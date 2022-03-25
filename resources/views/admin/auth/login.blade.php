@@ -7,7 +7,7 @@
     <title>Admin login</title>
 </head>
 <body>
-    <form action="{{ route('admin.auth) }}" method="post">
+    <form action="{{ route('admin.auth') }}" method="post">
         <input type="email" name="password">
         <input type="password" name="password">
         <button type="submit">Login</button>
