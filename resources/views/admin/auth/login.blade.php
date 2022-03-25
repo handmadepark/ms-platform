@@ -11,6 +11,9 @@
         <input type="email" name="password">
         <input type="password" name="password">
         <button type="submit">Login</button>
+        <label for="forgot-password">
+            Forgot pasword ?
+        </label>
     </form>
 </body>
 </html>
