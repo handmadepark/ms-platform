@@ -16,19 +16,24 @@ class AdminController extends Controller
 
         if(Auth::guard('admin')->attempt(['email'=>$request->email, 'password'=>$request->password], $request->get('remember')))
         {
-            return redirect()->route('admin.dashboard');
+            return redirect()->route('admin.select_transaction');
         }
         else
         {
-            return redirect()->back();
+            session()->flash('error', 'Email or password is incorrect');
+            return view('admin.login');
         }
+    }
+
+    public function select_transaction()
+    {
+        return view('admin.select_transaction');
     }
 
     public function dashboard()
     {
         return view('admin.dashboard');
     }
-
 
     public function logout()
     {

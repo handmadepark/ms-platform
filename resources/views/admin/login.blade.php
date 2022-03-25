@@ -43,7 +43,11 @@
                                         <span><i class="fa fa-lock"></i></span>    
                                         Admin Dashboard</h1>
                                     </div>
+                                     @if(Session::get('error'))
+                                     <p class="text-danger">{{ Session::get('error') }}</p>
+                                     @endif   
                                     <form class="user" action="{{ route('admin.auth') }}" method="POST">
+                                        
                                         @csrf
                                         <div class="form-group">
                                             <input type="email" name="email" class="form-control form-control-user"

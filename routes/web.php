@@ -29,6 +29,7 @@ Route::group(['prefix'=>'admin'], function(){
     });
 
     Route::group(['middleware'=>'admin.auth'], function(){
+        Route::get('/select_transaction', [AdminController::class, 'select_transaction'])->name('admin.select_transaction');
         Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
         Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     });
