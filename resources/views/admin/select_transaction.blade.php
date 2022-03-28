@@ -1,149 +1,53 @@
-<!DOCTYPE html>
-<html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="{{ asset('admin/css/transaction_style.css') }}">
-      <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-      <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+@extends('admin.layouts.master')
+@section('content')
+<div class="grid grid-cols-12 gap-6 mt-5">
+                        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                            <a href="{{ route('admin.administrator.dashboard') }}">
+                            <div class="report-box zoom-in">
+                                <div class="box p-5">
+                                    <div class="flex">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="user" data-lucide="user" class="lucide lucide-user report-box__icon text-success"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                    </div>
+                                    <div class="text-base text-slate-500 mt-1">Administrator</div>
+                                </div>
+                            </div>
+                        </a>
+                        </div>
+                        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                            <a href="{{ route('admin.stores.all-stores') }}">
+                            <div class="report-box zoom-in">
+                                <div class="box p-5">
+                                    <div class="flex">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="shopping-cart" data-lucide="shopping-cart" class="lucide lucide-shopping-cart report-box__icon text-primary"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"></path></svg>
+                                    </div>
+                                    <div class="text-base text-slate-500 mt-1">All shops</div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
 
-      <title>Select transaction</title>
-   </head>
-   <body>
-   <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                            <a href="{{ route('admin.stores.create-stores') }}">
+                            <div class="report-box zoom-in">
+                                <div class="box p-5">
+                                    <div class="flex">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="home" data-lucide="home" class="lucide lucide-home text-info"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>                                    </div>
+                                    <div class="text-base text-slate-500 mt-1">Open new shops</div>
+                                </div>
+                            </div>
+                            </a>
+                        </div>
 
-   <a class="navbar-brand ml-5" href="{{route('admin.select_transaction')}}">
-       <strong>Handmade Park</strong>
-   </a>
-
-<!-- Topbar Navbar -->
-<ul class="navbar-nav ml-auto">
-
-    <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-    <li class="nav-item dropdown no-arrow d-sm-none">
-        <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-search fa-fw"></i>
-        </a>
-        <!-- Dropdown - Messages -->
-        <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-            aria-labelledby="searchDropdown">
-            <form class="form-inline mr-auto w-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small"
-                        placeholder="Search for..." aria-label="Search"
-                        aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
+                        <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+                            <div class="report-box zoom-in">
+                                <div class="box p-5">
+                                    <div class="flex">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="sliders" data-lucide="sliders" class="lucide lucide-sliders report-box__icon text-danger"><line x1="4" y1="21" x2="4" y2="14"></line><line x1="4" y1="10" x2="4" y2="3"></line><line x1="12" y1="21" x2="12" y2="12"></line><line x1="12" y1="8" x2="12" y2="3"></line><line x1="20" y1="21" x2="20" y2="16"></line><line x1="20" y1="12" x2="20" y2="3"></line><line x1="1" y1="14" x2="7" y2="14"></line><line x1="9" y1="8" x2="15" y2="8"></line><line x1="17" y1="16" x2="23" y2="16"></line></svg>
+                                    </div>
+                                    <div class="text-base text-slate-500 mt-1">Site settings</div>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
-                </div>
-            </form>
-        </div>
-    </li>
-
-
-    <div class="topbar-divider d-none d-sm-block"></div>
-
-    <!-- Nav Item - User Information -->
-    <li class="nav-item dropdown no-arrow">
-        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-            <img class="img-profile rounded-circle"
-                src="img/undraw_profile.svg">
-        </a>
-        <!-- Dropdown - User Information -->
-        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-            aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">
-                <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                Profile
-            </a>
-            <a class="dropdown-item" href="#">
-                <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                Settings
-            </a>
-            <a class="dropdown-item" href="#">
-                <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                Activity Log
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ route('admin.logout') }}">
-                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                Logout
-            </a>
-        </div>
-    </li>
-
-</ul>
-
-</nav>
-   <div class="container mt-5">
-         <div class="row">
-             <div class="col-xl-4 col-md-6 mb-4">
-                <a href="" class="text-decoration-none">
-               <div class=" shop card border-left-primary shadow h-100 py-2">
-                  <div class="card-body">
-                     <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                           <div class=" text-xs font-weight-bold text-primary text-uppercase mb-1">
-                              Shop manager
-                           </div>
-                        </div>
-                        <div class="col-auto">
-                           <i class="fas fa-shopping-cart fa-2x text-gray-300"></i>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </a>
-            </div>
-            <div class="col-xl-4 col-md-6 mb-4">
-                <a href="" class="text-decoration-none">
-               <div class="all card border-left-info shadow h-100 py-2">
-                  <div class="card-body">
-                     <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                           <div class=" text-xs font-weight-bold text-info text-uppercase mb-1">
-                              All stores
-                           </div>
-                           <!-- <div class="h5 mb-0 font-weight-bold text-gray-800">(0)</div> -->
-                        </div>
-                        <div class="col-auto">
-                           <i class="fas fa-store-alt fa-2x text-gray-300"></i>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </a>
-            </div>
-            <div class="col-xl-4 col-md-6 mb-4">
-                <a href="" class="text-decoration-none">
-               <div class="open card border-left-success shadow h-100 py-2">
-                  <div class="card-body">
-                     <div class="row no-gutters align-items-center">
-                        <div class="col mr-2">
-                           <div class=" text-xs font-weight-bold text-success text-uppercase mb-1">
-                              Open new store
-                           </div>
-                        </div>
-                        <div class="col-auto">
-                           <i class="fas fa-plus fa-2x text-gray-300"></i>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </a>
-            </div>
-         </div>
-      </div> 
-      
-    <script src="{{ asset('admin/vendor/jquery/jquery.min.js')}}"></script>
-    <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-    
-   </body>
-</html>
+@endsection

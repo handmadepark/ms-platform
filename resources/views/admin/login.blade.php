@@ -1,99 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>SB Admin 2 - Login</title>
-
-    <!-- Custom fonts for this template-->
-    <link href="{{ asset('admin/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
-    <link
-        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
-        rel="stylesheet">
-
-    <!-- Custom styles for this template-->
-    <link href="{{ asset('admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
-
-</head>
-
-<body class="bg-gradient-primary">
-
-    <div class="container">
-
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
-
-            <div class="col-xl-10 col-lg-12 col-md-9">
-
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <!-- <div class="col-lg-6 d-none d-lg-block bg-login-image"></div> -->
-                            <div class="col-lg-6">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">
-                                        <span><i class="fa fa-lock"></i></span>    
-                                        Admin Dashboard</h1>
-                                    </div>
-                                     @if(Session::get('error'))
-                                     <p class="text-danger">{{ Session::get('error') }}</p>
-                                     @endif   
-                                    <form class="user" action="{{ route('admin.auth') }}" method="POST">
-                                        
-                                        @csrf
-                                        <div class="form-group">
-                                            <input type="email" name="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="Enter Email Address...">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" name="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck">
-                                                <label class="custom-control-label" for="customCheck">Remember
-                                                    Me</label>
-                                            </div>
-                                        </div>
-                                        <button class="btn btn-info btn-user btn-block" type="submit">Login</button>
-                                    </form>
-                                    <hr>
-                                    <div class="text-center">
-                                        <a class="small" href="#">Forgot Password?</a>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
+<!--
+Template Name: Rubick - HTML Admin Dashboard Template
+Author: Left4code
+Website: http://www.left4code.com/
+Contact: muhammadrizki@left4code.com
+Purchase: https://themeforest.net/user/left4code/portfolio
+Renew Support: https://themeforest.net/user/left4code/portfolio
+License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
+-->
+<html lang="en" class="light">
+    <!-- BEGIN: Head -->
+    <head>
+        <meta charset="utf-8">
+        <link href="dist/images/logo.svg" rel="shortcut icon">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Rubick admin is super flexible, powerful, clean & modern responsive tailwind admin template with unlimited possibilities.">
+        <meta name="keywords" content="admin template, Rubick Admin Template, dashboard template, flat admin template, responsive admin template, web app">
+        <meta name="author" content="LEFT4CODE">
+        <title>Login - Handmadepark Admin Dashboard</title>
+        <!-- BEGIN: CSS Assets-->
+        <link rel="stylesheet" href="{{ asset('admin/dist/css/app.css') }}" />
+        <!-- END: CSS Assets-->
+    </head>
+    <!-- END: Head -->
+    <body class="login">
+        <div class="container sm:px-10">
+            <div class="block xl:grid grid-cols-2 gap-4">
+                <!-- BEGIN: Login Info -->
+                <div class="hidden xl:flex flex-col min-h-screen">
+                    <a href="" class="-intro-x flex items-center pt-5">
+                        <img alt="Midone - HTML Admin Template" class="w-6" src="dist/images/logo.svg">
+                        <span class="text-white text-lg ml-3"> Handmadepark </span> 
+                    </a>
+                    <div class="my-auto">
+                        <img alt="Midone - HTML Admin Template" class="-intro-x w-1/2 -mt-16" src="{{asset('admin/dist/images/rocket.png')}}">
                     </div>
                 </div>
-
+                <!-- END: Login Info -->
+                <!-- BEGIN: Login Form -->
+                <div class="h-screen xl:h-auto flex py-5 xl:py-0 my-10 xl:my-0">
+                    <div class="my-auto mx-auto xl:ml-20 bg-white dark:bg-darkmode-600 xl:bg-transparent px-5 sm:px-8 py-8 xl:p-0 rounded-md shadow-md xl:shadow-none w-full sm:w-3/4 lg:w-2/4 xl:w-auto">
+                        <h2 class="intro-x font-bold text-2xl text-secondary xl:text-3xl text-center">
+                           - HMP login -
+                        </h2>
+                        <form action="{{ route('admin.auth') }}" method="post">
+                            @csrf
+                        <div class="intro-x mt-8">
+                            <input type="text" name="email" id="email" class="intro-x login__input form-control py-3 px-4 block" placeholder="Email">
+                            <input type="password" name="password" id="password" class="intro-x login__input form-control py-3 px-4 block mt-4" placeholder="Password">
+                        </div>
+                        <div class="intro-x flex text-slate-600 dark:text-slate-500 text-xs sm:text-sm mt-4">
+                            <div class="flex items-center mr-auto">
+                                <input id="remember" name="remember" type="checkbox" class="form-check-input border mr-2">
+                                <label class="cursor-pointer select-none" for="remember">Remember me</label>
+                            </div>
+                            <a href="">Forgot Password?</a> 
+                        </div>
+                        <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
+                            <button type="submit" class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">Login</button>
+                        </div>
+                        </form>
+                        <div class="intro-x mt-10 xl:mt-24 text-slate-600 dark:text-slate-500 text-center xl:text-left"> By signin up, you agree to our <a class="text-primary dark:text-slate-200" href="">Terms and Conditions</a> & <a class="text-primary dark:text-slate-200" href="">Privacy Policy</a> </div>
+                    </div>
+                </div>
+                <!-- END: Login Form -->
             </div>
-
         </div>
-
-    </div>
-
-    <!-- Bootstrap core JavaScript-->
-    <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="{{ asset('admin/vendor/jquery-easing/jquery.easing.min.js') }}"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="{{ asset('admin/js/sb-admin-2.min.js') }}"></script>
-
-</body>
-
+        <!-- BEGIN: Dark Mode Switcher-->
+      
+        <!-- END: Dark Mode Switcher-->
+        
+        <!-- BEGIN: JS Assets-->
+        <script src="{{ asset('admin/dist/js/app.js') }}"></script>
+        <!-- END: JS Assets-->
+    </body>
 </html>

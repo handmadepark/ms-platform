@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\StoreController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +31,12 @@ Route::group(['prefix'=>'admin'], function(){
 
     Route::group(['middleware'=>'admin.auth'], function(){
         Route::get('/select_transaction', [AdminController::class, 'select_transaction'])->name('admin.select_transaction');
-        Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+        Route::get('/administrator/dashboard', [DashboardController::class, 'dashboard'])->name('admin.administrator.dashboard');
+        
+        Route::get('stores/all-stores', [StoreController::class, 'all_stores'])->name('admin.stores.all-stores');
+        Route::get('stores/create-stores', [StoreController::class, 'create_stores'])->name('admin.stores.create-stores');
+        Route::post('stores/store', [StoreController::class, 'store'])->name('admin.stores.store');
+        Route::get('/stores/{id}/delete', [StoreController::class, 'delete'])->name('admin.stores.delete');
         Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');
     });
 });
