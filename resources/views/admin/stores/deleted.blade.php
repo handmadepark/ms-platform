@@ -20,7 +20,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="stores">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
@@ -65,7 +65,13 @@
             </div>
         </div>
     </div>
+@endsection
 
 
-
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#stores').DataTable();
+        } );
+    </script>
 @endsection

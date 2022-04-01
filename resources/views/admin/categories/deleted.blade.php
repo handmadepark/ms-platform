@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Deleted countries</h4>
+                                <h4 class="card-title mg-b-0">Deleted categories</h4>
                                 <div class="float-end">
                                     <a href="{{ URL::previous() }}">
                                         <button class="btn btn-sm btn-danger">
@@ -20,7 +20,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="categories">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
@@ -30,19 +30,19 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @forelse($countries as $country)
+                                    @forelse($categories as $category)
                                         <tr>
-                                            <td>{{$country->id}}</td>
-                                            <td>{{$country->name}}</td>
+                                            <td>{{$category->id}}</td>
+                                            <td>{{$category->name}}</td>
                                             <td>
-                                                @if($country->status==1)
+                                                @if($category->status==1)
                                                     <button class="btn btn-sm btn-outline-success">Active</button>
                                                 @else
                                                     <button class="btn btn-sm btn-outline-warning">Inactive</button>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.countries.restore', ['id'=>$country->id])  }}">
+                                                <a href="{{ route('admin.categories.restore', ['id'=>$category->id])  }}">
                                                     <button class="btn btn-sm btn-info">
                                                         <span><i class="fas fa-redo-alt"></i></span>
                                                     </button>
@@ -52,7 +52,7 @@
                                     @empty
                                         <tr>
                                             <td colspan="4">
-                                                <p class="text-danger text-center">There is no deleted country</p>
+                                                <p class="text-danger text-center">There is no deleted category</p>
                                             </td>
                                         </tr>
                                     @endforelse
@@ -65,7 +65,12 @@
             </div>
         </div>
     </div>
+@endsection
 
-
-
+@section('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#categories').DataTable();
+        } );
+    </script>
 @endsection

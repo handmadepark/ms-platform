@@ -6,15 +6,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Country extends Model
+class Categories extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $table = 'countries';
+    protected $table = 'categories';
     protected $fillable = ['name', 'status'];
 
-    public function getStores()
-    {
-        return $this->hasMany('App\Models\Stores', 'country_id', 'id');
-    }
 }

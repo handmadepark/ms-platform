@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Validator, Auth;
 use App\Http\Controllers\LogController;
 use App\Models\Log;
@@ -18,11 +19,10 @@ class AdminController extends Controller
 
         if(Auth::guard('admin')->attempt(['email'=>$request->email, 'password'=>$request->password], $request->get('remember')))
         {
-
             $content = Auth::guard('admin')->user()->name.' logged in to system.';
             $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
             toast('Logged in successfully','success');
-            return redirect()->route('admin.select_transaction');
+            return redirect()->route('admin.dashboard');
         }
         else
         {
@@ -31,12 +31,8 @@ class AdminController extends Controller
         }
     }
 
-    public function select_transaction()
-    {
-        return view('admin.select_transaction');
-    }
 
-    
+
 
     public function logout()
     {
@@ -45,5 +41,5 @@ class AdminController extends Controller
         Auth::logout();
         return view('admin.login');
     }
-    
+
 }

@@ -1,1 +1,1 @@
-<?php
+@extends('admin.layouts.master')

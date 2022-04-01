@@ -14,7 +14,7 @@ class CountrySeeder extends Seeder
      */
     public function run()
     {
-       
+
             Country::create([
                 'name' => 'Azerbaijan',
                 'status'=>1
@@ -29,5 +29,15 @@ class CountrySeeder extends Seeder
                 'name' =>'Turkey',
                 'status'=>1
             ]);
+
+        Country::create([
+            'name' =>'Ukraine',
+            'status'=>1
+        ]);
+
+        Country::create([
+            'name' =>'Kazakistan',
+            'status'=>1
+        ]);
     }
 }
