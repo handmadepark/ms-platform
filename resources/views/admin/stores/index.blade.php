@@ -78,7 +78,7 @@
                                                         <span><i class="fas fa-pen"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.stores.edit', ['id'=>$store->id])}}">
+                                                <a href="{{ route('admin.stores.store_manager', ['id'=>$store->id]) }}">
                                                     <button class="btn btn-sm btn-warning">
                                                         <span><i class="fas fa-cog"></i></span>
                                                     </button>

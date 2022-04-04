@@ -42,9 +42,11 @@ class CategoriesController extends Controller
     public function store(Request $request)
     {
         try{
+            $variations = json_encode($request->category_variations);
             Categories::create([
-                'name'      => $request->name,
-                'status'    => $request->status
+                'name'                  => $request->name,
+                'category_variations'   => $variations,
+                'status'                => $request->status
             ]);
             $content = Auth::guard('admin')->user()->name.' inserted new category - '.$request->name;
             $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
@@ -52,8 +54,9 @@ class CategoriesController extends Controller
             return redirect()->route('admin.categories');
         }catch(\Exception $e)
         {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.categories.create');
+            return $e;
+//            toast('An error occured...', 'warning');
+//            return redirect()->route('admin.categories.create');
         }
     }
 
@@ -115,6 +118,7 @@ class CategoriesController extends Controller
     {
         try{
             $updated_item = Categories::find($id);
+            $updated_item['category_variations'] = json_encode($request->category_variations);
             $updated_item->update($request->all());
             $content = Auth::guard('admin')->user()->name.' updated category - '.$request->name;
             $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);

@@ -21,8 +21,8 @@ class CreateStoresTable extends Migration
             $table->string('password');
             $table->string('phone')->unique()->nullable();
             $table->string('related_person')->nullable();
-            $table->string('email')->nullable();
-            $table->string('social')->nullable();
+            $table->json('email')->nullable();
+            $table->json('social')->nullable();
             $table->string('address')->nullable();
             $table->string('bg_image')->nullable();
             $table->string('logo')->nullable();

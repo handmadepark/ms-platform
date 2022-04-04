@@ -25,6 +25,36 @@
                                     <label for="name">Category name</label>
                                     <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" value="{{$item_selected->name}}">
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="address">Add variations</label>
+                                    <div class="input-group mb-3">
+                                              <span class="input-group-text" id="basic-addon1">
+                                              <i class="fas fa-list-alt"></i>
+                                              </span>
+                                        <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter category variations" type="text" name="category_variations[]">
+                                        <button class="btn btn-info" id="new_variation_button" type="button">
+                                            <span><i class="fas fa-plus"></i></span>
+                                        </button>
+                                    </div>
+
+                                    <div class="input-group mb-3" id="new_variation">
+                                        @foreach(json_decode($item_selected->category_variations) as $var)
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="basic-addon1">
+                                                    <i class="fas fa-list-alt"></i>
+                                                </span>
+                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" value="{{$var}}" type="text" name="category_variations[]">
+                                                <button class="btn btn-danger" id="remove_variation" type="button">
+                                                    <span>
+                                                        <i class="fas fa-close"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" id="status" class="form-control">
@@ -41,4 +71,30 @@
             </div>
         </div>
     </div>
+@endsection
+
+
+@section('scripts')
+    <script>
+        $(document).ready(function(){
+            var max_fields  = 5;
+            var wrapper     = $('#new_variation');
+            var add_button  = $('#new_variation_button');
+
+            var x = 1;
+            $(add_button).click(function(e){
+                e.preventDefault();
+                if(x<=max_fields){
+                    x++;
+                    $(wrapper).append('<div class="input-group mb-3"> <span class="input-group-text" id="basic-addon1"> <i class="fas fa-list-alt"></i> </span> <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter new category variation" type="text" name="category_variations[]"> <button class="btn btn-danger" id="remove_variation" type="button"> <span><i class="fas fa-close"></i></span> </button> </div>');
+                }
+            });
+
+            $(wrapper).on("click", "#remove_variation", function(e){
+                e.preventDefault();
+                $(this).parent('div').remove();
+                x--;
+            })
+        })
+    </script>
 @endsection

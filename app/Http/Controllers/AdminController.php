@@ -19,6 +19,7 @@ class AdminController extends Controller
 
         if(Auth::guard('admin')->attempt(['email'=>$request->email, 'password'=>$request->password], $request->get('remember')))
         {
+            Session::put('theme', 'dark');
             $content = Auth::guard('admin')->user()->name.' logged in to system.';
             $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
             toast('Logged in successfully','success');
