@@ -4,7 +4,7 @@
 <!-- Mirrored from laravel8.spruko.com/nowa/index2 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Mar 2022 18:51:48 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -36,11 +36,14 @@
     <!-- INTERNAL Select2 css -->
     <link href="{{asset('admin/plugins/select2/css/select2.min.css')}}" rel="stylesheet" />
 
+    <!--Tags-->
+    <link href="{{asset('admin/plugins/inputtags/inputtags.css')}}" rel="stylesheet">
+
     <!-- STYLES CSS -->
         <link href="{{asset('admin/css/style-dark.css')}}" rel="stylesheet">
         <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
 
-    <link href="{{asset('admin/css/style-transparent.css')}}" rel="stylesheet">
+        <link href="{{asset('admin/css/style-transparent.css')}}" rel="stylesheet">
 
     <!-- SKIN-MODES CSS -->
     <link href="{{asset('admin/css/skin-modes.css')}}" rel="stylesheet" />
@@ -171,7 +174,8 @@
 <!-- Datatables -->
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
+<script src="{{asset('admin/plugins/inputtags/inputtags.js')}}"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @yield('scripts')
 </body>
 </html>

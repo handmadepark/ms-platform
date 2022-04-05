@@ -4,7 +4,7 @@
 <!-- Mirrored from laravel8.spruko.com/nowa/index2 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Mar 2022 18:51:48 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name='viewport' content='width=device-width, initial-scale=1.0, user-scalable=0'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -44,6 +44,8 @@
 
     <!-- SKIN-MODES CSS -->
     <link href="{{asset('admin/css/skin-modes.css')}}" rel="stylesheet" />
+
+
 
     <!-- ANIMATION CSS -->
     <link href="{{asset('admin/css/animate.css')}}" rel="stylesheet">
@@ -125,7 +127,7 @@
 
 
 <!-- Internal Chart.Bundle js-->
-<script src="{{asset('admin/plugins/chartjs/Chart.bundle.min.js')}}"></script>
+
 
 <!-- INTERNAL Apexchart js -->
 <script src="{{asset('admin/js/apexcharts.js')}}"></script>
@@ -171,7 +173,7 @@
 <!-- Datatables -->
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
+<script src="{{asset('admin/plugins/inputtags/inputtags.js')}}"></script>
 @yield('scripts')
 </body>
 </html>

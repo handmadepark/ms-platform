@@ -7,7 +7,7 @@ use App\Models\Country;
 use App\Models\Stores;
 use Illuminate\Http\Request;
 use App\Models\Log;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Hash;
 
@@ -61,7 +61,7 @@ class StoresController extends Controller
             $new_store['social'] = json_encode($request->social);
             Stores::create($new_store);
             $content = Auth::guard('admin')->user()->name.' inserted new store - '.$request->name;
-            $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
+            (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
             toast('Store inserted successfully.', 'success');
             return redirect()->route('admin.stores');
         }catch(\Exception $e)
@@ -154,9 +154,32 @@ class StoresController extends Controller
         }
     }
 
+    public function checkStatus(Request $request)
+    {
+        $update_status = Stores::find($request->dataId);
+        $update_status->status = $request->check;
+        $update_status->save();
+        if($request->check == 1)
+        {
+            $old_status = "active";
+        }else{
+            $old_status = "deactive";
+        }
+        $content = Auth::guard('admin')->user()->name.' updated store status to - '.$old_status;
+        $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
+        $data = [
+            'icon'             => 'success',
+            'status'           => 200,
+            'message'          => 'Store status successfully updated'
+        ];
+        return $data;
+
+
+    }
+
     public function deleted()
     {
-        $countries = Stores::onlyTrashed()->get();
+        $stores = Stores::onlyTrashed()->get();
         return view('admin.stores.deleted', compact('stores'));
     }
 

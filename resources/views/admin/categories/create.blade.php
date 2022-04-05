@@ -27,6 +27,22 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="name">Category title</label>
+                            <input type="text" class="form-control" name="title" id="name" aria-describedby="emailHelp" placeholder="Enter country title">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Category description</label>
+                            <textarea name="description" class="form-control" id="" cols="30" rows="5"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name">Category keywords</label>
+                            <input type="text" data-role="tagsinput" class="form-control" name="keywords[]" id="keywords" aria-describedby="emailHelp" placeholder="Enter keywords">
+                            <small class="text-danger">Implode keywords with TAB button</small>
+                        </div>
+
+                        <div class="form-group">
                             <label for="address">Add variations</label>
                             <div class="input-group mb-3">
                                               <span class="input-group-text" id="basic-addon1">

@@ -64,7 +64,7 @@
                                             </td>
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch" id="check_status" {{ ($store->status==1) ? 'checked' : ''}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$store->id}}" id="check_status" {{ ($store->status==1) ? 'checked' : ''}}>
                                                 </div>
                                             </td>
                                             <td>
@@ -120,5 +120,45 @@
             $('#stores').DataTable();
         } );
 
+        $('.form-check-input').change(function(e){
+            var dataId = $(this).data('id');
+            var ch = $(this).is(':checked') ? 1 : 0;
+            $post = $(this);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('admin.stores.check_status') }}",
+                type: "POST",
+                data:{
+                    "dataId":dataId,
+                    "check":ch
+                },
+                success:function(data)
+                {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                        }
+                    })
+
+                    Toast.fire({
+                        icon: data.icon,
+                        title: data.message
+                    })
+                }
+            });
+
+        })
     </script>
 @endsection

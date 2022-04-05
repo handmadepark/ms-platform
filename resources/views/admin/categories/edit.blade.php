@@ -27,6 +27,24 @@
                                 </div>
 
                                 <div class="form-group">
+                                    <label for="name">Category title</label>
+                                    <input type="text" class="form-control" name="title" id="name" aria-describedby="emailHelp" value="{{$item_selected->title}}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="name">Category description</label>
+                                    <textarea name="description" class="form-control" id="" cols="30" rows="10">
+                                        {{$item_selected->description}}
+                                    </textarea>
+                                </div>
+
+
+{{--                                <div class="form-group">--}}
+{{--                                    <label for="name">Category keywords</label>--}}
+{{--                                    <input type="text" class="form-control" data-role="tagsinput" name="keywords[]" id="name" aria-describedby="emailHelp" value="@foreach(json_decode($item_selected->keywords) as $word) $word @endforeach">--}}
+{{--                                </div>--}}
+
+                                <div class="form-group">
                                     <label for="address">Add variations</label>
                                     <div class="input-group mb-3">
                                               <span class="input-group-text" id="basic-addon1">
@@ -54,6 +72,7 @@
                                         @endforeach
                                     </div>
                                 </div>
+
 
                                 <div class="form-group">
                                     <label for="status">Status</label>

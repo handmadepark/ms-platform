@@ -2,12 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\CategoriesController;
-use App\Http\Controllers\Admin\CountriesController;
-use App\Http\Controllers\Admin\StoresController;
-use App\Http\Controllers\Admin\PaymentCardController;
-use App\Http\Controllers\Admin\StoreManagerController;
+use App\Http\Controllers\Admin\{
+    DashboardController,
+    CategoriesController,
+    CountriesController,
+    StoresController,
+    StoreManagerController,
+    PaymentCardController,
+    MessagesController
+};
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,12 +69,18 @@ Route::group(['prefix'=>'admin'], function(){
           Route::get('/stores/{id}/edit', [StoresController::class, 'edit'])->name('admin.stores.edit');
           Route::get('/stores/{id}/restore', [StoresController::class, 'restore'])->name('admin.stores.restore');
           Route::get('/stores/deleted', [StoresController::class, 'deleted'])->name('admin.stores.deleted');
+          Route::post('/stores/check_status', [StoresController::class, 'checkStatus'])->name('admin.stores.check_status');
 
           //payment cards
           Route::post('/paymentCards', [PaymentCardController::class, 'store'])->name('admin.paymentCards.store');
 
           //store manager
           Route::get('/stores/{id}/store_manager', [StoreManagerController::class, 'index'])->name('admin.stores.store_manager');
+          Route::get('/stores/store_manager/listings', [StoreManagerController::class, 'listings'])->name('admin.stores.store_manager.listings');
+          Route::post('/stores/store_manager/getListings', [StoreManagerController::class, 'getListings'])->name('admin.stores.store_manager.getListings');
+
+          //messages
+          Route::get('/stores/store_manager/messages', [MessagesController::class, 'index'])->name('admin.stores.store_manager.messages');
 
           //logout
           Route::get('/logout', [AdminController::class, 'logout'])->name('admin.logout');

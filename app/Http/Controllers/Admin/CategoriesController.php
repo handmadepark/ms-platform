@@ -43,8 +43,12 @@ class CategoriesController extends Controller
     {
         try{
             $variations = json_encode($request->category_variations);
+            $keywords = json_encode($request->keywords);
             Categories::create([
                 'name'                  => $request->name,
+                'title'                 => $request->title,
+                'description'           => $request->description,
+                'keywords'              => $keywords,
                 'category_variations'   => $variations,
                 'status'                => $request->status
             ]);
@@ -119,6 +123,7 @@ class CategoriesController extends Controller
         try{
             $updated_item = Categories::find($id);
             $updated_item['category_variations'] = json_encode($request->category_variations);
+            $updated_item['keywords'] = json_encode($request->keywords);
             $updated_item->update($request->all());
             $content = Auth::guard('admin')->user()->name.' updated category - '.$request->name;
             $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);

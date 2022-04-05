@@ -29,10 +29,10 @@
                                 <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="categories">
                                     <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Status</th>
-                                        <th>Operations</th>
+                                        <th class="sorting" tabindex="0" aria-controls="user-datatable" rowspan="1" colspan="1" aria-label="ID: activate to sort column ascending" style="width: 184px;">ID</th>
+                                        <th class="sorting" tabindex="0" aria-controls="user-datatable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 184px;">Name</th>
+                                        <th class="sorting" tabindex="0" aria-controls="user-datatable" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending" style="width: 184px;">Status</th>
+                                        <th style="width: 184px;">Operations</th>
                                     </tr>
                                     </thead>
                                     <tbody>
