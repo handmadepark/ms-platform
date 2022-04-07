@@ -35,17 +35,15 @@
                                         <th>Operations</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="tablecontent">
                                     @forelse($countries as $country)
                                         <tr>
                                             <td>{{$country->id}}</td>
                                             <td>{{$country->name}}</td>
                                             <td>
-                                                @if($country->status==1)
-                                                    <button class="btn btn-sm btn-outline-success">Active</button>
-                                                @else
-                                                    <button class="btn btn-sm btn-outline-warning">Inactive</button>
-                                                @endif
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$country->id}}" id="check_status" {{ ($country->status==1) ? 'checked' : ''}}>
+                                                </div>
                                             </td>
                                             <td>
                                                 <a href="">
@@ -89,5 +87,35 @@
         $(document).ready(function() {
             $('#countries').DataTable();
         } );
+
+        $('.form-check-input').change(function(e){
+            var dataId = $(this).data('id');
+            var ch = $(this).is(':checked') ? 1 : 0;
+            $post = $(this);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('admin.countries.check_status') }}",
+                type: "POST",
+                data:{
+                    "dataId":dataId,
+                    "check":ch
+                },
+                success:function(data)
+                {
+                    Toast.fire({
+                        icon: data.icon,
+                        title: data.message
+                    })
+                }
+            });
+
+        })
     </script>
 @endsection
+

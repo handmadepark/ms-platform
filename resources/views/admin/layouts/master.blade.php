@@ -30,6 +30,8 @@
     <!-- P-SCROLL BAR CSS -->
     <link href="{{asset('admin/plugins/perfect-scrollbar/p-scrollbar.css')}}" rel="stylesheet" />
 
+    <!-- Treeview -->
+    <link href="{{asset('admin/plugins/treeview/treeview.css')}}" rel="stylesheet" type="text/css" />
     <!-- Datatables css -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
@@ -175,7 +177,21 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="{{asset('admin/plugins/inputtags/inputtags.js')}}"></script>
+<script src="{{asset('admin/plugins/treeview/treeview.js')}}"></script>
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+</script>
 @yield('scripts')
 </body>
 </html>

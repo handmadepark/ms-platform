@@ -1,9 +1,9 @@
 $.fn.extend({
     treed: function (o) {
-      
-      var openedClass = 'fe fe-folder-minus';
-      var closedClass = 'fe fe-folder-plus';
-      
+
+      var openedClass = 'fas fa-folder-minus';
+      var closedClass = 'fas fa-folder-plus';
+
       if (typeof o != 'undefined'){
         if (typeof o.openedClass != 'undefined'){
         openedClass = o.openedClass;
@@ -12,7 +12,7 @@ $.fn.extend({
         closedClass = o.closedClass;
         }
       };
-      
+
         //initialize each of the top levels
         var tree = $(this);
         tree.addClass("tree");
@@ -68,6 +68,6 @@ $('#treeview3').treed();
 
 $('#tree1').treed();
 
-$('#tree2').treed({openedClass:'si si-folder-alt', closedClass:'si si-folder'});
+$('#tree2').treed({openedClass:'fas fa-folder-alt', closedClass:'fas fa-folder'});
 
-$('#tree3').treed({openedClass:'si si-arrow-right-circle', closedClass:'si si-arrow-down-circle'});
+$('#tree3').treed({openedClass:'fas fa-arrow-right-circle', closedClass:'fasffa fa-arrow-down-circle'});

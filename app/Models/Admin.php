@@ -45,6 +45,6 @@ class Admin extends Authenticatable
 
     public function getLogs()
     {
-        return $this->hasMany('App\Models\Log', 'admin_id', 'id');
+        return $this->hasMany(Log::class, 'admin_id', 'id');
     }
 }

@@ -15,6 +15,6 @@ class Country extends Model
 
     public function getStores()
     {
-        return $this->hasMany('App\Models\Stores', 'country_id', 'id');
+        return $this->hasMany(Stores::class, 'country_id', 'id');
     }
 }

@@ -15,6 +15,6 @@ class Log extends Model
 
     public function getAdmin()
     {
-        return $this->belongsTo('App\Models\Admin', 'admin_id', 'id');
+        return $this->belongsTo(Admin::class, 'admin_id', 'id');
     }
 }

@@ -12,4 +12,15 @@ class Categories extends Model
     protected $table = 'categories';
     protected $fillable = ['name', 'title', 'description', 'keywords', 'category_variations','status'];
 
+
+    public function getListings()
+    {
+        return $this->belongsToMany(Listings::class, 'listings_categories');
+    }
+
+    public function getSubCategories()
+    {
+        return $this->hasMany(SubCategories::class, 'parent_id');
+    }
+
 }

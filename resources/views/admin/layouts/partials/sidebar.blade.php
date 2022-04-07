@@ -47,7 +47,7 @@
                         <li><a class="slide-item" href="javascript:void(0);">Users</a></li>
                         <li><a class="slide-item" href="javascript:void(0);">Roles</a></li>
                         <li><a class="slide-item" href="javascript:void(0);">Permissions</a></li>
-                        <li><a class="slide-item" href="javascript:void(0);">Site settings</a></li>
+                        <li><a class="slide-item" href="{{route('admin.settings')}}">Site settings</a></li>
                     </ul>
                 </li>
             </ul>

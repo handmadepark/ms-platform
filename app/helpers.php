@@ -1,7 +1,7 @@
 <?php
 use App\Models\
 {
-    Stores, Products
+    Stores, Listings
 };
 use App\Models\Country;
 
@@ -19,25 +19,25 @@ function getCountryName($store_id)
 
 function getListingsCount($store_id)
 {
-    $listings_count = Products::where('store_id', $store_id)->count();
+    $listings_count = Listings::where('store_id', $store_id)->count();
     return $listings_count;
 }
 
 function getListingActiveCount($store_id)
 {
-    $listings_active_count = Products::where('status', 1)->count();
+    $listings_active_count = Listings::where('status', 1)->count();
     return $listings_active_count;
 }
 
 function getListingDeactiveCount($store_id)
 {
-    $listings_deactive_count = Products::where('status', 0)->count();
+    $listings_deactive_count = Listings::where('status', 0)->count();
     return $listings_deactive_count;
 }
 
 function getListingDeletedCount($store_id)
 {
-    $listings_deleted_count = Products::onlyTrashed()->count();
+    $listings_deleted_count = Listings::onlyTrashed()->count();
     return $listings_deleted_count;
 }
 

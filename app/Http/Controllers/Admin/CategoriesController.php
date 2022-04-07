@@ -136,6 +136,27 @@ class CategoriesController extends Controller
         }
     }
 
+    public function check_status(Request $request)
+    {
+        $update_status = Categories::find($request->dataId);
+        $update_status->status = $request->check;
+        $update_status->save();
+        if($request->check == 1)
+        {
+            $old_status = "active";
+        }else{
+            $old_status = "deactive";
+        }
+        $content = Auth::guard('admin')->user()->name.' updated category status to - '.$old_status;
+        $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
+        $data = [
+            'icon'             => 'success',
+            'status'           => 200,
+            'message'          => 'Category status successfully updated'
+        ];
+        return $data;
+    }
+
     public function deleted()
     {
         $categories = Categories::onlyTrashed()->get();

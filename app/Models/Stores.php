@@ -14,11 +14,16 @@ class Stores extends Model
 
     public function getCountry()
     {
-        return $this->belongsTo('App\Models\Country', 'country_id', 'id');
+        return $this->belongsTo(Country::class, 'country_id', 'id');
     }
     public function getCards()
     {
-        return $this->hasMany('App\Models\PaymentCards', 'store_id','id');
+        return $this->hasMany(PaymentCards::class, 'store_id','id');
+    }
+
+    public function getProducts()
+    {
+        return $this->hasMany(Listings::class, 'store_id', 'id');
     }
 
 }

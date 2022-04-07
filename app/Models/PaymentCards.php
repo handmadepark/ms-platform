@@ -15,6 +15,6 @@ class PaymentCards extends Model
 
     public function getStore()
     {
-        return $this->belongsTo('App\Models\Stores', 'store_id', 'id');
+        return $this->belongsTo(Stores::class, 'store_id', 'id');
     }
 }
