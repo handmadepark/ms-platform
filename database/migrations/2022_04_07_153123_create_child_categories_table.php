@@ -17,6 +17,7 @@ class CreateChildCategoriesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('subcat_id');
             $table->string('name');
+            $table->integer('status');
             $table->softDeletes();
             $table->timestamps();
 

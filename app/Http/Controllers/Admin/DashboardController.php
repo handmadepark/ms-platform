@@ -14,7 +14,9 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $logs = Log::orderBy('id', 'DESC')->take(20)->get();
-        return view('admin.dashboard', compact('logs'));
+//        $logs = Log::orderBy('id', 'DESC')->take(20)->get();
+//        return view('admin.dashboard', compact('logs'));
+
+        return "Salam";
     }
 }

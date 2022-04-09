@@ -5,11 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
 use Illuminate\Http\Request;
-use App\Models\Log;
-use Auth;
-use App\Http\Controllers\LogController;
-
-
 
 class CountriesController extends Controller
 {
@@ -32,7 +27,7 @@ class CountriesController extends Controller
      */
     public function create()
     {
-        return view('admin.countries.create');
+        //
     }
 
     /**
@@ -43,45 +38,16 @@ class CountriesController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            Country::create([
-                'name'      => $request->name,
-                'status'    => $request->status
-            ]);
-            $content = Auth::guard('admin')->user()->name.' inserted new country - '.$request->name;
-            $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            toast('Country inserted successfully.', 'success');
-            return redirect()->route('admin.countries');
-        }catch(\Exception $e)
-        {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.countries.create');
-        }
-    }
-
-    public function restore($id)
-    {
-        try{
-            $item_restore = Country::onlyTrashed()->find($id);
-            $item_restore->restore();
-            $content = Auth::guard('admin')->user()->name.' restored country - '.$item_restore->name;
-            $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            toast('Country restores successfully.', 'success');
-            return redirect()->route('admin.countries');
-        }catch(\Exception $e)
-        {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.countries.deleted');
-        }
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Country $country)
     {
         //
     }
@@ -89,93 +55,34 @@ class CountriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Country $country)
     {
-        $item_selected = Country::find($id);
-        if($item_selected)
-        {
-            return view('admin.countries.edit', compact('item_selected'));
-        }
-        else
-        {
-            toast('Country not found...', 'warning');
-            return redirect()->route('admin.countries');
-        }
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Country $country)
     {
-        try{
-            $updated_item = Country::find($id);
-            $updated_item->update($request->all());
-            $content = Auth::guard('admin')->user()->name.' updated country - '.$request->name;
-            $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            toast('Country updated successfully.', 'success');
-            return redirect()->route('admin.countries');
-        }catch(\Exception $e)
-        {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.countries');
-        }
-    }
-
-    public function check_status(Request $request)
-    {
-        $update_status = Country::find($request->dataId);
-        $update_status->status = $request->check;
-        $update_status->save();
-        if($request->check == 1)
-        {
-            $old_status = "active";
-        }else{
-            $old_status = "deactive";
-        }
-        $content = Auth::guard('admin')->user()->name.' updated country status to - '.$old_status;
-        $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-        $data = [
-            'icon'             => 'success',
-            'status'           => 200,
-            'message'          => 'Country status successfully updated'
-        ];
-        return $data;
-    }
-
-
-    public function deleted()
-    {
-        $countries = Country::onlyTrashed()->get();
-        return view('admin.countries.deleted', compact('countries'));
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Country  $country
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Country $country)
     {
-        try {
-            $delete_item = Country::find($id);
-            $content = Auth::guard('admin')->user()->name.' deleted country - '.$delete_item->name;
-            $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            $delete_item->delete();
-            toast('Country deleted successfully.', 'success');
-            return redirect()->route('admin.countries');
-        }catch (\Exception $e)
-        {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.countries');
-        }
+        //
     }
 }

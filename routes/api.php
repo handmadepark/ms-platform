@@ -17,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+    Route::prefix('admin')->group(function (){
+        Route::middleware('admin.guest')->group(function(){
+            Route::view('/login', 'admin.login')->name('admin.login');
+            Route::post('/login', [\App\Http\Controllers\AdminController::class , 'authenticate'])
+                ->name('admin.auth');
+        });
+
+        Route::middleware('admin.auth')->group(function(){
+            Route::get('/dashboard', [\App\Http\Controllers\Admin\DashboardController::class , 'dashboard'])
+                ->name('admin.dashboard');
+        });
+    });

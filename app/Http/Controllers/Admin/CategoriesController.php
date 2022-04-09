@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\LogController;
 use App\Models\Categories;
+use App\Models\ChildCategories;
 use App\Models\Country;
+use App\Models\GrandChildCategories;
+use App\Models\SubCategories;
 use Illuminate\Http\Request;
 use Auth;
 
@@ -30,7 +33,11 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        $categories = Categories::where('status', 1)->get();
+        $subcat     = SubCategories::where('status', 1)->get();
+        $child      = ChildCategories::where('status', 1)->get();
+        $grand      = GrandChildCategories::where('status', 1)->get();
+        return view('admin.categories.create', compact('categories','subcat', 'child', 'grand'));
     }
 
     /**

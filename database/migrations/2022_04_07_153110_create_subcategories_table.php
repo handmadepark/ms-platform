@@ -17,6 +17,7 @@ class CreateSubcategoriesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('parent_id');
             $table->string('name');
+            $table->integer('status');
             $table->softDeletes();
             $table->timestamps();
 

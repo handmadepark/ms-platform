@@ -37,13 +37,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class , 'index'])->nam
 
 Route::group(['prefix' => 'admin'], function ()
 {
-    Route::group(['middleware' => 'admin.guest'], function ()
-    {
-        Route::view('/login', 'admin.login')
-            ->name('admin.login');
-        Route::post('/login', [AdminController::class , 'authenticate'])
-            ->name('admin.auth');
-    });
+//    Route::group(['middleware' => 'admin.guest'], function ()
+//    {
+//        Route::view('/login', 'admin.login')
+//            ->name('admin.login');
+//        Route::post('/login', [AdminController::class , 'authenticate'])
+//            ->name('admin.auth');
+//    });
 
     Route::group(['middleware' => 'admin.auth'], function ()
     {

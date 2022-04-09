@@ -19,7 +19,6 @@ class CreateCategoriesTable extends Migration
             $table->string('title');
             $table->text('description');
             $table->json('keywords');
-            $table->json('category_variations');
             $table->integer('status');
             $table->softDeletes();
             $table->timestamps();

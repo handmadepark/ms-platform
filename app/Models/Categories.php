@@ -10,7 +10,7 @@ class Categories extends Model
 {
     use HasFactory, SoftDeletes;
     protected $table = 'categories';
-    protected $fillable = ['name', 'title', 'description', 'keywords', 'category_variations','status'];
+    protected $fillable = ['name', 'title', 'description', 'keywords','status'];
 
 
     public function getListings()

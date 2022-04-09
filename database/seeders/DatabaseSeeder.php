@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\GrandChildCategories;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,7 +20,11 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             CountrySeeder::class,
             RoleSeeder::class,
-            PermissionSeeder::class
+            PermissionSeeder::class,
+            CategorySeeder::class,
+            SubCategorySeeder::class,
+            ChildCategorySeeder::class,
+            GrandChildCategorySeeder::class,
         ]);
     }
 }
