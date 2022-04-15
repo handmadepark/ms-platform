@@ -41,6 +41,11 @@ function getListingDeletedCount($store_id)
     return $listings_deleted_count;
 }
 
+function getListingCount($category)
+{
+    return $category->getListings()->count();
+}
+
 function getDatedmy($time)
 {
     return $time->format("d.m.Y");

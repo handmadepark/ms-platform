@@ -7,8 +7,11 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">{{$item_selected->name}}</h4>
+                                <h4 class="card-title mg-b-0">{{$data->name}} category</h4>
                                 <div class="float-end">
+                                    <label for="check_parent_id">
+                                    <input type="checkbox" class="form-check-input" {{(is_null($data->parent_id)) ? '' : 'checked'}} name="" id="check_parent_id">
+                                    Child category</label>
                                     <a href="{{ URL::previous() }}">
                                         <button class="btn btn-sm btn-danger">
                                             <span><i class="fas fa-arrow-left"></i></span>
@@ -16,71 +19,81 @@
                                         </button>
                                     </a>
                                 </div>
+
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{route('admin.categories.update', ['id'=>$item_selected->id])}}" method="POST">
+                            <form action="{{route('admin.categories.update', ['id'=>$data->id])}}" method="POST">
                                 @csrf
+                                <div class="form-group" id="parent_category">
+                                    <label for="parent_id">Parent category</label>
+                                    <select name="parent_id" class="form-control" id="parent_id">
+                                        <option disabled selected>Please select one item</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}" {{($data->parent_id==$category->id) ? 'selected' : ''}}>{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                                 <div class="form-group">
                                     <label for="name">Category name</label>
-                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" value="{{$item_selected->name}}">
+                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" value="{{ $data->name }}">
+                                    @if($errors->has('name'))
+                                        <p class="text-danger">{{ $errors->first('name') }}</p>
+                                    @endif
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="name">Category title</label>
-                                    <input type="text" class="form-control" name="title" id="name" aria-describedby="emailHelp" value="{{$item_selected->title}}">
+                                    <label for="title">Category title</label>
+                                    <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" value="{{$data->title}}">
+                                    @if($errors->has('title'))
+                                        <p class="text-danger">{{ $errors->first('title') }}</p>
+                                    @endif
                                 </div>
 
                                 <div class="form-group">
                                     <label for="name">Category description</label>
-                                    <textarea name="description" class="form-control" id="" cols="30" rows="10">
-                                        {{$item_selected->description}}
-                                    </textarea>
+                                    <textarea name="description" class="form-control" id="" cols="30" rows="5">{{$data->description}}</textarea>
+                                    @if($errors->has('description'))
+                                        <p class="text-danger">{{ $errors->first('description') }}</p>
+                                    @endif
                                 </div>
 
-
-{{--                                <div class="form-group">--}}
-{{--                                    <label for="name">Category keywords</label>--}}
-{{--                                    <input type="text" class="form-control" data-role="tagsinput" name="keywords[]" id="name" aria-describedby="emailHelp" value="@foreach(json_decode($item_selected->keywords) as $word) $word @endforeach">--}}
-{{--                                </div>--}}
-
                                 <div class="form-group">
-                                    <label for="address">Add variations</label>
-                                    <div class="input-group mb-3">
-                                              <span class="input-group-text" id="basic-addon1">
-                                              <i class="fas fa-list-alt"></i>
-                                              </span>
-                                        <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter category variations" type="text" name="category_variations[]">
-                                        <button class="btn btn-info" id="new_variation_button" type="button">
-                                            <span><i class="fas fa-plus"></i></span>
-                                        </button>
-                                    </div>
+                                    <label for="name">Category keywords</label>
+                                    <input type="text" data-role="tagsinput" class="form-control" name="keywords[]" id="keywords" value="">
+                                    <small class="text-danger">Implode keywords with TAB button</small>
+                                </div>
 
-                                    <div class="input-group mb-3" id="new_variation">
-                                        @foreach(json_decode($item_selected->category_variations) as $var)
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">
-                                                    <i class="fas fa-list-alt"></i>
-                                                </span>
-                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" value="{{$var}}" type="text" name="category_variations[]">
-                                                <button class="btn btn-danger" id="remove_variation" type="button">
-                                                    <span>
-                                                        <i class="fas fa-close"></i>
-                                                    </span>
-                                                </button>
+                                <hr>
+                                <div class="form-group">
+                                    <label for="variation_checkbox">
+                                    <input type="checkbox" {{$data->variations()->count()>0 ? 'checked' : ''}} name="variation_checkbox" id="variation_checkbox">
+                                        Add variations</label>
+                                </div>
+
+                                <div id="variations_section">
+                                    <div class="row">
+                                        @foreach($variations as $variation)
+                                            <div class="col-md-2">
+                                                <label for="{{$variation->variation_name}}">
+                                                    <input type="checkbox" value="{{$variation->id}}" name="variation_name" id="{{$variation->variation_name}}">
+                                                    {{$variation->variation_name}}
+                                                </label>
                                             </div>
                                         @endforeach
                                     </div>
                                 </div>
-
-
+                                <hr>
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" id="status" class="form-control">
                                         <option disabled selected>Please select</option>
-                                        <option value="0" {{ $item_selected->status==0 ? 'selected' : ''  }}>Deactive</option>
-                                        <option value="1" {{ $item_selected->status==1 ? 'selected' : ''  }}>Active</option>
+                                        <option value="0" {{$data->status == 0 ? 'selected' : ''}}>Deactive</option>
+                                        <option value="1" {{$data->status == 1 ? 'selected' : ''}}>Active</option>
                                     </select>
+                                    @if($errors->has('status'))
+                                        <p class="text-danger">{{ $errors->first('status') }}</p>
+                                    @endif
                                 </div>
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </form>
@@ -92,28 +105,38 @@
     </div>
 @endsection
 
-
 @section('scripts')
     <script>
-        $(document).ready(function(){
-            var max_fields  = 5;
-            var wrapper     = $('#new_variation');
-            var add_button  = $('#new_variation_button');
 
-            var x = 1;
-            $(add_button).click(function(e){
-                e.preventDefault();
-                if(x<=max_fields){
-                    x++;
-                    $(wrapper).append('<div class="input-group mb-3"> <span class="input-group-text" id="basic-addon1"> <i class="fas fa-list-alt"></i> </span> <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter new category variation" type="text" name="category_variations[]"> <button class="btn btn-danger" id="remove_variation" type="button"> <span><i class="fas fa-close"></i></span> </button> </div>');
-                }
-            });
+        if($('#check_parent_id').prop('checked')) {
+            $('#parent_category').fadeIn('slow');
+        }else{
+            $('#parent_category').hide();
+        }
 
-            $(wrapper).on("click", "#remove_variation", function(e){
-                e.preventDefault();
-                $(this).parent('div').remove();
-                x--;
-            })
-        })
+        if($('#variation_checkbox').prop('checked')) {
+            $('#variations_section').fadeIn('slow');
+        }else{
+            $('#variations_section').hide();
+        }
+
+        $('#check_parent_id').change(function(e){
+            if($('#check_parent_id').prop('checked')) {
+                $('#parent_category').fadeIn('slow');
+            } else {
+                $('#parent_category').fadeOut('slow');
+                $('#parent_id').val('');
+            }
+        });
+
+        $('#variation_checkbox').change(function(e){
+            if($('#variation_checkbox').prop('checked')) {
+                $('#variations_section').fadeIn('slow');
+            } else {
+                $('#variations_section').fadeOut('slow');
+            }
+        });
+
+
     </script>
 @endsection

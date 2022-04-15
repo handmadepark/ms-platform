@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGrandChildCategoriesTable extends Migration
+class CreateVariationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateGrandChildCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('grand_child_categories', function (Blueprint $table) {
+        Schema::create('variations', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('child_id');
-            $table->string('name');
-            $table->integer('status');
+            $table->string('variation_name');
+            $table->integer('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('child_id')->references('id')->on('child_categories')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
     }
 
@@ -32,6 +30,6 @@ class CreateGrandChildCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('grand_child_categories');
+        Schema::dropIfExists('variations');
     }
 }

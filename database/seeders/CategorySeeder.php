@@ -19,6 +19,7 @@ class CategorySeeder extends Seeder
             'title'         => 'Jewelry & Accessories',
             'description'   => 'Jewelry & Accessories for men and women',
             'keywords'      => '["this is a test keyword"]',
+            'slug'          => 'jewelry-and-accessories',
             'status'        => 1
         ]);
 
@@ -27,6 +28,7 @@ class CategorySeeder extends Seeder
             'title'         => 'Clothing & Shoes',
             'description'   => 'Clothing & Shoes for men and women',
             'keywords'      => '["this is a test keyword"]',
+            'slug'          => 'clothing-and-shoes',
             'status'        => 1
         ]);
 
@@ -35,6 +37,7 @@ class CategorySeeder extends Seeder
             'title'         => 'Home & Living',
             'description'   => 'Home & Living items for every home',
             'keywords'      => '["this is a test keyword"]',
+            'slug'          => 'home-and-living',
             'status'        => 1
         ]);
 
@@ -43,6 +46,7 @@ class CategorySeeder extends Seeder
             'title'         => 'Wedding & Party',
             'description'   => 'Wedding & Party for men and women',
             'keywords'      => '["this is a test keyword"]',
+            'slug'          => 'wedding-and-party',
             'status'        => 1
         ]);
 
@@ -51,6 +55,7 @@ class CategorySeeder extends Seeder
             'title'         => 'Toys & Entertainment',
             'description'   => 'Toys & Entertainment for children',
             'keywords'      => '["this is a test keyword"]',
+            'slug'          => 'toys-entertainment',
             'status'        => 1
         ]);
 
@@ -59,6 +64,7 @@ class CategorySeeder extends Seeder
             'title'         => 'Art & Collectibles',
             'description'   => 'Art & Collectibles for every home and office',
             'keywords'      => '["this is a test keyword"]',
+            'slug'          => 'art-collectibles',
             'status'        => 1
         ]);
 
@@ -67,6 +73,7 @@ class CategorySeeder extends Seeder
             'title'         => 'Craft Supplies & Tools',
             'description'   => 'Craft Supplies & Tools for everyone',
             'keywords'      => '["this is a test keyword"]',
+            'slug'          => 'craft-supplies-and-tools',
             'status'        => 1
         ]);
 
@@ -75,6 +82,7 @@ class CategorySeeder extends Seeder
             'title'         => 'Vintage',
             'description'   => 'Vintage for every home',
             'keywords'      => '["this is a test keyword"]',
+            'slug'          => 'vintage',
             'status'        => 1
         ]);
     }

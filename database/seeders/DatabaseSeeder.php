@@ -21,10 +21,7 @@ class DatabaseSeeder extends Seeder
             CountrySeeder::class,
             RoleSeeder::class,
             PermissionSeeder::class,
-            CategorySeeder::class,
-            SubCategorySeeder::class,
-            ChildCategorySeeder::class,
-            GrandChildCategorySeeder::class,
+            CategorySeeder::class
         ]);
     }
 }

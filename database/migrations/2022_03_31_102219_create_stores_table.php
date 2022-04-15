@@ -15,7 +15,6 @@ class CreateStoresTable extends Migration
     {
         Schema::create('stores', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('country_id');
             $table->string('name')->unique();
             $table->string('login')->unique();
             $table->string('password');
@@ -33,7 +32,7 @@ class CreateStoresTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('country_id')->references('id')->on('countries')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreignId('country_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

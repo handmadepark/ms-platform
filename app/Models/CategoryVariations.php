@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ListingsCategories extends Model
+class CategoryVariations extends Model
 {
     use HasFactory;
-    protected $table = 'listings_categories';
-    protected $fillable = ['listings_id', 'categories_id'];
 
+    protected $table = 'category_variations';
+    protected $fillable = ['category_id', 'variation_id'];
 }

@@ -3,65 +3,31 @@
     <div class="main-content app-content mt-5">
         <div class="main-container container-fluid">
             <div class="row row-sm">
-                <div class="col-xl-6">
+                <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
                                 <h4 class="card-title mg-b-0">New Category</h4>
+                                <div class="float-end">
+                                    <label for="check_parent_id">
+                                    <input type="checkbox" class="form-check-input" name="" id="check_parent_id">
+                                    Child category</label>
+                                    <a href="{{ URL::previous() }}">
+                                        <button class="btn btn-sm btn-danger">
+                                            <span><i class="fas fa-arrow-left"></i></span>
+                                            Back
+                                        </button>
+                                    </a>
+                                </div>
 
                             </div>
                         </div>
                         <div class="card-body">
                             <form action="{{route('admin.categories.store')}}" method="POST">
                                 @csrf
-                                <div class="form-group">
-                                    <label for="name">Category name</label>
-                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Enter country name">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="name">Category title</label>
-                                    <input type="text" class="form-control" name="title" id="name" aria-describedby="emailHelp" placeholder="Enter country title">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="name">Category description</label>
-                                    <textarea name="description" class="form-control" id="" cols="30" rows="5"></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="name">Category keywords</label>
-                                    <input type="text" data-role="tagsinput" class="form-control" name="keywords[]" id="keywords" aria-describedby="emailHelp" placeholder="Enter keywords">
-                                    <small class="text-danger">Implode keywords with TAB button</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option disabled selected>Please select</option>
-                                        <option value="0">Deactive</option>
-                                        <option value="1">Active</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">New Subcategory</h4>
-
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <form action="{{route('admin.categories.store')}}" method="POST">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="name">Select Category</label>
-                                    <select name="category_id" class="form-control" id="">
+                                <div class="form-group" id="parent_category">
+                                    <label for="parent_id">Parent category</label>
+                                    <select name="parent_id" class="form-control" id="parent_id">
                                         <option disabled selected>Please select one item</option>
                                         @foreach($categories as $category)
                                             <option value="{{$category->id}}">{{$category->name}}</option>
@@ -70,71 +36,60 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="name">Subcategory name</label>
-                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Enter subcategory name">
-                                </div>
-
-
-
-                                <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option disabled selected>Please select</option>
-                                        <option value="0">Deactive</option>
-                                        <option value="1">Active</option>
-                                    </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">New Category</h4>
-
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <form action="{{route('admin.categories.store')}}" method="POST">
-                                @csrf
-                                <div class="form-group">
                                     <label for="name">Category name</label>
-                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Enter country name">
+                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Enter category name">
+                                    @if($errors->has('name'))
+                                        <p class="text-danger">{{ $errors->first('name') }}</p>
+                                    @endif
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="name">Category title</label>
-                                    <input type="text" class="form-control" name="title" id="name" aria-describedby="emailHelp" placeholder="Enter country title">
+                                    <label for="title">Category title</label>
+                                    <input type="text" class="form-control" name="title" id="title" aria-describedby="emailHelp" placeholder="Enter category title">
+                                    @if($errors->has('title'))
+                                        <p class="text-danger">{{ $errors->first('title') }}</p>
+                                    @endif
                                 </div>
 
                                 <div class="form-group">
                                     <label for="name">Category description</label>
                                     <textarea name="description" class="form-control" id="" cols="30" rows="5"></textarea>
+                                    @if($errors->has('description'))
+                                        <p class="text-danger">{{ $errors->first('description') }}</p>
+                                    @endif
                                 </div>
 
                                 <div class="form-group">
                                     <label for="name">Category keywords</label>
-                                    <input type="text" data-role="tagsinput" class="form-control" name="keywords[]" id="keywords" aria-describedby="emailHelp" placeholder="Enter keywords">
+                                    <input type="text" data-role="tagsinput" class="form-control" name="keywords[]" id="keywords">
                                     <small class="text-danger">Implode keywords with TAB button</small>
+                                    @if($errors->has('keywords'))
+                                        <p class="text-danger">{{ $errors->first('keywords') }}</p>
+                                    @endif
                                 </div>
 
+                                <hr>
                                 <div class="form-group">
-                                    <label for="address">Add variations</label>
-                                    <div class="input-group mb-3">
-                                                      <span class="input-group-text" id="basic-addon1">
-                                                      <i class="fas fa-list-alt"></i>
-                                                      </span>
-                                        <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter category variations" type="text" name="category_variations[]">
-                                        <button class="btn btn-info" id="new_variation_button" type="button">
-                                            <span><i class="fas fa-plus"></i></span>
-                                        </button>
-                                    </div>
-
-                                    <div class="input-group mb-3" id="new_variation"></div>
+                                    <label for="variation_checkbox">
+                                        <input type="checkbox" name="variation_checkbox" id="variation_checkbox">
+                                        Add variations</label>
                                 </div>
+
+                                <div id="variations_section">
+                                    <div class="row">
+                                        @foreach($variations as $variation)
+                                            <div class="col-md-2">
+                                                <label for="{{$variation->variation_name}}">
+                                                    <input type="checkbox" value="{{$variation->id}}" name="variation_name" id="{{$variation->variation_name}}">
+                                                    {{$variation->variation_name}}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                                <hr>
+
+                                <hr>
 
                                 <div class="form-group">
                                     <label for="status">Status</label>
@@ -143,66 +98,9 @@
                                         <option value="0">Deactive</option>
                                         <option value="1">Active</option>
                                     </select>
-                                </div>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xl-6">
-                    <div class="card">
-                        <div class="card-header pb-0">
-                            <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">New Category</h4>
-
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <form action="{{route('admin.categories.store')}}" method="POST">
-                                @csrf
-                                <div class="form-group">
-                                    <label for="name">Category name</label>
-                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Enter country name">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="name">Category title</label>
-                                    <input type="text" class="form-control" name="title" id="name" aria-describedby="emailHelp" placeholder="Enter country title">
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="name">Category description</label>
-                                    <textarea name="description" class="form-control" id="" cols="30" rows="5"></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="name">Category keywords</label>
-                                    <input type="text" data-role="tagsinput" class="form-control" name="keywords[]" id="keywords" aria-describedby="emailHelp" placeholder="Enter keywords">
-                                    <small class="text-danger">Implode keywords with TAB button</small>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="address">Add variations</label>
-                                    <div class="input-group mb-3">
-                                                      <span class="input-group-text" id="basic-addon1">
-                                                      <i class="fas fa-list-alt"></i>
-                                                      </span>
-                                        <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter category variations" type="text" name="category_variations[]">
-                                        <button class="btn btn-info" id="new_variation_button" type="button">
-                                            <span><i class="fas fa-plus"></i></span>
-                                        </button>
-                                    </div>
-
-                                    <div class="input-group mb-3" id="new_variation"></div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <select name="status" id="status" class="form-control">
-                                        <option disabled selected>Please select</option>
-                                        <option value="0">Deactive</option>
-                                        <option value="1">Active</option>
-                                    </select>
+                                    @if($errors->has('status'))
+                                        <p class="text-danger">{{ $errors->first('status') }}</p>
+                                    @endif
                                 </div>
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </form>
@@ -226,7 +124,7 @@
                 e.preventDefault();
                 if(x<=max_fields){
                     x++;
-                    $(wrapper).append('<div class="input-group mb-3"> <span class="input-group-text" id="basic-addon1"> <i class="fas fa-list-alt"></i> </span> <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter new category variation" type="text" name="category_variations[]"> <button class="btn btn-danger" id="remove_variation" type="button"> <span><i class="fas fa-close"></i></span> </button> </div>');
+                    $(wrapper).append('<div class="input-group mb-3"> <span class="input-group-text" id="basic-addon1"> <i class="fas fa-list-alt"></i> </span> <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter variation name" type="text" name="variation_name[]"> <button class="btn btn-danger" id="remove_variation" type="button"> <span><i class="fas fa-close"></i></span> </button> </div>');
                 }
             });
 
@@ -236,5 +134,27 @@
                 x--;
             })
         })
+
+        $('#parent_category').hide();
+        $('#variations_section').hide();
+
+        $('#check_parent_id').change(function(e){
+            if($('#check_parent_id').prop('checked')) {
+                $('#parent_category').fadeIn('slow');
+            } else {
+                $('#parent_category').fadeOut('slow');
+                $('#parent_id').val('');
+            }
+        });
+
+        $('#variation_checkbox').change(function(e){
+            if($('#variation_checkbox').prop('checked')) {
+                $('#variations_section').fadeIn('slow');
+            } else {
+                $('#variations_section').fadeOut('slow');
+            }
+        });
+
+
     </script>
 @endsection

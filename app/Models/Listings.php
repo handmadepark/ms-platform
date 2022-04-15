@@ -10,16 +10,8 @@ class Listings extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $table = 'listings';
-    protected $fillable = ['store_id', 'category_id', 'name', 'description', 'attributes', 'selling_price', 'discount', 'stock', 'images', 'rating', 'seen','status'];
-
-    public function getStore()
+    public function getCategory()
     {
-        return $this->belongsTo(Stores::class, 'store_id', 'id');
-    }
-
-    public function getCategories()
-    {
-        return $this->belongsToMany(Categories::class, 'listings_categories');
+        return $this->belongsTo(Categories::class, 'category_id');
     }
 }

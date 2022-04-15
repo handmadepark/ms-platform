@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">{{$item_selected->name}}</h4>
+                                <h4 class="card-title mg-b-0">{{$item->name}}</h4>
                                 <div class="float-end">
                                     <a href="{{ URL::previous() }}">
                                         <button class="btn btn-sm btn-danger">
@@ -19,25 +19,19 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{route('admin.countries.update', ['id'=>$item_selected->id])}}" method="POST">
+                            <form action="{{route('admin.countries.update', ['country'=>$item->id])}}" method="PUT">
                                 @csrf
                                 <div class="form-group">
                                     <label for="name">Country name</label>
-                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" value="{{$item_selected->name}}">
-                                    @if($errors->has('name'))
-                                        <p class="text-danger">{{ $errors->first('name') }}</p>
-                                    @endif
+                                    <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" value="{{$item->name}}">
                                 </div>
                                 <div class="form-group">
                                     <label for="status">Status</label>
                                     <select name="status" id="status" class="form-control">
                                         <option disabled selected>Please select</option>
-                                        <option value="0" {{ $item_selected->status==0 ? 'selected' : ''  }}>Deactive</option>
-                                        <option value="1" {{ $item_selected->status==1 ? 'selected' : ''  }}>Active</option>
+                                        <option value="0" {{ $item->status==0 ? 'selected' : ''  }}>Deactive</option>
+                                        <option value="1" {{ $item->status==1 ? 'selected' : ''  }}>Active</option>
                                     </select>
-                                    @if($errors->has('status'))
-                                        <p class="text-danger">{{ $errors->first('status') }}</p>
-                                    @endif
                                 </div>
                                 <button type="submit" class="btn btn-primary">Save</button>
                             </form>

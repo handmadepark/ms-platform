@@ -2,22 +2,21 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
 use App\Http\Controllers\LogController;
-use App\Models\Categories;
-use App\Models\ChildCategories;
-use App\Models\Country;
-use App\Models\GrandChildCategories;
-use App\Models\SubCategories;
+use App\Http\Controllers\Controller;
+use App\Models\Variations;
+use http\Env\Response;
 use Illuminate\Http\Request;
-use Auth;
+use App\Models\Categories;
+use Validator, Auth;
 
 class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
      */
     public function index()
     {
@@ -25,6 +24,7 @@ class CategoriesController extends Controller
         $count_deleted = Categories::onlyTrashed()->count();
         return view('admin.categories.index', compact('categories', 'count_deleted'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -34,10 +34,8 @@ class CategoriesController extends Controller
     public function create()
     {
         $categories = Categories::where('status', 1)->get();
-        $subcat     = SubCategories::where('status', 1)->get();
-        $child      = ChildCategories::where('status', 1)->get();
-        $grand      = GrandChildCategories::where('status', 1)->get();
-        return view('admin.categories.create', compact('categories','subcat', 'child', 'grand'));
+        $variations = Variations::where('status', 1)->get();
+        return view('admin.categories.create', compact('categories', 'variations'));
     }
 
     /**
@@ -48,74 +46,63 @@ class CategoriesController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $variations = json_encode($request->category_variations);
-            $keywords = json_encode($request->keywords);
-            Categories::create([
-                'name'                  => $request->name,
-                'title'                 => $request->title,
-                'description'           => $request->description,
-                'keywords'              => $keywords,
-                'category_variations'   => $variations,
-                'status'                => $request->status
-            ]);
-            $content = Auth::guard('admin')->user()->name.' inserted new category - '.$request->name;
-            $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            toast('Category inserted successfully.', 'success');
-            return redirect()->route('admin.categories');
-        }catch(\Exception $e)
-        {
-            return $e;
-//            toast('An error occured...', 'warning');
-//            return redirect()->route('admin.categories.create');
-        }
-    }
 
-    public function restore($id)
-    {
-        try{
-            $item_restore = Categories::onlyTrashed()->find($id);
-            $item_restore->restore();
-            $content = Auth::guard('admin')->user()->name.' restored country - '.$item_restore->name;
-            $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            toast('Category restores successfully.', 'success');
-            return redirect()->route('admin.categories');
-        }catch(\Exception $e)
-        {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.categories.deleted');
-        }
+        $item = $request->validate([
+            'name'              =>'required|string|max:25',
+            'title'             =>'required|string|max:225',
+            'description'       =>'required|string|max:225',
+            'keywords'          =>'required',
+            'status'            =>'required|integer',
+        ]);
+
+        $keywords = json_encode($request->keywords);
+        $data = Categories::create([
+            'parent_id'             => $request->parent_id,
+            'name'                  => $request->name,
+            'title'                 => $request->title,
+            'description'           => $request->description,
+            'keywords'              => $keywords,
+            'slug'                  => Str::slug($request->title),
+            'status'                => $request->status
+        ]);
+
+        $content = \Illuminate\Support\Facades\Auth::guard('admin')->user()->name.' inserted new category - '.$request->name;
+        (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
+        toast('Category inserted successfully.', 'success');
+        return redirect()->route('admin.categories');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $category
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($category)
     {
-        //
+        $data = Categories::find($category);
+        if (is_null($data)) {
+            return response()->json('Item not found', 404);
+        }
+        return response()->json($data, 200);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($category)
     {
-        $item_selected = Categories::find($id);
-        if($item_selected)
+        $data = Categories::find($category);
+        if(is_null($data))
         {
-            return view('admin.categories.edit', compact('item_selected'));
+            return response()->json('Item not found', 404);
         }
-        else
-        {
-            toast('Country not found...', 'warning');
-            return redirect()->route('admin.categories');
-        }
+        $categories = Categories::where('status', 1)->get();
+        $variations = Variations::where('status', 1)->get();
+        return view('admin.categories.edit', compact('data', 'categories', 'variations'));
     }
 
     /**
@@ -127,20 +114,34 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
-            $updated_item = Categories::find($id);
-            $updated_item['category_variations'] = json_encode($request->category_variations);
-            $updated_item['keywords'] = json_encode($request->keywords);
-            $updated_item->update($request->all());
-            $content = Auth::guard('admin')->user()->name.' updated category - '.$request->name;
-            $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            toast('Category updated successfully.', 'success');
-            return redirect()->route('admin.categories');
-        }catch(\Exception $e)
+        $validator = Validator::make($request->all(), [
+            'name'          => 'required|min:3|max:255',
+            'title'         => 'required|min:3|max:255',
+            'description'   => 'required|min:20|max:500',
+            'status'        => 'required|integer'
+        ]);
+
+        if($validator->fails())
         {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.categories');
+            return redirect()->back()->withErrors($validator)->withInput();
         }
+        $data = Categories::find($id);
+        $data->update($request->all());
+        $content = Auth::guard('admin')->user()->name.' updated category - '.$request->name;
+        (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
+        toast('Category updated successfully.', 'success');
+        return redirect()->route('admin.categories');
+    }
+
+    public function destroy($id)
+    {
+        $item = Categories::find($id);
+        $content = Auth::guard('admin')->user()->name.' deleted category - '.$item->name;
+        (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
+        $item->delete();
+        toast('Category deleted successfully.', 'success');
+        return redirect()->route('admin.categories');
+
     }
 
     public function check_status(Request $request)
@@ -170,25 +171,13 @@ class CategoriesController extends Controller
         return view('admin.categories.deleted', compact('categories'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function restore($id)
     {
-        try {
-            $delete_item = Categories::find($id);
-            $content = Auth::guard('admin')->user()->name.' deleted category - '.$delete_item->name;
-            $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            $delete_item->delete();
-            toast('Categories deleted successfully.', 'success');
-            return redirect()->route('admin.categories');
-        }catch (\Exception $e)
-        {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.categories');
-        }
+        $item = Categories::onlyTrashed()->where('id', $id)->first();
+        $content = Auth::guard('admin')->user()->name.' restored deleted category - '.$item->name;
+        (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
+        $item->restore();
+        toast('Category restored successfully.', 'success');
+        return redirect()->route('admin.categories');
     }
 }

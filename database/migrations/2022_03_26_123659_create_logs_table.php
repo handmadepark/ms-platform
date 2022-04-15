@@ -15,13 +15,12 @@ class CreateLogsTable extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('admin_id');
             $table->text('content');
             $table->integer('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('admin_id')->references('id')->on('admins')->ondelete('CASCADE')->onupdate('CASCADE');
+            $table->foreignId('admin_id')->constrained()->ondelete('cascade')->onupdate('cascade');
         });
     }
 

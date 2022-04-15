@@ -15,7 +15,6 @@ class CreatePaymentCardsTable extends Migration
     {
         Schema::create('payment_cards', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('store_id');
             $table->string('name_on_card');
             $table->string('card_number');
             $table->string('expiration_month');
@@ -26,7 +25,7 @@ class CreatePaymentCardsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('store_id')->references('id')->on('stores')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreignId('store_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

@@ -24,6 +24,9 @@
                         <div class="form-group">
                             <label for="name">Country name</label>
                             <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" placeholder="Enter country name">
+                            @if($errors->has('name'))
+                                <p class="text-danger">{{ $errors->first('name') }}</p>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label for="status">Status</label>
@@ -32,6 +35,9 @@
                                 <option value="0">Deactive</option>
                                 <option value="1">Active</option>
                             </select>
+                            @if($errors->has('status'))
+                                <p class="text-danger">{{ $errors->first('status') }}</p>
+                            @endif
                         </div>
                         <button type="submit" class="btn btn-primary">Save</button>
                     </form>

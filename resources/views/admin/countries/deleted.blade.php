@@ -30,7 +30,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @forelse($countries as $country)
+                                    @foreach($countries as $country)
                                         <tr>
                                             <td>{{$country->id}}</td>
                                             <td>{{$country->name}}</td>
@@ -49,13 +49,7 @@
                                                 </a>
                                             </td>
                                         </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="4">
-                                                <p class="text-danger text-center">There is no deleted country</p>
-                                            </td>
-                                        </tr>
-                                    @endforelse
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
