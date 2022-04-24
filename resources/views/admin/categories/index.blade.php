@@ -44,7 +44,7 @@
                                     @foreach($categories as $category)
                                     <tr>
                                         <td>{{ $category->id }}</td>
-                                        <td>{{ $category->name }}  ({{getListingCount($category)}})</td>
+                                        <td>{{ (!is_null($category->parent) ? $category->parent['name'].' -> ' : '') }} {{ $category->name }}  ({{getListingCount($category)}})</td>
                                         <td class="text-center">
                                             <div class="form-check form-switch">
                                                 <input class="form-check-input" type="checkbox" role="switch" data-id="{{$category->id}}" id="check_status" {{ ($category->status==1) ? 'checked' : ''}}>
@@ -68,9 +68,9 @@
                                             </a>
                                         </td>
                                     </tr>
-                                        @if(count($category->subcategory))
-                                            @include('admin.categories.child',['subcategories' => $category->subcategory])
-                                        @endif
+{{--                                        @if(count($category->subcategory))--}}
+{{--                                            @include('admin.categories.child',['subcategories' => $category->subcategory])--}}
+{{--                                        @endif--}}
                                     @endforeach
                                     </tbody>
                                 </table>

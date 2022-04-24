@@ -35,6 +35,9 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                                @if($errors->has('country_id'))
+                                                    <p class="text-danger">{{ $errors->first('country_id') }}</p>
+                                                @endif
                                         </div>
                                         <div class="col-lg">
                                             <label for="name">Store name</label>
@@ -42,8 +45,11 @@
                                               <span class="input-group-text" id="basic-addon1">
                                               <i class="fas fa-shopping-cart"></i>
                                               </span>
-                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter shop name" type="text" name="name">
+                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" id="name" placeholder="enter shop name" type="text" name="name">
                                             </div>
+                                                @if($errors->has('name'))
+                                                    <p class="text-danger">{{ $errors->first('name') }}</p>
+                                                @endif
                                         </div>
                                         <div class="col-lg">
                                             <div class="col-lg">
@@ -52,8 +58,11 @@
                               <span class="input-group-text" id="basic-addon1">
                               <i class="fas fa-phone"></i>
                               </span>
-                                                    <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter shop phone" type="text" name="phone">
+                                                    <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" id="phone" placeholder="enter shop phone" type="text" name="phone">
                                                 </div>
+                                                    @if($errors->has('phone'))
+                                                        <p class="text-danger">{{ $errors->first('phone') }}</p>
+                                                    @endif
                                             </div>
                                         </div>
                                     </div>
@@ -67,15 +76,21 @@
                               <i class="fas fa-user"></i>
                               </span>
                               </span>
-                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter shop related person" type="text" name="related_person">
+                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" id="related_person" placeholder="enter shop related person" type="text" name="related_person">
                                             </div>
+                                                @if($errors->has('related_person'))
+                                                    <p class="text-danger">{{ $errors->first('related_person') }}</p>
+                                                @endif
                                         </div>
                                         <div class="col-lg">
                                             <label for="login">Store login</label>
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="basic-addon1">@</span>
-                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter shop login" type="text" name="login">
-                                            </div>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="basic-addon1">@</span>
+                                                    <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" id="login" placeholder="enter shop login" type="text" name="login">
+                                                </div>
+                                                @if($errors->has('login'))
+                                                    <p class="text-danger">{{ $errors->first('login') }}</p>
+                                                @endif
                                         </div>
                                         <div class="col-lg">
                                             <label for="password">Store password</label>
@@ -83,8 +98,12 @@
                               <span class="input-group-text" id="basic-addon1">
                               <i class="fas fa-key"></i>
                               </span>
-                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="********" type="password" name="password">
+                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" id="password" placeholder="********" type="password" name="password">
+
                                             </div>
+                                            @if($errors->has('password'))
+                                                <p class="text-danger">{{ $errors->first('password') }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row row-sm mg-t-20">
@@ -92,23 +111,31 @@
                                         <div class="col-lg">
                                             <label for="address">Address</label>
                                             <div class="input-group mb-3">
-                              <span class="input-group-text" id="basic-addon1">
-                              <i class="fas fa-map-marker"></i>
-                              </span>
-                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter shop address" type="text" name="address">
+                                              <span class="input-group-text" id="basic-addon1">
+                                              <i class="fas fa-map-marker"></i>
+                                              </span>
+                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" id="address" placeholder="enter shop address" type="text" name="address">
+
                                             </div>
+                                            @if($errors->has('address'))
+                                                <p class="text-danger">{{ $errors->first('address') }}</p>
+                                            @endif
                                         </div>
                                         <div class="col-lg">
-                                            <label for="address">Store email</label>
+                                            <label for="email">Store email</label>
                                             <div class="input-group mb-3">
                                               <span class="input-group-text" id="basic-addon1">
                                               <i class="fas fa-envelope"></i>
                                               </span>
-                                              <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter shop address" type="email" name="email[]">
+                                              <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" id="email" placeholder="enter shop address" type="email" name="email[]">
                                                 <button class="btn btn-info" id="new_email_button" type="button">
                                                     <span><i class="fas fa-plus"></i></span>
                                                 </button>
+
                                             </div>
+                                            @if($errors->has('email'))
+                                                <p class="text-danger">{{ $errors->first('email') }}</p>
+                                            @endif
 
                                             <div class="input-group mb-3" id="new_email_section">
                                             </div>
@@ -116,17 +143,20 @@
                                         </div>
 
                                         <div class="col-lg">
-                                            <label for="address">Store Social networks</label>
+                                            <label for="social">Store Social networks</label>
                                             <div class="input-group mb-3">
                                               <span class="input-group-text" id="basic-addon1">
                                               <i class="fas fa-globe"></i>
                                               </span>
-                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="enter shop social networks" type="url" name="social[]">
+                                                <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" id="social" placeholder="enter shop social networks" type="url" name="social[]">
                                                 <button class="btn btn-info" id="new_social_button" type="button">
                                                     <span><i class="fas fa-plus"></i></span>
                                                 </button>
-                                            </div>
 
+                                            </div>
+                                            @if($errors->has('social'))
+                                                <p class="text-danger">{{ $errors->first('social') }}</p>
+                                            @endif
                                             <div class="input-group mb-3" id="new_social_section"></div>
 
                                         </div>

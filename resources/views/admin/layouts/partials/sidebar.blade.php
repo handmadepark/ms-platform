@@ -24,6 +24,7 @@
                         <li class="side-menu__label1"><a href="javascript:void(0);">Category options</a></li>
                         <li><a class="slide-item" href="{{route('admin.categories')}}">Categories</a></li>
                         <li><a class="slide-item" href="{{route('admin.variations')}}">Variations</a></li>
+                        <li><a class="slide-item" href="{{route('admin.options')}}">Variation Options</a></li>
                     </ul>
                 </li>
                 <li class="slide">

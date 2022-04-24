@@ -10,5 +10,5 @@ class CategoryVariations extends Model
     use HasFactory;
 
     protected $table = 'category_variations';
-    protected $fillable = ['category_id', 'variation_id'];
+    protected $fillable = ['categories_id', 'variations_id'];
 }

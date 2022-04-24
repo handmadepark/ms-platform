@@ -35,6 +35,9 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        @if($errors->has('country_id'))
+                                            <p class="text-danger">{{ $errors->first('country_id') }}</p>
+                                        @endif
                                     </div>
                                     <div class="col-lg">
                                         <label for="name">Store name</label>
@@ -44,6 +47,9 @@
                                               </span>
                                             <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" value="{{$item_selected->name}}" type="text" name="name">
                                         </div>
+                                        @if($errors->has('name'))
+                                            <p class="text-danger">{{ $errors->first('name') }}</p>
+                                        @endif
                                     </div>
                                     <div class="col-lg">
                                         <div class="col-lg">
@@ -54,6 +60,9 @@
                               </span>
                                                 <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" value="{{$item_selected->phone}}" type="text" name="phone">
                                             </div>
+                                            @if($errors->has('phone'))
+                                                <p class="text-danger">{{ $errors->first('phone') }}</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -69,6 +78,9 @@
                               </span>
                                             <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" value="{{$item_selected->related_person}}" type="text" name="related_person">
                                         </div>
+                                        @if($errors->has('related_person'))
+                                            <p class="text-danger">{{ $errors->first('related_person') }}</p>
+                                        @endif
                                     </div>
                                     <div class="col-lg">
                                         <label for="login">Store login</label>
@@ -76,6 +88,9 @@
                                             <span class="input-group-text" id="basic-addon1">@</span>
                                             <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" value="{{$item_selected->login}}" type="text" name="login">
                                         </div>
+                                        @if($errors->has('login'))
+                                            <p class="text-danger">{{ $errors->first('login') }}</p>
+                                        @endif
                                     </div>
                                     <div class="col-lg">
                                         <label for="password">Store password</label>
@@ -85,6 +100,9 @@
                               </span>
                                             <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" placeholder="********" type="password" name="password">
                                         </div>
+                                        @if($errors->has('password'))
+                                            <p class="text-danger">{{ $errors->first('password') }}</p>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="row row-sm mg-t-20">
@@ -97,6 +115,9 @@
                               </span>
                                             <input aria-describedby="basic-addon1" aria-label="Username" class="form-control" value="{{$item_selected->address}}" type="text" name="address">
                                         </div>
+                                        @if($errors->has('address'))
+                                            <p class="text-danger">{{ $errors->first('address') }}</p>
+                                        @endif
                                     </div>
 
                                     <div class="col-lg">
@@ -110,6 +131,9 @@
                                                 <span><i class="fas fa-plus"></i></span>
                                             </button>
                                         </div>
+                                        @if($errors->has('email'))
+                                            <p class="text-danger">{{ $errors->first('email') }}</p>
+                                        @endif
 
                                         <div id="new_email_section">
                                             @foreach(json_decode($item_selected->email) as $email)
@@ -139,6 +163,9 @@
                                                 <span><i class="fas fa-plus"></i></span>
                                             </button>
                                         </div>
+                                        @if($errors->has('social'))
+                                            <p class="text-danger">{{ $errors->first('social') }}</p>
+                                        @endif
 
                                         <div id="new_social_section">
                                             @foreach(json_decode($item_selected->social) as $social)

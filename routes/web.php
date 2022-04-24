@@ -12,7 +12,8 @@ use App\Http\Controllers\Admin\
     StoreManagerController,
     PaymentCardController,
     SettingsController,
-    VariationsController
+    VariationsController,
+    VariationOptionsController
 
 };
 /*
@@ -83,8 +84,23 @@ Route::group(['prefix' => 'admin'], function ()
            Route::any('/{id}/destroy', [VariationsController::class, 'destroy'])->name('admin.variations.destroy');
            Route::post('/check_status', [VariationsController::class, 'check_status'])->name('admin.variations.check_status');
            Route::get('/deleted', [VariationsController::class, 'deleted'])->name('admin.variations.deleted');
-           Route::post('/restore', [VariationsController::class, 'restore'])->name('admin.variations.restore');
+           Route::post('/{id}/restore', [VariationsController::class, 'restore'])->name('admin.variations.restore');
            Route::get('/show', [VariationsController::class, 'show'])->name('admin.variations.show');
+
+        });
+
+        Route::group(['prefix' => 'options'], function()
+        {
+           Route::get('/', [VariationOptionsController::class, 'index'])->name('admin.options');
+           Route::get('/create', [VariationOptionsController::class, 'create'])->name('admin.options.create');
+           Route::post('/store', [VariationOptionsController::class, 'store'])->name('admin.options.store');
+           Route::get('/{id}/edit', [VariationOptionsController::class, 'edit'])->name('admin.options.edit');
+           Route::post('/{id}/update', [VariationOptionsController::class, 'update'])->name('admin.options.update');
+           Route::any('/{id}/destroy', [VariationOptionsController::class, 'delete'])->name('admin.options.delete');
+           Route::post('/check_status', [VariationOptionsController::class, 'check_status'])->name('admin.options.check_status');
+           Route::get('/deleted', [VariationOptionsController::class, 'deleted'])->name('admin.options.deleted');
+           Route::post('/{id}/restore', [VariationOptionsController::class, 'restore'])->name('admin.options.restore');
+           Route::get('/show', [VariationOptionsController::class, 'show'])->name('admin.options.show');
 
         });
 
@@ -147,6 +163,8 @@ Route::group(['prefix' => 'admin'], function ()
                     ->name('admin.stores.store_manager.listings');
                 Route::get('/{id}/listing_details', [StoreManagerController::class , 'listing_details'])
                     ->name('admin.stores.store_manager.listings.listing_details');
+                Route::get('create', [StoreManagerController::class, 'create'])
+                    ->name('admin.stores.store_manager.listings.create');
 
                 Route::get('/active', [StoreManagerController::class , 'active'])
                     ->name('admin.stores.store_manager.listings.active');
@@ -154,6 +172,8 @@ Route::group(['prefix' => 'admin'], function ()
                     ->name('admin.stores.store_manager.listings.deactive');
                 Route::get('/deleted', [StoreManagerController::class , 'deleted'])
                     ->name('admin.stores.store_manager.listings.deleted');
+
+                Route::post('/{id}/getVariations', [StoreManagerController::class, 'getVariations'])->name('getVariations');
             });
 
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\CategoryVariations;
 use Illuminate\Support\Str;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\Controller;
@@ -66,7 +67,15 @@ class CategoriesController extends Controller
             'status'                => $request->status
         ]);
 
-        $content = \Illuminate\Support\Facades\Auth::guard('admin')->user()->name.' inserted new category - '.$request->name;
+        if ($request->has('variation_checkbox'))
+        {
+            CategoryVariations::create([
+                'categories_id' => $data->id,
+                'variations_id' => $request->variation_name
+            ]);
+        }
+
+        $content = Auth::guard('admin')->user()->name.' inserted new category - '.$request->name;
         (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
         toast('Category inserted successfully.', 'success');
         return redirect()->route('admin.categories');

@@ -67,6 +67,17 @@ class StoreManagerController extends Controller
         return view('admin.store_manager.listings.listing_details', compact('item_selected'));
     }
 
+    public function create()
+    {
+        $categories = Categories::where('status', 1)->get();
+        return view('admin.store_manager.listings.create', compact('categories'));
+    }
+
+    public function getVariations($id)
+    {
+        return $id;
+    }
+
     public function back()
     {
         Session::forget('listing_store');

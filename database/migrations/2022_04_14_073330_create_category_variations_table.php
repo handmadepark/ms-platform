@@ -16,6 +16,7 @@ class CreateCategoryVariationsTable extends Migration
         Schema::create('category_variations', function (Blueprint $table) {
             $table->unsignedBigInteger('categories_id')->nullable();
             $table->unsignedBigInteger('variations_id')->nullable();
+            $table->timestamps();
             $table->foreign('categories_id')->references('id')->on('categories')
                 ->onDelete('cascade');
             $table->foreign('variations_id')->references('id')->on('variations')

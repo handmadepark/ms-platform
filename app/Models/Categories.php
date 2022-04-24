@@ -20,6 +20,8 @@ class Categories extends Model
     {
         return $this->belongsTo(Categories::class, 'parent_id');
     }
+
+
     public function variations()
     {
         return $this->belongsToMany(Variations::class, 'category_variations');

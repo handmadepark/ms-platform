@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from laravel8.spruko.com/nowa/index2 by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 29 Mar 2022 18:51:48 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
@@ -14,6 +13,12 @@
 
     <!-- Title -->
     <title>Handmadepark - Admin Dashboard </title>
+
+    <!---Internal Fileupload css-->
+	<link href="{{ asset('admin/plugins/fileuploads/css/fileupload.css') }}" rel="stylesheet" type="text/css"/>
+
+    <!---Internal Fancy uploader css-->
+    <link href="{{ asset('admin/plugins/fancyuploder/fancy_fileupload.css') }}" rel="stylesheet" />
 
     <!-- FAVICON -->
     <link rel="icon" href="{{asset('admin/img/brand/favicon.png')}}" type="image/x-icon"/>
@@ -33,8 +38,8 @@
     <!-- Datatables css -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
-    <!-- INTERNAL Select2 css -->
-    <link href="{{asset('admin/plugins/select2/css/select2.min.css')}}" rel="stylesheet" />
+    <!-- Internal Select2 css -->
+    <link href="{{asset('admin/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
 
     <!-- STYLES CSS -->
     <link href="{{asset('admin/css/style-dark.css')}}" rel="stylesheet">
@@ -45,12 +50,15 @@
     <!-- SKIN-MODES CSS -->
     <link href="{{asset('admin/css/skin-modes.css')}}" rel="stylesheet" />
 
-
-
     <!-- ANIMATION CSS -->
     <link href="{{asset('admin/css/animate.css')}}" rel="stylesheet">
 
+    <!--Tags-->
+    <link href="{{asset('admin/plugins/inputtags/inputtags.css')}}" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    @yield('styles')
 </head>
 
 <body class="ltr main-body app sidebar-mini">
@@ -95,6 +103,8 @@
 <a href="#top" id="back-to-top"><i class="las la-arrow-up"></i></a>
 
 @include('sweetalert::alert')
+
+
 <!-- JQUERY JS -->
 <script src="{{asset('admin/plugins/jquery/jquery.min.js')}}"></script>
 
@@ -125,10 +135,6 @@
 <script src="{{asset('admin/plugins/sidebar/sidebar.js')}}"></script>
 <script src="{{asset('admin/plugins/sidebar/sidebar-custom.js')}}"></script>
 
-
-<!-- Internal Chart.Bundle js-->
-
-
 <!-- INTERNAL Apexchart js -->
 <script src="{{asset('admin/js/apexcharts.js')}}"></script>
 
@@ -150,11 +156,6 @@
 <!--Internal  index js -->
 <script src="{{asset('admin/js/index.js')}}"></script>
 
-<!-- INTERNAL Select2 js -->
-<script src="{{asset('admin/plugins/select2/js/select2.full.min.js')}}"></script>
-<script src="{{asset('admin/js/select2.js')}}"></script>
-
-
 <!-- EVA-ICONS JS -->
 <script src="{{asset('admin/plugins/eva-icons/eva-icons.min.js')}}"></script>
 
@@ -174,6 +175,12 @@
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 <script src="{{asset('admin/plugins/inputtags/inputtags.js')}}"></script>
+
+<!-- Internal Select2.min js -->
+<script src="{{asset('admin/plugins/select2/js/select2.min.js')}}"></script>
+
+<!-- Internal form-elements js -->
+<script src="{{asset('admin/js/form-elements.js')}}"></script>
 @yield('scripts')
 </body>
 </html>

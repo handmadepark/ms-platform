@@ -11,7 +11,7 @@ class Variations extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'variations';
-    protected $fillable = ['category_id', 'variation_name', 'status'];
+    protected $fillable = [ 'variation_name', 'input_type', 'status'];
 
     public function getVariationOptions()
     {

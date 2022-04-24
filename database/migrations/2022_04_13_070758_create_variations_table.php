@@ -16,6 +16,7 @@ class CreateVariationsTable extends Migration
         Schema::create('variations', function (Blueprint $table) {
             $table->id();
             $table->string('variation_name');
+            $table->string('input_type');
             $table->integer('status')->default(1);
             $table->softDeletes();
             $table->timestamps();

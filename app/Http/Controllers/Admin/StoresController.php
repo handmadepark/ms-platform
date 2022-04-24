@@ -10,6 +10,7 @@ use App\Models\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\LogController;
 use Illuminate\Support\Facades\Hash;
+use Validator;
 
 
 class StoresController extends Controller
@@ -45,10 +46,23 @@ class StoresController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+            $new_store = Validator::make($request->all(),[
+                'country_id'        => 'required|integer',
+                'name'              => 'required|string|min:3|max:50|unique:stores',
+                'phone'             => 'required|string|unique:stores',
+                'related_person'    => 'required|string|min:3|max:50',
+                'login'             => 'required|string|min:3|max:50|unique:stores',
+                'password'          => 'required|string|min:8',
+                'address'           => 'required|string|min:20',
+                'email'             => 'required|email|unique:stores',
+                'social'            => 'required|url'
+            ]);
 
+            if ($new_store->fails())
+            {
+                return back()->withErrors($new_store)->withInput();
+            }
 
-            $new_store = $request->all();
             if($request->who_manage == "on")
             {
             $new_store['who_manage'] = 1;
@@ -64,12 +78,7 @@ class StoresController extends Controller
             (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
             toast('Store inserted successfully.', 'success');
             return redirect()->route('admin.stores');
-        }catch(\Exception $e)
-        {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.stores.create');
 
-        }
     }
 
     public function restore($id)
@@ -129,7 +138,21 @@ class StoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try{
+            $update_item = Validator::make($request->all(),[
+                'country_id'        => 'required|integer',
+                'name'              => 'required|string|min:3|max:50',
+                'phone'             => 'required|string',
+                'related_person'    => 'required|string|min:3|max:50',
+                'login'             => 'required|string|min:3|max:50',
+                'address'           => 'required|string|min:20',
+                'email'             => 'required|email',
+                'social'            => 'required|url'
+            ]);
+
+            if ($update_item->fails())
+            {
+                return back()->withErrors($update_item)->withInput();
+            }
 
             $updated_item = Stores::find($id);
             $updated_item['email'] = json_encode($request->email);
@@ -147,11 +170,7 @@ class StoresController extends Controller
             $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
             toast('Store updated successfully.', 'success');
             return redirect()->route('admin.stores');
-        }catch(\Exception $e)
-        {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.stores');
-        }
+
     }
 
     public function checkStatus(Request $request)

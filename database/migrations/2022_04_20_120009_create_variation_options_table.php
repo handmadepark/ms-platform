@@ -15,14 +15,11 @@ class CreateVariationOptionsTable extends Migration
     {
         Schema::create('variation_options', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('variation_id')->constrained()->ondelete('cascade')->onupdate('cascade');
             $table->string('option_name');
             $table->integer('status');
+            $table->softDeletes();
             $table->timestamps();
-
-            $table->foreignId('variation_id')
-            ->constrained()
-            ->onUpdate('cascade')
-            ->onDelete('cascade');
         });
     }
 

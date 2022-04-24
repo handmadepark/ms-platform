@@ -29,9 +29,11 @@
                         </button>
                     </div>
                     <div class="justify-content-end">
-                        <button class="btn btn-light">
-                            <span><i class="fas fa-plus"></i></span>
-                            Add new listing</button>
+                        <a href="{{route('admin.stores.store_manager.listings.create')}}">
+                            <button class="btn btn-light">
+                                <span><i class="fas fa-plus"></i></span>
+                                Add new listing</button>
+                        </a>
                     </div>
 
             </div>

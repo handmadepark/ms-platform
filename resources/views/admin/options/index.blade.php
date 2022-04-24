@@ -8,18 +8,18 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Variations</h4>
+                                <h4 class="card-title mg-b-0">Variation Options</h4>
                                 <div class="float-end">
-                                    <a href="{{route('admin.variations.deleted')}}">
+                                    <a href="{{route('admin.options.deleted')}}">
                                         <button class="btn btn-sm btn-outline-warning">
                                             <span><i class="fas fa-trash"></i></span>
                                             Deleted variations - {{$count_deleted}}
                                         </button>
                                     </a>
-                                    <a href="{{ route('admin.variations.create') }}">
+                                    <a href="{{ route('admin.options.create') }}">
                                         <button class="btn btn-sm btn-info">
                                             <span><i class="fas fa-plus"></i></span>
-                                            New variation
+                                            New variation option
                                         </button>
                                     </a>
                                 </div>
@@ -27,11 +27,12 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="countries">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="options">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>Variation</th>
                                         <th>Input type</th>
                                         <th>Status</th>
                                         <th class="text-center">
@@ -42,14 +43,14 @@
                                     </tr>
                                     </thead>
                                     <tbody id="tablecontent">
-                                    @foreach($variations as $variation)
+                                    @foreach($options as $option)
                                         <tr>
-                                            <td>{{$variation->id}}</td>
-                                            <td>{{$variation->variation_name}}</td>
-                                            <td>{{$variation->input_type}}</td>
+                                            <td>{{$option->id}}</td>
+                                            <td>{{$option->option_name}}</td>
+                                            <td>{{$option->getVariation['variation_name']}}</td>
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$variation->id}}" id="check_status" {{ ($variation->status==1) ? 'checked' : ''}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$option->id}}" id="check_status" {{ ($option->status==1) ? 'checked' : ''}}>
                                                 </div>
                                             </td>
                                             <td>
@@ -58,12 +59,12 @@
                                                         <span><i class="fas fa-eye"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.variations.edit', ['id'=>$variation->id])}}">
+                                                <a href="{{route('admin.options.edit', ['id'=>$option->id])}}">
                                                     <button class="btn btn-sm btn-primary">
                                                         <span><i class="fas fa-pen"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.variations.destroy', ['id'=>$variation->id])}}">
+                                                <a href="{{route('admin.options.delete', ['id'=>$option->id])}}">
                                                     <button class="btn btn-sm btn-danger">
                                                         <span><i class="fas fa-trash"></i></span>
                                                     </button>
@@ -86,7 +87,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#countries').DataTable();
+            $('#options').DataTable();
         });
 
         $('.form-check-input').change(function(e){
@@ -101,7 +102,7 @@
             });
 
             $.ajax({
-                url: "{{ route('admin.variations.check_status') }}",
+                url: "{{ route('admin.options.check_status') }}",
                 type: "POST",
                 data:{
                     "dataId":dataId,

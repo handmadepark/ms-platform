@@ -56,7 +56,7 @@ class CountriesController extends Controller
             (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
             toast('Country inserted successfully.', 'success');
             return redirect()->route('admin.countries');
-        
+
     }
 
     /**
@@ -96,7 +96,7 @@ class CountriesController extends Controller
                 'name'      => 'required|min:3|max:255',
                 'status'    => 'required|integer'
             ]);
-    
+
             if($validator->fails())
             {
                 return redirect()->back()->withErrors($validator)->withInput();
@@ -107,7 +107,7 @@ class CountriesController extends Controller
             (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
             toast('Country updated successfully.', 'success');
             return redirect()->route('admin.countries');
-        
+
     }
 
     /**
@@ -124,7 +124,7 @@ class CountriesController extends Controller
         $item->delete();
         toast('Country deleted successfully.', 'success');
         return redirect()->route('admin.countries');
-        
+
     }
 
     public function check_status(Request $request)

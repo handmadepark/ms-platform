@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Deleted categories</h4>
+                                <h4 class="card-title mg-b-0">Deleted variations</h4>
                                 <div class="float-end">
                                     <a href="{{ URL::previous() }}">
                                         <button class="btn btn-sm btn-danger">
@@ -20,29 +20,35 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="countries">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="variations">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>Variation</th>
                                         <th>Status</th>
-                                        <th>Operations</th>
+                                        <th class="text-center">
+                                            <span>
+                                                <i class="fas fa-cogs"></i>
+                                            </span>
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($categories as $category)
+                                    @foreach($data as $item)
                                         <tr>
-                                            <td>{{$category->id}}</td>
-                                            <td>{{$category->name}}</td>
+                                            <td>{{$item->id}}</td>
+                                            <td>{{$item->option_name}}</td>
+                                            <td>{{$item->getVariation['name']}}</td>
                                             <td>
-                                                @if($category->status==1)
+                                                @if($item->status==1)
                                                     <button class="btn btn-sm btn-outline-success">Active</button>
                                                 @else
                                                     <button class="btn btn-sm btn-outline-warning">Inactive</button>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.categories.restore', ['id'=>$category->id])  }}">
+                                                <a href="{{ route('admin.options.restore', ['id'=>$item->id])}}">
                                                     <button class="btn btn-sm btn-info">
                                                         <span><i class="fas fa-redo-alt"></i></span>
                                                     </button>
@@ -65,7 +71,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#countries').DataTable();
+            $('#variations').DataTable();
         } );
     </script>
 @endsection
