@@ -342,20 +342,17 @@
         $(document).ready(function(){
             $('.select2').change(function (e){
                 e.preventDefault();
-                let category_id = $(this).val();
+                let id = $(this).val();
                 $.ajax({
-                    url:category_id+"/getvariations",
-                    method:"POST",
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    data:{
-                        "category_id":category_id
-                    },
-                    success:function(data)
+                    type:"GET",
+                    url:'{{url('admin/stores/listings/gv')}}'+"/"+id,
+                    dataType:'json',
+                    success:function(html)
                     {
-                        alert(data);
+                        alert(html);
                     }
                 })
-            })
+            });
         });
 
     </script>

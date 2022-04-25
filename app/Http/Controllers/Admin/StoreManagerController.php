@@ -73,7 +73,7 @@ class StoreManagerController extends Controller
         return view('admin.store_manager.listings.create', compact('categories'));
     }
 
-    public function getVariations($id)
+    public function gv($id)
     {
         return $id;
     }

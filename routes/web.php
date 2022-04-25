@@ -173,7 +173,7 @@ Route::group(['prefix' => 'admin'], function ()
                 Route::get('/deleted', [StoreManagerController::class , 'deleted'])
                     ->name('admin.stores.store_manager.listings.deleted');
 
-                Route::post('/{id}/getVariations', [StoreManagerController::class, 'getVariations'])->name('getVariations');
+                Route::get('/gv/{id}', [StoreManagerController::class , 'gv'])->name('gv');
             });
 
         });
