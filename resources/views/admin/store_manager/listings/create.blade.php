@@ -2,6 +2,8 @@
 @section('styles')
     <link rel="stylesheet" href="{{asset('admin/sorting_gallery_web_master/style.css')}}">
     <link rel="stylesheet" href="{{ asset('admin/sorting_gallery_web_master/libs/cropper/style.css') }}">
+    <!--Internal Sumoselect css-->
+		<link rel="stylesheet" href="{{ asset('admin/plugins/sumoselect/sumoselect.css') }}">
     <style>
         .btn-file {
             position: relative;
@@ -178,8 +180,6 @@
                                     <p>Tell the world all about your item and why they'll love it.</p>
                                 </div>
                             </div>
-
-                            <form>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <label for="title" class="col-sm-12 col-form-label"><strong>Title</strong></label>
@@ -207,6 +207,9 @@
                                             <small>Shoppers will find this item in all of these categories:</small>
                                         </div>
                                     </div>
+                                </div>
+                                <div id="variations_div">
+                                
                                 </div>
 
                                 <div class="row mb-3">
@@ -247,7 +250,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </form>
                         </div>
                     </div>
                 </div>
@@ -268,6 +270,8 @@
                                         <input type="text" class="form-control" id="title">
                                     </div>
                                 </div>
+
+
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
                                         <label for="category_id" class="col-sm-12 col-form-label"><strong>Quantity *</strong></label>
@@ -310,7 +314,10 @@
     <script src="{{ asset('admin/sorting_gallery_web_master/libs/cropper/cropper.js')}}"></script>
     <script src="{{ asset('admin/sorting_gallery_web_master/libs/cropper/jquery-cropper.js')}}"></script>
     <script src="{{ asset('admin/sorting_gallery_web_master/jquery-ui.js')}}"></script>
+    <!--Internal Sumoselect js-->
+		<script src="{{ asset('admin/plugins/sumoselect/jquery.sumoselect.js') }}"></script>
     <script>
+
         const input = document.getElementById('file-input');
         const video = document.getElementById('video');
         const videoSource = document.createElement('source');
@@ -338,22 +345,29 @@
         $(document).ready(function() {
             $('.select2').select2();
         });
-
+        
         $(document).ready(function(){
             $('.select2').change(function (e){
+                $('#variations_div').empty();
                 e.preventDefault();
                 let id = $(this).val();
                 $.ajax({
                     type:"GET",
                     url:'{{url('admin/stores/listings/gv')}}'+"/"+id,
                     dataType:'json',
-                    success:function(html)
+                    success:function(response)
                     {
-                        alert(html);
+                        $('#variations_div').append(response['html']); 
+                        if(response['html'])
+                        {
+                            $('.testselect2').SumoSelect({search: true, searchText: 'Enter material..'});
+                        } 
                     }
-                })
+                });
             });
         });
+
+        
 
     </script>
 @endsection

@@ -25,6 +25,8 @@
                         <li><a class="slide-item" href="{{route('admin.categories')}}">Categories</a></li>
                         <li><a class="slide-item" href="{{route('admin.variations')}}">Variations</a></li>
                         <li><a class="slide-item" href="{{route('admin.options')}}">Variation Options</a></li>
+                        <li><a class="slide-item" href="{{route('admin.sizes')}}">Variation Sizes</a></li>
+                        <li><a class="slide-item" href="{{route('admin.size_options')}}">Size Options</a></li>
                     </ul>
                 </li>
                 <li class="slide">

@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
-                        <h4 class="card-title mg-b-0">New variation</h4>
+                        <h4 class="card-title mg-b-0">New size group</h4>
                         <div class="float-end">
                             <a href="{{ URL::previous() }}">
                                 <button class="btn btn-sm btn-danger">
@@ -20,26 +20,13 @@
                 </div>
                 <div class="card-body">
 
-                    <form action="{{route('admin.variations.store')}}" method="POST">
+                    <form action="{{route('admin.sizes.store')}}" method="POST">
                         @csrf
                         <div class="form-group">
-                            <label for="name">Variation name</label>
-                            <input type="text" class="form-control" name="variation_name" id="name" aria-describedby="emailHelp" placeholder="Enter variation name">
-                            @if($errors->has('variation_name'))
-                                        <p class="text-danger">{{ $errors->first('variation_name') }}</p>
-                            @endif
-                        </div>
-
-                        <div class="form-group">
-                            <label for="input_type">Variation input type</label>
-                            <select name="input_type" id="input_type" class="form-control">
-                                <option selected disabled>Please select one item</option>
-                                @foreach($types as $type)
-                                    <option value="{{$type->input_type}}">{{$type->input_type}}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('input_type'))
-                                        <p class="text-danger">{{ $errors->first('input_type') }}</p>
+                            <label for="name">Size group name</label>
+                            <input type="text" class="form-control" name="size_name" id="name" aria-describedby="emailHelp" placeholder="Enter size name">
+                            @if($errors->has('size_name'))
+                                        <p class="text-danger">{{ $errors->first('size_name') }}</p>
                             @endif
                         </div>
 
@@ -63,3 +50,4 @@
         </div>
     </div>
 @endsection
+

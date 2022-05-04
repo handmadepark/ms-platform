@@ -22,38 +22,60 @@
                             <h3 class="card-title  mg-b-10">Category treeview </h3>
                             <p class="mg-b-20">You can add sub and clild categories from here.</p>
                             <div class="row">
-                                <!-- col -->
-                                @foreach($categories as $cat)
-                                    <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12 mt-4 mt-lg-0">
-                                        <ul id="tree2" class="tree">
-                                            <li class="branch">
-                                                <i class="fas fa-folder"></i>
-                                                <a href="javascript:void(0);">{{$cat->name}}</a>
-                                                <ul>
-                                                    @foreach($cat->getSubCategories as $sub)
-                                                        <li class="branch">
-                                                            <i class="fas fa-folder text-warning"></i>
-                                                            <input type="text" class="form-control form-control-sm" name="name" value="{{$sub->name}}" id="">
-                                                            <ul>
-                                                                @foreach($sub->getChildCategory as $child)
-                                                                    <li class="branch"><i class="fas fa-folder"></i>
-                                                                        <input type="text" class="form-control form-control-sm" name="name" value="{{$child->name}}" id="">
-                                                                        <ul>
-                                                                            <li>Report1</li>
-                                                                            <li>Report2</li>
-                                                                            <li>Report3</li>
-                                                                        </ul>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                        </ul>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <strong>Input types</strong>
+                                        </div>
+                                        <div class="card-body">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th colspan="4">
+                                                        <form action="{{route('admin.settings.create_input')}}" method="POST">
+                                                            @csrf
+                                                            <div class="row">
+                                                                <div class="col-sm-9">
+                                                                    <input type="text" placeholder="enter type name" name="input_type" id="input_type" class="form-control">
+                                                                </div>
+                                                                <div class="col-sm-3">
+                                                                    <button type="submit" class="btn btn-outline-info w-100">
+                                                                        <span><i class="fas fa-plus"></i></span>
+                                                                        New
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </th>
+                                                </tr>
+                                                <tr>
+                                                <th scope="col">#</th>
+                                                <th scope="col">Input type</th>
+                                                <th scope="col">
+                                                    <span><i class="fas fa-cogs"></i></span>
+                                                </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($types as $type)
+                                                    <tr>
+                                                        <th scope="row">{{$type->id}}</th>
+                                                        <td>{{$type->input_type}}</td>
+                                                        <td>
+                                                            <a href="">
+                                                                <button class="btn btn-danger btn-sm">
+                                                                    <span><i class="fas fa-trash"></i></span>
+                                                                </button>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                            </table>
+                                        </div>
                                     </div>
-                                @endforeach
-                                <!-- /col -->
+                                </div>
+                                
                             </div>
                         </div>
                     </div>

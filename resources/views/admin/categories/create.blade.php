@@ -80,7 +80,7 @@
                                         @foreach($variations as $variation)
                                             <div class="col-md-2">
                                                 <label for="{{$variation->variation_name}}">
-                                                    <input type="checkbox" value="{{$variation->id}}" name="variation_name" id="{{$variation->variation_name}}">
+                                                    <input type="checkbox" value="{{$variation->id}}" name="variation_name[]" id="{{$variation->variation_name}}">
                                                     {{$variation->variation_name}}
                                                 </label>
                                             </div>

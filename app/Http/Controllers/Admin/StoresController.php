@@ -46,22 +46,15 @@ class StoresController extends Controller
      */
     public function store(Request $request)
     {
-            $new_store = Validator::make($request->all(),[
+            $new_store = $request->validate([
                 'country_id'        => 'required|integer',
                 'name'              => 'required|string|min:3|max:50|unique:stores',
                 'phone'             => 'required|string|unique:stores',
                 'related_person'    => 'required|string|min:3|max:50',
                 'login'             => 'required|string|min:3|max:50|unique:stores',
                 'password'          => 'required|string|min:8',
-                'address'           => 'required|string|min:20',
-                'email'             => 'required|email|unique:stores',
-                'social'            => 'required|url'
+                'address'           => 'required|string|min:20'
             ]);
-
-            if ($new_store->fails())
-            {
-                return back()->withErrors($new_store)->withInput();
-            }
 
             if($request->who_manage == "on")
             {
@@ -83,18 +76,13 @@ class StoresController extends Controller
 
     public function restore($id)
     {
-        try{
             $item_restore = Stores::onlyTrashed()->find($id);
             $item_restore->restore();
             $content = Auth::guard('admin')->user()->name.' restored store - '.$item_restore->name;
             $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
             toast('Store restores successfully.', 'success');
             return redirect()->route('admin.stores');
-        }catch(\Exception $e)
-        {
-            toast('An error occured...', 'warning');
-            return redirect()->route('admin.stores.deleted');
-        }
+
     }
 
     /**
@@ -145,8 +133,8 @@ class StoresController extends Controller
                 'related_person'    => 'required|string|min:3|max:50',
                 'login'             => 'required|string|min:3|max:50',
                 'address'           => 'required|string|min:20',
-                'email'             => 'required|email',
-                'social'            => 'required|url'
+                'email'             => 'required',
+                'social'            => 'required'
             ]);
 
             if ($update_item->fails())

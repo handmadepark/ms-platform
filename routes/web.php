@@ -13,8 +13,8 @@ use App\Http\Controllers\Admin\
     PaymentCardController,
     SettingsController,
     VariationsController,
-    VariationOptionsController
-
+    VariationOptionsController,
+    SizeController
 };
 /*
 |--------------------------------------------------------------------------
@@ -104,6 +104,36 @@ Route::group(['prefix' => 'admin'], function ()
 
         });
 
+        Route::group(['prefix' => 'sizes'], function()
+        {
+           Route::get('/', [SizeController::class, 'index'])->name('admin.sizes');
+           Route::get('/create', [SizeController::class, 'create'])->name('admin.sizes.create');
+           Route::post('/store', [SizeController::class, 'store'])->name('admin.sizes.store');
+           Route::get('/{id}/edit', [SizeController::class, 'edit'])->name('admin.sizes.edit');
+           Route::post('/{id}/update', [SizeController::class, 'update'])->name('admin.sizes.update');
+           Route::any('/{id}/destroy', [SizeController::class, 'delete'])->name('admin.sizes.delete');
+           Route::post('/check_status', [SizeController::class, 'check_status'])->name('admin.sizes.check_status');
+           Route::get('/deleted', [SizeController::class, 'deleted'])->name('admin.sizes.deleted');
+           Route::get('/{id}/restore', [SizeController::class, 'restore'])->name('admin.sizes.restore');
+           Route::get('/show', [SizeController::class, 'show'])->name('admin.sizes.show');
+
+        });
+
+        Route::group(['prefix' => 'size_options'], function()
+        {
+           Route::get('/', [SizeOptionsController::class, 'index'])->name('admin.size_options');
+           Route::get('/create', [SizeOptionsController::class, 'create'])->name('admin.size_options.create');
+           Route::post('/store', [SizeOptionsController::class, 'store'])->name('admin.size_options.store');
+           Route::get('/{id}/edit', [SizeOptionsController::class, 'edit'])->name('admin.size_options.edit');
+           Route::post('/{id}/update', [SizeOptionsController::class, 'update'])->name('admin.size_options.update');
+           Route::any('/{id}/destroy', [SizeOptionsController::class, 'delete'])->name('admin.size_options.delete');
+           Route::post('/check_status', [SizeOptionsController::class, 'check_status'])->name('admin.size_options.check_status');
+           Route::get('/deleted', [SizeOptionsController::class, 'deleted'])->name('admin.size_options.deleted');
+           Route::get('/{id}/restore', [SizeOptionsController::class, 'restore'])->name('admin.size_options.restore');
+           Route::get('/show', [SizeOptionsController::class, 'show'])->name('admin.size_options.show');
+
+        });
+
         //countries
         Route::group(['prefix' => 'countries'], function ()
         {
@@ -180,6 +210,7 @@ Route::group(['prefix' => 'admin'], function ()
 
         //settings
         Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
+        Route::post('/settings/create_input', [SettingsController::class, 'create_input'])->name('admin.settings.create_input');
 
         //logout
         Route::get('/logout', [AdminController::class , 'logout'])

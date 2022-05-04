@@ -67,12 +67,16 @@ class CategoriesController extends Controller
             'status'                => $request->status
         ]);
 
+
         if ($request->has('variation_checkbox'))
         {
-            CategoryVariations::create([
-                'categories_id' => $data->id,
-                'variations_id' => $request->variation_name
-            ]);
+            foreach($request->variation_name as $variation)
+            {
+               CategoryVariations::create([
+                   'categories_id'  => $data->id,
+                   'variations_id'  => $variation
+               ]);
+            }
         }
 
         $content = Auth::guard('admin')->user()->name.' inserted new category - '.$request->name;

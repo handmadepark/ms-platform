@@ -4,15 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\LogController;
-use App\Models\CategoryVariations;
-use App\Models\InputTypes;
-use App\Models\VariationOptions;
 use Illuminate\Http\Request;
-use App\Models\Variations;
+use App\Models\Size;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
-class VariationsController extends Controller
+class SizeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -21,9 +18,9 @@ class VariationsController extends Controller
      */
     public function index()
     {
-        $variations = Variations::all();
-        $count_deleted = Variations::onlyTrashed()->count();
-        return view('admin.variations.index', compact('variations', 'count_deleted'));
+        $sizes = Size::all();
+        $count_deleted = Size::onlyTrashed()->count();
+        return view('admin.sizes.index', compact('sizes', 'count_deleted'));
     }
 
     /**
@@ -33,8 +30,7 @@ class VariationsController extends Controller
      */
     public function create()
     {
-        $types = InputTypes::all();
-        return view('admin.variations.create', compact('types'));
+        return view('admin.sizes.create');
     }
 
     /**
@@ -46,8 +42,7 @@ class VariationsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'variation_name'=>'required|max:25',
-            'input_type'    =>'required',
+            'size_name'=>'required|max:25',
             'status'=>'required|integer'
         ]);
 
@@ -55,12 +50,12 @@ class VariationsController extends Controller
         {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $data = Variations::create($request->all());
+        $data = Size::create($request->all());
 
-        $content = Auth::guard('admin')->user()->name.' inserted new variation - '.$request->name;
+        $content = Auth::guard('admin')->user()->name.' inserted new size group - '.$request->name;
         (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-        toast('Variation inserted successfully.', 'success');
-        return redirect()->route('admin.variations');
+        toast('Size group inserted successfully.', 'success');
+        return redirect()->route('admin.sizes');
     }
 
     /**
@@ -71,7 +66,7 @@ class VariationsController extends Controller
      */
     public function show($id)
     {
-        $data = Variations::find($id);
+        $data = Size::find($id);
         if (is_null($data)) {
             return response()->json('Item not found...', 404);
         }
@@ -86,9 +81,8 @@ class VariationsController extends Controller
      */
     public function edit($id)
     {
-        $types = InputTypes::all();
-        $item = Variations::find($id);
-        return view('admin.variations.edit', compact('item', 'types'));
+        $item = Size::find($id);
+        return view('admin.sizes.edit', compact('item'));
     }
 
     /**
@@ -101,23 +95,22 @@ class VariationsController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(),[
-            'variation_name'=>'required|max:25',
-            'input_type'    =>'required',
+            'size_name'=>'required|max:25',
             'status'=>'required|integer'
         ]);
 
-        $data = Variations::find($id);
+        $data = Size::find($id);
         $data->update($request->all());
 
-        $content = Auth::guard('admin')->user()->name.' updated variation - '.$request->name;
+        $content = Auth::guard('admin')->user()->name.' updated size group - '.$request->name;
         (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-        toast('Variation updated successfully.', 'success');
-        return redirect()->route('admin.variations');
+        toast('Size name updated successfully.', 'success');
+        return redirect()->route('admin.sizes');
     }
 
     public function check_status(Request $request)
     {
-        $update_status = Variations::find($request->dataId);
+        $update_status = Size::find($request->dataId);
         $update_status->status = $request->check;
         $update_status->save();
         if($request->check == 1)
@@ -126,20 +119,20 @@ class VariationsController extends Controller
         }else{
             $old_status = "deactive";
         }
-        $content = Auth::guard('admin')->user()->name.' updated variation status to - '.$old_status;
+        $content = Auth::guard('admin')->user()->name.' updated size group status to - '.$old_status;
         $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
         $data = [
             'icon'             => 'success',
             'status'           => 200,
-            'message'          => 'Variation status successfully updated'
+            'message'          => 'Size group status successfully updated'
         ];
         return $data;
     }
 
     public function deleted()
     {
-        $data = Variations::onlyTrashed()->get();
-        return view('admin.variations.deleted', compact('data'));
+        $data = Size::onlyTrashed()->get();
+        return view('admin.sizes.deleted', compact('data'));
     }
 
     /**
@@ -150,21 +143,21 @@ class VariationsController extends Controller
      */
     public function delete($id)
     {
-        $item = Variations::find($id);
-        $content = Auth::guard('admin')->user()->name.' deleted variation - '.$item->name;
+        $item = Size::find($id);
+        $content = Auth::guard('admin')->user()->name.' deleted size group - '.$item->name;
         (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
         $item->delete();
-        toast('Variation deleted successfully.', 'success');
-        return redirect()->route('admin.variations');
+        toast('Size group deleted successfully.', 'success');
+        return redirect()->route('admin.sizes');
     }
 
     public function restore($id)
     {
-        $item = Variations::onlyTrashed()->where('id', $id)->first();
-        $content = Auth::guard('admin')->user()->name.' restored deleted variation - '.$item->name;
+        $item = Size::onlyTrashed()->where('id', $id)->first();
+        $content = Auth::guard('admin')->user()->name.' restored deleted size group - '.$item->name;
         (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
         $item->restore();
-        toast('Variation restored successfully.', 'success');
-        return redirect()->route('admin.variation');
+        toast('Size group restored successfully.', 'success');
+        return redirect()->route('admin.sizes');
     }
 }
