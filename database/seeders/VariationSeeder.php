@@ -14,29 +14,6 @@ class VariationSeeder extends Seeder
      */
     public function run()
     {
-        Variations::create([
-            'variation_name' => 'Height',
-            'input_type'     => 'text',
-            'status'         => 1
-        ]);
-
-        Variations::create([
-            'variation_name' => 'Width',
-            'input_type'     => 'text',
-            'status'         => 1
-        ]);
-
-        Variations::create([
-            'variation_name' => 'Length',
-            'input_type'     => 'text',
-            'status'         => 1
-        ]);
-
-        Variations::create([
-            'variation_name' => 'Depth',
-            'input_type'     => 'text',
-            'status'         => 1
-        ]);
 
         Variations::create([
             'variation_name' => 'Material',

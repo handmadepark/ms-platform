@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             CategorySeeder::class,
             VariationSeeder::class,
+            InputTypeSeeder::class,
+            ScaleSeeder::class,
         ]);
     }
 }

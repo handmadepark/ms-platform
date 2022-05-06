@@ -7,6 +7,10 @@ use App\Models\CategoryVariations;
 use App\Models\VariationOptions;
 use App\Models\Listings;
 use App\Models\Variations;
+use App\Models\Sizes;
+use App\Models\Scale;
+use App\Models\VariationSizes;
+use App\Models\SizeOptions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -94,6 +98,57 @@ class StoreManagerController extends Controller
             return $html_option;
         }
 
+        function get_size_options($par)
+        {
+            $variation = VariationSizes::where('variation_id', $par)->first();
+            $options = SizeOptions::where('size_id', $variation->size_id)->get();
+
+            $check_null = false;
+            foreach($options as $option)
+            {
+                if(is_null($option['scale_id']))
+                {
+                    $check_null = true;
+                }
+                else 
+                {
+                    $check_null = false;
+                }
+            }
+            $html_option = '';
+
+            if($check_null == true)
+            {
+                $html_option .= '<select name="size_option" class="form-control form-control" data-bs-placeholder="Select category">';
+                foreach($options as $option)
+                {
+                    $html_option .= '<option value='.$option['id'].'>'.$option['size_option_name'].'</option>';
+                }
+                $html_option .= '</select>';
+            }
+            else 
+            {
+                $scale_name = Scale::all();
+                $html_option .= '<div class="col-md-6">';
+                $html_option .= '<select name="scale_id" id="scale_id" class="form-control form-control" data-bs-placeholder="Select category">';
+                $html_option .= '<option disabled selected>Select scale</option>';
+                foreach($scale_name as $scale)
+                {
+                    $html_option .= '<option value='.$scale['id'].'>'.$scale['scale_name'].'</option>';
+                }
+                $html_option .= '</select>';
+                $html_option .= '</div>';
+
+                $html_option .= '<div class="col-md-6">';
+                $html_option .= '<select name="size" id="size" class="form-control form-control" data-bs-placeholder="Select category">';
+                    $html_option .= '<option disabled selected>Please select scale</option>';
+                $html_option .= '</select>';
+                $html_option .= '</div>';
+            }
+        
+            return $html_option;
+        }
+
 
         $data = CategoryVariations::select('variations_id')->where('categories_id', $id)->get()
             ->toArray();
@@ -123,6 +178,9 @@ class StoreManagerController extends Controller
                              <div class="col-sm-2">
                                  <input type="text" placeholder="Enter value" class="form-control" id="title">
                              </div>
+                             <div class="col-sm-2">                             
+                                 '.get_size_options($response_data['variations'][$i]['id']).'
+                             </div>
                           </div>'; 
             }
 
@@ -133,7 +191,7 @@ class StoreManagerController extends Controller
                                  <label for="title" class="col-sm-12 col-form-label"><strong>'.$response_data['variations'][$i]['variation_name'].'</strong></label>
                                  <p class="col-sm-12">Include keywords that buyers would use to search for your item.</p>
                              </div>
-                             <div class="col-sm-6">
+                             <div class="col-sm-3">
                              <select name="" class="form-control form-control" data-bs-placeholder="Select category">
                              '.check_select($response_data['variations'][$i]['id']).'
                              </select>
@@ -172,10 +230,31 @@ class StoreManagerController extends Controller
                           </div>'; 
             }
 
+            elseif ($response_data['variations'][$i]['input_type'] == 'no-type')
+            {
+	            $html .= '<div class="row mb-3">
+                            <div class="col-sm-3">
+                                 <label for="title" class="col-sm-12 col-form-label"><strong>'.$response_data['variations'][$i]['variation_name'].'</strong></label>
+                                 <p class="col-sm-12">Include keywords that buyers would use to search for your item.</p>
+                             </div>
+                             <div class="col-sm-6">                             
+                                 <div class="row">
+                                 '.get_size_options($response_data['variations'][$i]['id']).'
+                                 </div>
+                             </div>
+                          </div>'; 
+            }
+
         }
         
         $response_html["html"] = $html;
         return $response_html;
+    }
+
+    public function gso($id)
+    {
+        $size_options = SizeOptions::where('scale_id', $id)->get();
+        return $size_options;
     }
 
     

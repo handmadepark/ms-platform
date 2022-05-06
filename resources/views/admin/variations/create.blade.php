@@ -43,6 +43,32 @@
                             @endif
                         </div>
 
+                        <hr>
+                        <div class="form-group">
+                            <label for="size_checkbox">
+                                <input type="checkbox" name="size_checkbox" id="size_checkbox">
+                                Add size group</label>
+                        </div>
+
+                        <div id="size_section">
+                            <div class="row">
+                                @foreach($sizes as $size)
+                                    <div class="col-md-2">
+                                        <label for="{{$size->size_name}}">
+                                            <input type="checkbox" value="{{$size->id}}" name="size_name[]" class="size_checkbox_information" id="{{$size->size_name}}">
+                                            {{$size->size_name}}
+                                            <ul>
+                                                @foreach($size->getSizeOption as $so)
+                                                <li>{{$so->size_option_name}}</li>
+                                                @endforeach
+                                            </ul>
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        <hr>
+
                         <div class="form-group">
                             <label for="status">Status</label>
                             <select name="status" id="status" class="form-control">
@@ -62,4 +88,19 @@
     </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script>
+    $('#size_section').hide();
+
+$('#size_checkbox').change(function(e){
+    if($('#size_checkbox').prop('checked')) {
+        $('#size_section').fadeIn('slow');
+    } else {
+        $('#size_section').fadeOut('slow');
+        $('.size_checkbox_information').prop('checked',false);
+    }
+});
+</script>
 @endsection

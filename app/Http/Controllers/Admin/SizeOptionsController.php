@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\LogController;
+use App\Models\SizeOptions;
 use App\Models\Size;
+use App\Models\Scale;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -31,8 +33,8 @@ class SizeOptionsController extends Controller
     public function create()
     {
         $sizes = Size::where('status', 1)->get();
-        $country = Country::where('status', 1)->get();
-        return view('admin.size_options.create', compact('sizes', 'country'));
+        $scales = Scale::all();
+        return view('admin.size_options.create', compact('sizes', 'scales'));
     }
 
     /**
@@ -43,9 +45,9 @@ class SizeOptionsController extends Controller
      */
     public function store(Request $request)
     {
+
         $validator = Validator::make($request->all(),[
             'size_id'   =>'required|integer',
-            'country_id'   =>'required|integer',
             'size_option_name'    =>'required',
             'status'         =>'required|integer'
         ]);
@@ -56,11 +58,11 @@ class SizeOptionsController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         
-        foreach($request->option_name as $option)
+        foreach($request->size_option_name as $option)
         {
             SizeOptions::create([
+                'scale_id'  => $request->scale_id,
                 'size_id'    => $request->size_id,
-                'country_id'    => $request->country_id,
                 'size_option_name'     => $option,
                 'status'          => $request->status
             ]);
@@ -96,9 +98,9 @@ class SizeOptionsController extends Controller
     public function edit($id)
     {
         $sizes = Size::where('status', 1)->get();
-        $country = Country::where('status', 1)->get();
+        $scales = Scale::all();
         $item = SizeOptions::find($id);
-        return view('admin.size_options.edit', compact('item', 'sizes,', 'country'));
+        return view('admin.size_options.edit', compact('item', 'sizes,', 'scales'));
     }
 
     /**
@@ -112,7 +114,6 @@ class SizeOptionsController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'size_id'   =>'required|integer',
-            'country_id'    =>'required|integer',
             'size_option_name'    =>'required',
             'status'         =>'required|integer'
         ]);

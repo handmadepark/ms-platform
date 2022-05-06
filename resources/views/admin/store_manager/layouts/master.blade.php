@@ -59,13 +59,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     @yield('styles')
 
-    <script type="text/javascript">
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-    </script>
+    
 
 </head>
 
@@ -126,9 +120,6 @@
 <!-- MOMENT JS -->
 <script src="{{asset('admin/plugins/moment/moment.js')}}"></script>
 
-<!-- P-SCROLL JS -->
-<script src="{{asset('admin/plugins/perfect-scrollbar/perfect-scrollbar.min.js')}}"></script>
-<script src="{{asset('admin/plugins/perfect-scrollbar/p-scroll.js')}}"></script>
 
 <!-- SIDEBAR JS -->
 <script src="{{asset('admin/plugins/side-menu/sidemenu.js')}}"></script>

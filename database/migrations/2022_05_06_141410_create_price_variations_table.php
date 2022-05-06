@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSizeOptionsTable extends Migration
+class CreatePriceVariationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,10 @@ class CreateSizeOptionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('size_options', function (Blueprint $table) {
+        Schema::create('price_variations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('size_id')->constrained()->ondelete('cascade')->onupdate('cascade');
-            $table->integer('scale_id')->nullable();
-            $table->string('size_option_name');
-            $table->integer('status');
+            $table->string('variation_name');
+            $table->integer('status')->default(1);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -31,6 +29,6 @@ class CreateSizeOptionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('size_options');
+        Schema::dropIfExists('price_variations');
     }
 }

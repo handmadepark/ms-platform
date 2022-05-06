@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="{{asset('admin/sorting_gallery_web_master/style.css')}}">
     <link rel="stylesheet" href="{{ asset('admin/sorting_gallery_web_master/libs/cropper/style.css') }}">
     <!--Internal Sumoselect css-->
-		<link rel="stylesheet" href="{{ asset('admin/plugins/sumoselect/sumoselect.css') }}">
+	<link rel="stylesheet" href="{{ asset('admin/plugins/sumoselect/sumoselect.css') }}">
     <style>
         .btn-file {
             position: relative;
@@ -303,10 +303,53 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Variations</h4>
+                                </div>
+                            </div>
+                                <div class="row mb-3">
+                                    <div class="col-sm-3">
+                                        <p class="col-sm-12">Remember to factor in the costs of materials, labor, and other business expenses. If you offer free shipping, make sure to include the cost of shipping so it doesn't eat into your profits.</p>
+                                    </div>
+                                    <div class="col-sm-9">
+                                    <a class="btn ripple btn-info" data-bs-target="#modaldemo3" data-bs-toggle="modal" href="#">View Demo</a>
+                                    </div>
+                                </div>
+
+
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     </div>
+
+
+
+    <div class="modal fade" id="modaldemo3" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content modal-content-demo">
+                                <div class="modal-header">
+                                    <h6 class="modal-title">Large Modal</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h6>Modal Body</h6>
+                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn ripple btn-primary" type="button">Save changes</button>
+                                    <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 @endsection
 @section('scripts')
     <!-- Sorging Gallery Web Master -->
@@ -367,6 +410,21 @@
             });
         });
 
+        $(document).on("change", "#scale_id", function(){
+            var id = this.value;
+                $.ajax({
+                    type:"GET",
+                    url:'{{url('admin/stores/listings/gso')}}'+"/"+id,
+                    dataType:'json',
+                    success:function(response)
+                    {
+                        $('#size').html('');
+                        $.each(response, function(index, value) {
+                            $('#size').append('<option value='+value.id+'>'+value.size_option_name+'</option>');
+                        });
+                    }
+            });
+        });
         
 
     </script>

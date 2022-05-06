@@ -1,6 +1,5 @@
 @extends('admin.layouts.master')
 @section('content')
-
     <div class="main-content app-content mt-5">
         <div class="main-container container-fluid">
             <div class="row row-sm">
@@ -8,18 +7,18 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Sizes</h4>
+                                <h4 class="card-title mg-b-0">Price Variations</h4>
                                 <div class="float-end">
-                                    <a href="{{route('admin.sizes.deleted')}}">
+                                    <a href="{{route('admin.pv.deleted')}}">
                                         <button class="btn btn-sm btn-outline-warning">
                                             <span><i class="fas fa-trash"></i></span>
-                                            Deleted sizes - {{$count_deleted}}
+                                            Deleted price variations - {{$count_deleted}}
                                         </button>
                                     </a>
-                                    <a href="{{ route('admin.sizes.create') }}">
+                                    <a href="{{ route('admin.pv.create') }}">
                                         <button class="btn btn-sm btn-info">
                                             <span><i class="fas fa-plus"></i></span>
-                                            New size
+                                            New price variation
                                         </button>
                                     </a>
                                 </div>
@@ -27,29 +26,23 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="sizes">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="pv">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Variations</th>
                                         <th>Status</th>
-                                        <th class="text-center">
-                                            <span>
-                                                <i class="fas fa-cogs"></i>
-                                            </span>
-                                        </th>
+                                        <th>Operations</th>
                                     </tr>
                                     </thead>
                                     <tbody id="tablecontent">
-                                    @foreach($sizes as $size)
+                                    @foreach($pv as $p)
                                         <tr>
-                                            <td>{{$size->id}}</td>
-                                            <td>{{$size->size_name}}</td>
-
+                                            <td>{{$p->id}}</td>
+                                            <td>{{$p->variation_name}}</td>
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$size->id}}" id="check_status" {{ ($size->status==1) ? 'checked' : ''}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$p->id}}" id="check_status" {{ ($p->status==1) ? 'checked' : ''}}>
                                                 </div>
                                             </td>
                                             <td>
@@ -58,12 +51,12 @@
                                                         <span><i class="fas fa-eye"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.sizes.edit', ['id'=>$size->id])}}">
+                                                <a href="{{route('admin.pv.edit', ['id'=>$p->id])}}">
                                                     <button class="btn btn-sm btn-primary">
                                                         <span><i class="fas fa-pen"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.sizes.delete', ['id'=>$size->id])}}">
+                                                <a href="{{route('admin.pv.destroy', ['id'=>$p->id])}}">
                                                     <button class="btn btn-sm btn-danger">
                                                         <span><i class="fas fa-trash"></i></span>
                                                     </button>
@@ -86,8 +79,8 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#sizes').DataTable();
-        });
+            $('#pv').DataTable();
+        } );
 
         $('.form-check-input').change(function(e){
             var dataId = $(this).data('id');
@@ -101,7 +94,7 @@
             });
 
             $.ajax({
-                url: "{{ route('admin.sizes.check_status') }}",
+                url: "{{ route('admin.pv.check_status') }}",
                 type: "POST",
                 data:{
                     "dataId":dataId,
@@ -111,7 +104,7 @@
                 {
                     Toast.fire({
                         icon: data.icon,
-                        title: data.message,
+                        title: data.message
                     })
                 }
             });

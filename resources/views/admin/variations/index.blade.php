@@ -33,6 +33,7 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Input type</th>
+                                        <th>Size group</th>
                                         <th>Status</th>
                                         <th class="text-center">
                                             <span>
@@ -47,6 +48,7 @@
                                             <td>{{$variation->id}}</td>
                                             <td>{{$variation->variation_name}}</td>
                                             <td>{{$variation->input_type}}</td>
+
                                             <td>
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" role="switch" data-id="{{$variation->id}}" id="check_status" {{ ($variation->status==1) ? 'checked' : ''}}>

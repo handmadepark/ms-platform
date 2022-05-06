@@ -14,7 +14,9 @@ use App\Http\Controllers\Admin\
     SettingsController,
     VariationsController,
     VariationOptionsController,
-    SizeController
+    SizeController,
+    SizeOptionsController,
+    PriceVariationsController
 };
 /*
 |--------------------------------------------------------------------------
@@ -72,6 +74,28 @@ Route::group(['prefix' => 'admin'], function ()
                 ->name('admin.categories.deleted');
             Route::post('/check_status', [CategoriesController::class , 'check_status'])
                 ->name('admin.categories.check_status');
+        });
+
+        Route::group(['prefix' => 'pv'], function ()
+        {
+            Route::get('/', [PriceVariationsController::class , 'index'])
+                ->name('admin.pv');
+            Route::get('/create', [PriceVariationsController::class , 'create'])
+                ->name('admin.pv.create');
+            Route::post('/store', [PriceVariationsController::class , 'store'])
+                ->name('admin.pv.store');
+            Route::post('/{id}/update', [PriceVariationsController::class , 'update'])
+                ->name('admin.pv.update');
+            Route::any('/{id}/destroy', [PriceVariationsController::class , 'destroy'])
+                ->name('admin.pv.destroy');
+            Route::get('/{id}/edit', [PriceVariationsController::class , 'edit'])
+                ->name('admin.pv.edit');
+            Route::get('/{id}/restore', [PriceVariationsController::class , 'restore'])
+                ->name('admin.pv.restore');
+            Route::get('/deleted', [PriceVariationsController::class , 'deleted'])
+                ->name('admin.pv.deleted');
+            Route::post('/check_status', [PriceVariationsController::class , 'check_status'])
+                ->name('admin.pv.check_status');
         });
 
         Route::group(['prefix' => 'variations'], function()
@@ -204,6 +228,7 @@ Route::group(['prefix' => 'admin'], function ()
                     ->name('admin.stores.store_manager.listings.deleted');
 
                 Route::get('/gv/{id}', [StoreManagerController::class , 'gv'])->name('gv');
+                Route::get('/gso/{id}', [StoreManagerController::class , 'gso'])->name('gso');
             });
 
         });
@@ -211,7 +236,13 @@ Route::group(['prefix' => 'admin'], function ()
         //settings
         Route::get('/settings', [SettingsController::class, 'index'])->name('admin.settings');
         Route::post('/settings/create_input', [SettingsController::class, 'create_input'])->name('admin.settings.create_input');
-
+        Route::post('/settings/create_scale', [SettingsController::class, 'create_scale'])->name('admin.settings.create_scale');
+        Route::post('/settings/check_scale_status', [SettingsController::class, 'check_scale_status'])->name('admin.settings.check_scale_status');
+        Route::any('/{id}/destroy_input', [SettingsController::class , 'destroy_input'])
+                ->name('admin.settings.destroyInput');
+        Route::any('{id}/destroy_scale', [SettingsController::class, 'destroy_scale'])->name('admin.settings.destroy_scale');
+        
+        
         //logout
         Route::get('/logout', [AdminController::class , 'logout'])
             ->name('admin.logout');

@@ -18,4 +18,9 @@ class Size extends Model
         return $this->hasMany(SizeOptions::class, 'size_id');
     }
 
+    public function getVariations()
+    {
+        return $this->hasMany(VariationSizes::class, 'variation_sizes');
+    }
+
 }

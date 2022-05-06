@@ -22,4 +22,9 @@ class Variations extends Model
     {
         return $this->belongsToMany(Categories::class, 'category_variations');
     }
+
+    public function getSizes()
+    {
+        return $this->hasMany(VariationSizes::class, 'variation_sizes');
+    }
 }

@@ -68,9 +68,6 @@
                                             </a>
                                         </td>
                                     </tr>
-{{--                                        @if(count($category->subcategory))--}}
-{{--                                            @include('admin.categories.child',['subcategories' => $category->subcategory])--}}
-{{--                                        @endif--}}
                                     @endforeach
                                     </tbody>
                                 </table>
