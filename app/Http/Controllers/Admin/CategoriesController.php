@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\CategoryVariations;
+use App\Models\CategoryPVariations;
 use Illuminate\Support\Str;
 use App\Http\Controllers\LogController;
 use App\Http\Controllers\Controller;
 use App\Models\Variations;
+use App\Models\PriceVariations;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Models\Categories;
@@ -33,10 +35,11 @@ class CategoriesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
         $categories = Categories::where('status', 1)->get();
         $variations = Variations::where('status', 1)->get();
-        return view('admin.categories.create', compact('categories', 'variations'));
+        $price_variations = PriceVariations::where('status', 1)->get();
+        return view('admin.categories.create', compact('categories', 'variations', 'price_variations'));
     }
 
     /**
@@ -73,6 +76,17 @@ class CategoriesController extends Controller
             foreach($request->variation_name as $variation)
             {
                CategoryVariations::create([
+                   'categories_id'  => $data->id,
+                   'variations_id'  => $variation
+               ]);
+            }
+        }
+
+        if ($request->has('pv_checkbox'))
+        {
+            foreach($request->price_variation_name as $variation)
+            {
+               CategoryPVariations::create([
                    'categories_id'  => $data->id,
                    'variations_id'  => $variation
                ]);

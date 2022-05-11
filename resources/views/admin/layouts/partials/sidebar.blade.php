@@ -28,7 +28,7 @@
                         <li><a class="slide-item" href="{{route('admin.sizes')}}">Variation Sizes</a></li>
                         <li><a class="slide-item" href="{{route('admin.size_options')}}">Size Options</a></li>
                         <li><a class="slide-item" href="{{route('admin.pv')}}">Price Variations</a></li>
-                        <li><a class="slide-item" href="{{route('admin.size_options')}}">Price Variation Options</a></li>
+                        <li><a class="slide-item" href="{{route('admin.pvoptions')}}">Price Variation Options</a></li>
                     </ul>
                 </li>
                 <li class="slide">

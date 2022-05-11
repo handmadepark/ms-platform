@@ -19,7 +19,8 @@ class PriceVariationsController extends Controller
 
     public function create()
     {
-        return view('admin.pv.create');
+        $types = InputTypes::all();
+        return view('admin.pv.create', 'types');
     }
 
     /**
@@ -32,6 +33,7 @@ class PriceVariationsController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'variation_name'=>'required|max:25',
+            'input_type'=>'required',
             'status'=>'required|integer'
         ]);
 
@@ -70,8 +72,9 @@ class PriceVariationsController extends Controller
      */
     public function edit($id)
     {
+        $types = InputTypes::all();
         $item_selected = PriceVariations::find($id);
-        return view('admin.pv.edit', compact('item_selected'));
+        return view('admin.pv.edit', compact('item_selected', 'types'));
     }
 
     /**
@@ -85,6 +88,7 @@ class PriceVariationsController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'variation_name'=>'required|max:25',
+            'input_type'=>'required',
             'status'=>'required|integer'
         ]);
 

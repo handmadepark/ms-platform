@@ -31,6 +31,7 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>Input type</th>
                                         <th>Status</th>
                                         <th>Operations</th>
                                     </tr>
@@ -40,6 +41,7 @@
                                         <tr>
                                             <td>{{$p->id}}</td>
                                             <td>{{$p->variation_name}}</td>
+                                            <td>{{$p->input_type}}</td>
                                             <td>
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" role="switch" data-id="{{$p->id}}" id="check_status" {{ ($p->status==1) ? 'checked' : ''}}>

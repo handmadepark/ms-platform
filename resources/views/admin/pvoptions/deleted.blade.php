@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Deleted price variations</h4>
+                                <h4 class="card-title mg-b-0">Deleted variations</h4>
                                 <div class="float-end">
                                     <a href="{{ URL::previous() }}">
                                         <button class="btn btn-sm btn-danger">
@@ -20,20 +20,26 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="pv">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="variations">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>Variation</th>
                                         <th>Status</th>
-                                        <th>Operations</th>
+                                        <th class="text-center">
+                                            <span>
+                                                <i class="fas fa-cogs"></i>
+                                            </span>
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($data as $item)
                                         <tr>
                                             <td>{{$item->id}}</td>
-                                            <td>{{$item->price_variation_name}}</td>
+                                            <td>{{$item->option_name}}</td>
+                                            <td>{{$item->getVariation['name']}}</td>
                                             <td>
                                                 @if($item->status==1)
                                                     <button class="btn btn-sm btn-outline-success">Active</button>
@@ -42,7 +48,7 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.pv.restore', ['id'=>$item->id])  }}">
+                                                <a href="{{ route('admin.options.restore', ['id'=>$item->id])}}">
                                                     <button class="btn btn-sm btn-info">
                                                         <span><i class="fas fa-redo-alt"></i></span>
                                                     </button>
@@ -65,7 +71,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#pv').DataTable();
+            $('#variations').DataTable();
         } );
     </script>
 @endsection

@@ -8,18 +8,18 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Sizes</h4>
+                                <h4 class="card-title mg-b-0">Variation Options</h4>
                                 <div class="float-end">
-                                    <a href="{{route('admin.sizes.deleted')}}">
+                                    <a href="{{route('admin.options.deleted')}}">
                                         <button class="btn btn-sm btn-outline-warning">
                                             <span><i class="fas fa-trash"></i></span>
-                                            Deleted sizes - {{$count_deleted}}
+                                            Deleted variations - {{$count_deleted}}
                                         </button>
                                     </a>
-                                    <a href="{{ route('admin.sizes.create') }}">
+                                    <a href="{{ route('admin.pvoptions.create') }}">
                                         <button class="btn btn-sm btn-info">
                                             <span><i class="fas fa-plus"></i></span>
-                                            New size
+                                            New variation option
                                         </button>
                                     </a>
                                 </div>
@@ -27,11 +27,12 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="sizes">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="options">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
+                                        <th>Variation</th>
                                         <th>Status</th>
                                         <th class="text-center">
                                             <span>
@@ -41,13 +42,14 @@
                                     </tr>
                                     </thead>
                                     <tbody id="tablecontent">
-                                    @foreach($sizes as $size)
+                                    @foreach($options as $option)
                                         <tr>
-                                            <td>{{$size->id}}</td>
-                                            <td>{{$size->size_name}}</td>
+                                            <td>{{$option->id}}</td>
+                                            <td>{{$option->option_name}}</td>
+                                            <td>{{$option->getPriceVariation['variation_name']}}</td>
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$size->id}}" id="check_status" {{ ($size->status==1) ? 'checked' : ''}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$option->id}}" id="check_status" {{ ($option->status==1) ? 'checked' : ''}}>
                                                 </div>
                                             </td>
                                             <td>
@@ -56,12 +58,12 @@
                                                         <span><i class="fas fa-eye"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.sizes.edit', ['id'=>$size->id])}}">
+                                                <a href="{{route('admin.pvoptions.edit', ['id'=>$option->id])}}">
                                                     <button class="btn btn-sm btn-primary">
                                                         <span><i class="fas fa-pen"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.sizes.delete', ['id'=>$size->id])}}">
+                                                <a href="{{route('admin.pvoptions.delete', ['id'=>$option->id])}}">
                                                     <button class="btn btn-sm btn-danger">
                                                         <span><i class="fas fa-trash"></i></span>
                                                     </button>
@@ -84,7 +86,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#sizes').DataTable();
+            $('#options').DataTable();
         });
 
         $('.form-check-input').change(function(e){
@@ -99,7 +101,7 @@
             });
 
             $.ajax({
-                url: "{{ route('admin.sizes.check_status') }}",
+                url: "{{ route('admin.pvoptions.check_status') }}",
                 type: "POST",
                 data:{
                     "dataId":dataId,

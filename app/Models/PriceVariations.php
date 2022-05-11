@@ -11,10 +11,10 @@ class PriceVariations extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'price_variations';
-    protected $fillable = ['variation_name', 'status'];
+    protected $fillable = ['input_type','variation_name', 'status'];
 
     public function getPriceVariationOptions()
     {
-        return $this->hasMany(PriceVariationOptions::class, 'variation_id');
+        return $this->hasMany(PriceVariationOptions::class, 'pvariation_id');
     }
 }

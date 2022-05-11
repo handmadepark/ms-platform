@@ -17,7 +17,7 @@ class VariationSeeder extends Seeder
 
         Variations::create([
             'variation_name' => 'Material',
-            'input_type'     => 'checkbox',
+            'input_type'     => 'multiple-select',
             'status'         => 1
         ]);
 

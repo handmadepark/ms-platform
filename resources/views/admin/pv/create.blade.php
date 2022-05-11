@@ -29,6 +29,19 @@
                             @endif
                         </div>
                         <div class="form-group">
+                            <label for="input_type">Input Type</label>
+                            <select name="input_type" id="input_type" class="form-control">
+                                <option disabled selected>Please select</option>
+                                @foreach($types as $type)
+                                <option value="{{ $type->input_type }}">{{ $type->input_type }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('input_type'))
+                                <p class="text-danger">{{ $errors->first('input_type') }}</p>
+                            @endif
+                        </div>
+
+                        <div class="form-group">
                             <label for="status">Status</label>
                             <select name="status" id="status" class="form-control">
                                 <option disabled selected>Please select</option>

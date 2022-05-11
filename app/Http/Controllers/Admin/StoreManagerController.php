@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Categories;
 use App\Models\CategoryVariations;
+use App\Models\CategoryPVariations;
 use App\Models\VariationOptions;
+use App\Models\PriceVariations;
+use App\Models\PriceVariationOptions;
 use App\Models\Listings;
 use App\Models\Variations;
 use App\Models\Sizes;
@@ -81,7 +84,8 @@ class StoreManagerController extends Controller
     public function create()
     {
         $categories = Categories::where('status', 1)->get();
-        return view('admin.store_manager.listings.create', compact('categories'));
+        $pvariations = PriceVariations::where('status', 1)->get();
+        return view('admin.store_manager.listings.create', compact('categories', 'pvariations'));
     }
 
     public function gv($id)
@@ -145,7 +149,7 @@ class StoreManagerController extends Controller
                 $html_option .= '</select>';
                 $html_option .= '</div>';
             }
-        
+
             return $html_option;
         }
 
@@ -174,6 +178,7 @@ class StoreManagerController extends Controller
                             <div class="col-sm-3">
                                  <label for="title" class="col-sm-12 col-form-label"><strong>'.$response_data['variations'][$i]['variation_name'].'</strong></label>
                                  <p class="col-sm-12">Include keywords that buyers would use to search for your item.</p>
+                                 <input type="text" id="variation_id" hidden value="'.$response_data['variations'][$i]['id'].'">
                              </div>
                              <div class="col-sm-2">
                                  <input type="text" placeholder="Enter value" class="form-control" id="title">
@@ -190,6 +195,7 @@ class StoreManagerController extends Controller
                             <div class="col-sm-3">
                                  <label for="title" class="col-sm-12 col-form-label"><strong>'.$response_data['variations'][$i]['variation_name'].'</strong></label>
                                  <p class="col-sm-12">Include keywords that buyers would use to search for your item.</p>
+                                 <input type="text" id="variation_id" hidden value="'.$response_data['variations'][$i]['id'].'">
                              </div>
                              <div class="col-sm-3">
                              <select name="" class="form-control form-control" data-bs-placeholder="Select category">
@@ -205,6 +211,7 @@ class StoreManagerController extends Controller
                             <div class="col-sm-3">
                                  <label for="title" class="col-sm-12 col-form-label"><strong>'.$response_data['variations'][$i]['variation_name'].'</strong></label>
                                  <p class="col-sm-12">Include keywords that buyers would use to search for your item.</p>
+                                 <input type="text" id="variation_id" hidden value="'.$response_data['variations'][$i]['id'].'">
                              </div>
                              <div class="col-sm-6">
                              <select multiple="multiple" class="testselect2">
@@ -220,6 +227,7 @@ class StoreManagerController extends Controller
                             <div class="col-sm-3">
                                  <label for="title" class="col-sm-12 col-form-label"><strong>'.$response_data['variations'][$i]['variation_name'].'</strong></label>
                                  <p class="col-sm-12">Include keywords that buyers would use to search for your item.</p>
+                                 <input type="text" id="variation_id" hidden value="'.$response_data['variations'][$i]['id'].'">
                              </div>
                              <div class="col-sm-6">
                              <div>
@@ -236,6 +244,7 @@ class StoreManagerController extends Controller
                             <div class="col-sm-3">
                                  <label for="title" class="col-sm-12 col-form-label"><strong>'.$response_data['variations'][$i]['variation_name'].'</strong></label>
                                  <p class="col-sm-12">Include keywords that buyers would use to search for your item.</p>
+                                 <input type="hidden" id="variation_hidden_id" value="'.$response_data['variations'][$i]['id'].'">
                              </div>
                              <div class="col-sm-6">                             
                                  <div class="row">
@@ -246,15 +255,81 @@ class StoreManagerController extends Controller
             }
 
         }
-        
         $response_html["html"] = $html;
         return $response_html;
     }
 
-    public function gso($id)
-    {
-        $size_options = SizeOptions::where('scale_id', $id)->get();
+    public function gso($id='', $variation_id='')
+    {   
+        $data = VariationSizes::where('variation_id', $variation_id)->first();
+        if($data)
+        {
+            $size_options = SizeOptions::where('size_id', $data['size_id'])->where('scale_id', $id)->get();
+        }
+        else
+        {
+            $size_options = [];
+        }
+        
         return $size_options;
+    }
+
+    public function gpv($id)
+    {
+        $pv_id = CategoryPVariations::where('categories_id', $id)->get();
+        $id_variations = [];
+        foreach ($pv_id as $item)
+        {
+            $id_variations[] = $item['variations_id'];
+        }
+        $integerVariationsIds = array_map('intval', $id_variations);
+        $pv = PriceVariations::whereIn('id', $integerVariationsIds)->get();
+
+        return $pv;
+    }
+
+    public function gpvo($id)
+    {
+        $pv_options = PriceVariationOptions::where('variation_id', $id)->get();
+        $pv_name = PriceVariations::where('id', $id)->first();
+        $html_variations = '';
+        $html_variations .= '<div class="row" id="selected_variation" data-id="'.$pv_name['id'].'">
+        <div class="col-md-6">
+                    <div class="variation_name_div">
+                        <span id="variation_name_p">'.$pv_name['price_variation_name'].'</span> 
+                        <button class="float-end btn btn-sm btn-dark" onclick="delete_variation_div('.$pv_name['id'].')">Delete</button>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="price">
+                        <input class="form-check-input" type="checkbox" name="pvariation" value="" id="price">
+                            Prices vary for each <span id="variation_name_p">'.$pv_name['price_variation_name'].'</span>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="quantity">
+                        <input class="form-check-input" type="checkbox" name="qvariation" value="" id="quantity">
+                            Quantities vary for each <span id="variation_name_p">'.$pv_name['price_variation_name'].'</span>
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="sku">
+                        <input class="form-check-input" type="checkbox" name="svariation" value="" id="sku">
+                            SKUs vary for each <span id="variation_name_p">'.$pv_name['price_variation_name'].'</span>
+                        </label>
+                    </div>
+                    </div>
+                    <div class="col-md-6 float-end">
+                    <select name="pv_options" class="form-control" id="pv_options">
+                    <option disabled selected>Please select one item</option>';
+        
+                    foreach($pv_options as $pv_option)
+                    {
+                        $html_variations .= '<option value="'.$pv_option['id'].'">'.$pv_option['option_name'].'</option>';
+                    }
+        $html_variations .= '</select>';
+        $html_variations .='</div></div>';
+                    
+        return $html_variations;
     }
 
     

@@ -16,7 +16,8 @@ use App\Http\Controllers\Admin\
     VariationOptionsController,
     SizeController,
     SizeOptionsController,
-    PriceVariationsController
+    PriceVariationsController,
+    PVOptions 
 };
 /*
 |--------------------------------------------------------------------------
@@ -96,6 +97,28 @@ Route::group(['prefix' => 'admin'], function ()
                 ->name('admin.pv.deleted');
             Route::post('/check_status', [PriceVariationsController::class , 'check_status'])
                 ->name('admin.pv.check_status');
+        });
+
+        Route::group(['prefix' => 'pvoptions'], function ()
+        {
+            Route::get('/', [PVOptions::class , 'index'])
+                ->name('admin.pvoptions');
+            Route::get('/create', [PVOptions::class , 'create'])
+                ->name('admin.pvoptions.create');
+            Route::post('/store', [PVOptions::class , 'store'])
+                ->name('admin.pvoptions.store');
+            Route::post('/{id}/update', [PVOptions::class , 'update'])
+                ->name('admin.pvoptions.update');
+            Route::any('/{id}/delete', [PVOptions::class , 'delete'])
+                ->name('admin.pvoptions.delete');
+            Route::get('/{id}/edit', [PVOptions::class , 'edit'])
+                ->name('admin.pvoptions.edit');
+            Route::get('/{id}/restore', [PVOptions::class , 'restore'])
+                ->name('admin.pvoptions.restore');
+            Route::get('/deleted', [PVOptions::class , 'deleted'])
+                ->name('admin.pvoptions.deleted');
+            Route::post('/check_status', [PVOptions::class , 'check_status'])
+                ->name('admin.pvoptions.check_status');
         });
 
         Route::group(['prefix' => 'variations'], function()
@@ -228,7 +251,9 @@ Route::group(['prefix' => 'admin'], function ()
                     ->name('admin.stores.store_manager.listings.deleted');
 
                 Route::get('/gv/{id}', [StoreManagerController::class , 'gv'])->name('gv');
-                Route::get('/gso/{id}', [StoreManagerController::class , 'gso'])->name('gso');
+                Route::get('/gpv/{id}', [StoreManagerController::class , 'gpv'])->name('gpv');
+                Route::get('/gpvo/{id}', [StoreManagerController::class , 'gpvo'])->name('gpvo');
+                Route::get('/gso/{id}/{variation_id}', [StoreManagerController::class , 'gso'])->name('gso');
             });
 
         });

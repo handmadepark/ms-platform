@@ -15,6 +15,7 @@ class CreatePriceVariationsTable extends Migration
     {
         Schema::create('price_variations', function (Blueprint $table) {
             $table->id();
+            $table->string('input_type');
             $table->string('variation_name');
             $table->integer('status')->default(1);
             $table->softDeletes();

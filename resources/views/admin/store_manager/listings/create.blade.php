@@ -198,7 +198,7 @@
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="input-group mb-3">
-                                            <select name="category_id" class="form-control form-control-lg select2" data-bs-placeholder="Select category">
+                                            <select name="category_id" id="category_id" class="form-control form-control-lg select2" data-bs-placeholder="Select category">
                                                 <option disabled selected>Search your product category ...</option>
                                                 @foreach($categories as $category)
                                                     <option value="{{$category->id}}">{{ (!is_null($category->parent) ? $category->parent['name'].' -> ' : '') }} {{$category->name}}</option>
@@ -242,11 +242,11 @@
 
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <label for="material" class="col-sm-12 col-form-label"><strong>Material </strong> <small>Optional</small></label>
+                                        <label for="materials" class="col-sm-12 col-form-label"><strong>Material </strong> <small>Optional</small></label>
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="input-group mb-3">
-                                            <input data-role="tagsinput" name="materials[]" id="material" placeholder="enter product material" type="text">
+                                            <input data-role="tagsinput" name="materials[]" id="materials" placeholder="enter product materials" type="text">
                                         </div>
                                     </div>
                                 </div>
@@ -263,39 +263,39 @@
                             </div>
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <label for="title" class="col-sm-12 col-form-label"><strong>Price</strong></label>
+                                        <label for="price" class="col-sm-12 col-form-label"><strong>Price</strong></label>
                                         <p class="col-sm-12">Remember to factor in the costs of materials, labor, and other business expenses. If you offer free shipping, make sure to include the cost of shipping so it doesn't eat into your profits.</p>
                                     </div>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="title">
+                                        <input type="text" class="form-control" id="price">
                                     </div>
                                 </div>
 
 
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <label for="category_id" class="col-sm-12 col-form-label"><strong>Quantity *</strong></label>
+                                        <label for="quantity" class="col-sm-12 col-form-label"><strong>Quantity *</strong></label>
                                         <p class="col-sm-12">
                                             For quantities greater than one, this listing will renew automatically until it sells out. You’ll be charged a USD 0.20 USD listing fee each time.
                                         </p>
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="quantity" class="form-control">
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
-                                        <label for="description" class="col-sm-12 col-form-label"><strong>SKU</strong> <small>Optional</small></label>
+                                        <label for="sku" class="col-sm-12 col-form-label"><strong>SKU</strong> <small>Optional</small></label>
                                         <p class="col-sm-12">
                                             SKUs are for your use only—buyers won’t see them.
                                         </p>
                                     </div>
                                     <div class="col-sm-9">
                                         <div class="input-group mb-3">
-                                            <input type="text" class="form-control">
+                                            <input type="text" id="sku" class="form-control">
                                         </div>
                                     </div>
                                 </div>
@@ -317,7 +317,7 @@
                                         <p class="col-sm-12">Remember to factor in the costs of materials, labor, and other business expenses. If you offer free shipping, make sure to include the cost of shipping so it doesn't eat into your profits.</p>
                                     </div>
                                     <div class="col-sm-9">
-                                    <a class="btn ripple btn-info" data-bs-target="#modaldemo3" data-bs-toggle="modal" href="#">View Demo</a>
+                                    <a class="btn ripple btn-info" data-bs-target="#modaldemo3" data-bs-toggle="modal" href="#">Add variations</a>
                                     </div>
                                 </div>
 
@@ -328,23 +328,35 @@
             </div>
         </div>
     </div>
-    </div>
 
 
 
-    <div class="modal fade" id="modaldemo3" style="display: none;" aria-hidden="true">
+
+                    <div class="modal fade" id="modaldemo3" style="display: none;" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content modal-content-demo">
                                 <div class="modal-header">
-                                    <h6 class="modal-title">Large Modal</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+                                    <h6 class="modal-title">Add variations</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
                                 </div>
                                 <div class="modal-body">
-                                    <h6>Modal Body</h6>
-                                    <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button class="btn ripple btn-primary" type="button">Save changes</button>
-                                    <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                                    <p>List all the options you offer. Buyers will see them in the order they are here.</p>
+                                    <div id="variation_hidden_div">
+                                        
+                                    </div>
+                                    <hr>
+                                    <div class="form-row" id="variations_showen_div">
+                                        <div class="form-group col-md-4">
+                                        <label for="pv_id">Add a variation</label>
+                                        <select name="pv_id" class="form-control" id="pv_id">
+                                            <option disabled selected>Firstly, you must select category</option>
+                                        </select>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="modal-footer">
+                                        <button class="btn ripple btn-primary" type="button">Save changes</button>
+                                        <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -406,15 +418,31 @@
                             $('.testselect2').SumoSelect({search: true, searchText: 'Enter material..'});
                         } 
                     }
+                }),
+
+                $.ajax({
+                    type:"GET",
+                    url:'{{url('admin/stores/listings/gpv')}}'+"/"+id,
+                    dataType:'json',
+                    success:function(response)
+                    {
+                        $('#pv_id').html('');
+                        $.each(response, function(index, value) {
+                            $('#pv_id').append('<option value='+value.id+'>'+value.price_variation_name+'</option>');
+                        });
+                    }
                 });
             });
         });
 
         $(document).on("change", "#scale_id", function(){
             var id = this.value;
-                $.ajax({
+            var variation_id = $('#variation_hidden_id').val();
+            console.log(variation_id);
+            
+            $.ajax({
                     type:"GET",
-                    url:'{{url('admin/stores/listings/gso')}}'+"/"+id,
+                    url:'{{url('admin/stores/listings/gso')}}'+"/"+id+"/"+variation_id,
                     dataType:'json',
                     success:function(response)
                     {
@@ -423,9 +451,42 @@
                             $('#size').append('<option value='+value.id+'>'+value.size_option_name+'</option>');
                         });
                     }
-            });
+                });
         });
-        
+        $('#variation_hidden_div').fadeOut();
+        let count = 0;
+            $(document).on("change", "#pv_id",function (e){
+                e.preventDefault();
+                let id = $(this).val();
+                    $.ajax({
+                    type:"GET",
+                    url:'{{url('admin/stores/listings/gpvo')}}'+"/"+id,
+                    success:function(response)
+                    {
+                        $('#variation_hidden_div').fadeIn();
+                        count++;
+                        if(count==2)
+                        {
+                            $('#variations_showen_div').fadeOut();
+                        }
+                        $('#variation_hidden_div').append(response);
+                    }
+                });
+    
+            });   
+            
+
+            function delete_variation_div(dataId)
+            {
+                $('#selected_variation[data-id="'+dataId+'"]').remove();
+                count--;
+                if(count<2)
+                {
+                    $('#variations_showen_div').fadeIn();
+                }
+            }
+            
+      
 
     </script>
 @endsection

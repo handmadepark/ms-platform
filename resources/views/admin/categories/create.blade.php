@@ -89,6 +89,25 @@
                                 </div>
                                 <hr>
 
+                                <div class="form-group">
+                                    <label for="pv_checkbox">
+                                        <input type="checkbox" name="pv_checkbox" id="pv_checkbox">
+                                        Add price variations</label>
+                                </div>
+
+                                <div id="pv_section">
+                                    <div class="row">
+                                        @foreach($price_variations as $pv)
+                                            <div class="col-md-2">
+                                                <label for="{{$pv->price_variation_name}}">
+                                                    <input type="checkbox" value="{{$pv->id}}" name="price_variation_name[]" id="{{$pv->price_variation_name}}">
+                                                    {{$pv->price_variation_name}}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+
                                 <hr>
 
                                 <div class="form-group">
@@ -137,6 +156,7 @@
 
         $('#parent_category').hide();
         $('#variations_section').hide();
+        $('#pv_section').hide();
 
         $('#check_parent_id').change(function(e){
             if($('#check_parent_id').prop('checked')) {
@@ -152,6 +172,14 @@
                 $('#variations_section').fadeIn('slow');
             } else {
                 $('#variations_section').fadeOut('slow');
+            }
+        });
+
+        $('#pv_checkbox').change(function(e){
+            if($('#pv_checkbox').prop('checked')) {
+                $('#pv_section').fadeIn('slow');
+            } else {
+                $('#pv_section').fadeOut('slow');
             }
         });
 

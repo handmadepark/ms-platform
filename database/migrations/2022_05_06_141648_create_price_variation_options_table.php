@@ -15,11 +15,13 @@ class CreatePriceVariationOptionsTable extends Migration
     {
         Schema::create('price_variation_options', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('variation_id')->constrained()->ondelete('cascade')->onupdate('cascade');
+            $table->unsignedBigInteger('pvariation_id');
             $table->string('option_name');
             $table->integer('status');
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('pvariation_id')->references('id')->on('price_variations')->ondelete('cascade')->onupdate('cascade');
         });
     }
 
