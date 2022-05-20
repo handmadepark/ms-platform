@@ -103,7 +103,7 @@ class CountriesController extends Controller
             }
             $data = Country::find($id);
             $data->update($request->all());
-            $content = Auth::guard('admin')->user()->name.' updated country - '.$validator->name;
+            $content = Auth::guard('admin')->user()->name.' updated country - '.$request->name;
             (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
             toast('Country updated successfully.', 'success');
             return redirect()->route('admin.countries');
@@ -139,11 +139,11 @@ class CountriesController extends Controller
             $old_status = "deactive";
         }
         $content = Auth::guard('admin')->user()->name.' updated country status to - '.$old_status;
-        $result = (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
+        (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
         $data = [
             'icon'             => 'success',
             'status'           => 200,
-            'message'          => 'Store status successfully updated'
+            'message'          => 'Country status successfully updated'
         ];
         return $data;
     }

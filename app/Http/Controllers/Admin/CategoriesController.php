@@ -38,8 +38,7 @@ class CategoriesController extends Controller
     {   
         $categories = Categories::where('status', 1)->get();
         $variations = Variations::where('status', 1)->get();
-        $price_variations = PriceVariations::where('status', 1)->get();
-        return view('admin.categories.create', compact('categories', 'variations', 'price_variations'));
+        return view('admin.categories.create', compact('categories', 'variations'));
     }
 
     /**
@@ -69,30 +68,33 @@ class CategoriesController extends Controller
             'slug'                  => Str::slug($request->title),
             'status'                => $request->status
         ]);
-
-
+        
+        dd($request->all());
+        
         if ($request->has('variation_checkbox'))
-        {
-            foreach($request->variation_name as $variation)
+        {      
+            for($i=0;$i<count($request->variations_id);$i++)
             {
-               CategoryVariations::create([
-                   'categories_id'  => $data->id,
-                   'variations_id'  => $variation
-               ]);
+                    if (isset($request->pv[$i])) {
+                        if($request->pv[$i] == 'on')
+                        {
+                            $check_pv = 1;
+                        }
+                    }
+                    else 
+                    {
+                        $check_pv = 0;
+                    }
+                    
+                    CategoryVariations::create([
+                        'categories_id' => $data->id,
+                        'variations_id' => $request->variations_id[$i],
+                        'pv'            => $check_pv
+                    ]);
+
             }
         }
-
-        if ($request->has('pv_checkbox'))
-        {
-            foreach($request->price_variation_name as $variation)
-            {
-               CategoryPVariations::create([
-                   'categories_id'  => $data->id,
-                   'variations_id'  => $variation
-               ]);
-            }
-        }
-
+        
         $content = Auth::guard('admin')->user()->name.' inserted new category - '.$request->name;
         (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
         toast('Category inserted successfully.', 'success');

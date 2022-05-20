@@ -138,7 +138,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h4>Video</h4>
-                                    <p>Bring your product to life with a 5 to 15 second video—it could help you drive more sales. The video won't feature sound, so let your product do the talking!</p>
+                                    <p>Bring your product to life with a 5 to 15 second videoвЂ”it could help you drive more sales. The video won't feature sound, so let your product do the talking!</p>
                                 </div>
                             </div>
                                 <div class="row">
@@ -146,7 +146,7 @@
                                         <strong>Quick tips</strong>
                                         <ul>
                                             <li>Film wearable items on a model or show a functional item being used.</li>
-                                            <li>Adjust your settings to record high resolution video—aim for 1080p or higher.</li>
+                                            <li>Adjust your settings to record high resolution videoвЂ”aim for 1080p or higher.</li>
                                             <li>Crop your video after you upload it to get the right dimensions.</li>
                                         </ul>
                                         <a href="#">Learn how to make videos that sell</a>
@@ -215,7 +215,7 @@
                                 <div class="row mb-3">
                                     <div class="col-sm-3">
                                        <label for="description" class="col-sm-12 col-form-label"><strong>Description</strong></label>
-                                       <p class="col-sm-12">Start with a brief overview that describes your item’s finest features. Shoppers will only see the first few lines of your description at first, so make it count!
+                                       <p class="col-sm-12">Start with a brief overview that describes your itemвЂ™s finest features. Shoppers will only see the first few lines of your description at first, so make it count!
                                        Not sure what else to say? Shoppers also like hearing about your process, and the story behind this item.</p>
                                     </div>
                                     <div class="col-sm-9">
@@ -276,7 +276,7 @@
                                     <div class="col-sm-3">
                                         <label for="quantity" class="col-sm-12 col-form-label"><strong>Quantity *</strong></label>
                                         <p class="col-sm-12">
-                                            For quantities greater than one, this listing will renew automatically until it sells out. You’ll be charged a USD 0.20 USD listing fee each time.
+                                            For quantities greater than one, this listing will renew automatically until it sells out. YouвЂ™ll be charged a USD 0.20 USD listing fee each time.
                                         </p>
                                     </div>
                                     <div class="col-sm-9">
@@ -290,7 +290,7 @@
                                     <div class="col-sm-3">
                                         <label for="sku" class="col-sm-12 col-form-label"><strong>SKU</strong> <small>Optional</small></label>
                                         <p class="col-sm-12">
-                                            SKUs are for your use only—buyers won’t see them.
+                                            SKUs are for your use onlyвЂ”buyers wonвЂ™t see them.
                                         </p>
                                     </div>
                                     <div class="col-sm-9">
@@ -320,7 +320,15 @@
                                     <a class="btn ripple btn-info" data-bs-target="#modaldemo3" data-bs-toggle="modal" href="#">Add variations</a>
                                     </div>
                                 </div>
-
+								
+								<div id="modal_pv_generated_div">
+								</div>
+								
+								<div id="modal_pv_generated_div">
+								</div>
+								
+								<div id="modal_pv_generated_div">
+								</div>
 
                         </div>
                     </div>
@@ -336,7 +344,7 @@
                         <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content modal-content-demo">
                                 <div class="modal-header">
-                                    <h6 class="modal-title">Add variations</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true">×</span></button>
+                                    <h6 class="modal-title">Add variations</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"><span aria-hidden="true"><i class="fas fa-times"></i></span></button>
                                 </div>
                                 <div class="modal-body">
                                     <p>List all the options you offer. Buyers will see them in the order they are here.</p>
@@ -347,14 +355,12 @@
                                     <div class="form-row" id="variations_showen_div">
                                         <div class="form-group col-md-4">
                                         <label for="pv_id">Add a variation</label>
-                                        <select name="pv_id" class="form-control" id="pv_id">
-                                            <option disabled selected>Firstly, you must select category</option>
-                                        </select>
+                                        <select name="pv_id" class="form-control" id="pv_id"></select>
                                         </div>
                                     </div>
                                     <hr>
                                     <div class="modal-footer">
-                                        <button class="btn ripple btn-primary" type="button">Save changes</button>
+                                        <button class="btn ripple btn-primary" type="button" id="save_changes">Save changes</button>
                                         <button class="btn ripple btn-secondary" data-bs-dismiss="modal" type="button">Close</button>
                                     </div>
                                 </div>
@@ -427,49 +433,53 @@
                     success:function(response)
                     {
                         $('#pv_id').html('');
-                        $.each(response, function(index, value) {
-                            $('#pv_id').append('<option value='+value.id+'>'+value.price_variation_name+'</option>');
-                        });
+                        $('#pv_id').html('<option disabled selected>Please select one item</>');
+                        $('#pv_id').append(response['html']);
                     }
                 });
             });
         });
-
+        		
         $(document).on("change", "#scale_id", function(){
-            var id = this.value;
-            var variation_id = $('#variation_hidden_id').val();
-            console.log(variation_id);
-            
+            var scale_id = this.value;
+            var variation_id = $('#variation_hidden_id').val();            
             $.ajax({
                     type:"GET",
-                    url:'{{url('admin/stores/listings/gso')}}'+"/"+id+"/"+variation_id,
+                    url:'{{url('admin/stores/listings/gso')}}'+"/"+scale_id+"/"+variation_id,
                     dataType:'json',
                     success:function(response)
                     {
-                        $('#size').html('');
-                        $.each(response, function(index, value) {
-                            $('#size').append('<option value='+value.id+'>'+value.size_option_name+'</option>');
-                        });
+                            $('#size').html('');
+                            $.each(response, function(index, value) {
+                                $('#size').append('<option value='+value.id+'>'+value.size_option_name+'</option>');
+                            });
+    						
+    						$('#scale_size').html('');                        
+                            $.each(response, function(index, value) {
+                                $('#scale_size').append('<option value='+value.id+'>'+value.size_option_name+'</option>');
+                            });
+                            $('#scale_size').append('<option value="all">Add all option</option>');
                     }
                 });
         });
-        $('#variation_hidden_div').fadeOut();
+        $('#variation_hidden_div').hide();
         let count = 0;
             $(document).on("change", "#pv_id",function (e){
                 e.preventDefault();
                 let id = $(this).val();
+				
                     $.ajax({
                     type:"GET",
                     url:'{{url('admin/stores/listings/gpvo')}}'+"/"+id,
-                    success:function(response)
+                    success:function(iresponse)
                     {
-                        $('#variation_hidden_div').fadeIn();
+                        $('#variation_hidden_div').show();
                         count++;
                         if(count==2)
                         {
-                            $('#variations_showen_div').fadeOut();
+                            $('#variations_showen_div').hide();
                         }
-                        $('#variation_hidden_div').append(response);
+                        $('#variation_hidden_div').append(iresponse);
                     }
                 });
     
@@ -480,11 +490,90 @@
             {
                 $('#selected_variation[data-id="'+dataId+'"]').remove();
                 count--;
-                if(count<2)
+                if(count==2)
                 {
-                    $('#variations_showen_div').fadeIn();
+                    $('#variations_showen_div').hide();
+                }
+                else
+                {
+                	$('#variations_showen_div').show();
                 }
             }
+            
+            
+            var max_fields  = 13;
+            var x = 1;
+            $(document).on("click", "#pvnew_button", function(e){
+            var pvnew_value = $('#pvnew').val();
+                e.preventDefault();
+                if(pvnew_value.length>0)
+                {
+                    if(x<=max_fields){
+                        x++;
+                        $('#pvnew_section').append('<div class="input-group mb-3"> <input aria-describedby="basic-addon1" aria-label="Username" data-id="'+x+'" readonly class="form-control" type="text" name="pvnew[]" id="pvnew_field"  value="'+pvnew_value+'"><button class="btn btn-dark" onclick="update_pvnew_field('+x+')" type="button"> <span><i class="fas fa-pencil"></i></span> </button> <button class="btn btn-danger" id="remove_pvnew_field" type="button"> <span><i class="fas fa-close"></i></span> </button></div>');
+                    	$('#pvnew').val('');
+                    }
+                }
+                else
+                {
+                	alert("Enter text...");
+                }
+            });
+            
+            function update_pvnew_field(dataId)
+            {
+            	$('#pvnew_field[data-id="'+dataId+'"]').prop('readonly', false);	
+            }
+
+            $(document).on("click", "#remove_pvnew_field", function(e){
+                e.preventDefault();
+                $(this).val('');
+                $(this).parent('div').remove();
+                x--;
+            });
+            
+            
+            $(document).on("change","#scale_size", function(e){
+        		e.preventDefault();
+        		var scale_id = $('[id=scale_id]:eq(1)').val();
+        		let scale_size_id = $(this).val();
+        		$.ajax({
+                type:"GET",
+                url:'{{url('admin/stores/listings/gsso')}}'+"/"+scale_id+"/"+scale_size_id,
+                success:function(htmlresponse){
+        				$('#scalesize_new_section').append(htmlresponse);
+                	}
+                });
+        	});
+        	
+        	$(document).on("change", "#pv_options", function(e){
+        		e.preventDefault();
+        		let pv_id = $(this).val();
+        		$.ajax({
+        			type:"GET",
+        			url:'{{url('admin/stores/listings/gpvodiv')}}'+"/"+pv_id,
+        			success:function(html_response){
+						$('#pv_generated_div').append(html_response);
+        			}
+        		})
+        	});
+        	
+            
+            $(document).on("click", "#remove_size_option_field", function(e){
+                e.preventDefault();
+                $(this).val('');
+                $(this).parent('div').remove();
+            });
+            
+            $(document).on("click", "#save_changes", function(){
+                
+                $("#pv_generated_div").clone().appendTo("#modal_pv_generated_div");
+                
+                
+            	$("#modaldemo3").modal('hide');
+            });
+            
+            
             
       
 

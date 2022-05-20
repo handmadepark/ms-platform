@@ -43,7 +43,6 @@
             <div class="row row-sm">
                 <div class="col-xl-9 col-lg-9 col-md-12">
                     <div class="row row-sm">
-                        @foreach($listings as $listing)
                             <div class="col-md-6 col-lg-6 col-xl-3  col-sm-6">
                                 <div class="card">
                                     <div class="card-body h-100  product-grid6">
@@ -53,7 +52,7 @@
                                                 <img class="pic-2" src="{{asset('admin/img/ecommerce/09.jpg')}}" alt="product-image-1">
                                             </a>
                                             <ul class="icons">
-                                                <li><a href="{{ route('admin.stores.store_manager.listings.listing_details', ['id'=>$listing->id]) }}" class="info-gradient me-2" data-bs-placement="top" data-bs-toggle="tooltip" title=""><i class="fa fa-eye"></i></a></li>
+                                                <li><a href="" class="info-gradient me-2" data-bs-placement="top" data-bs-toggle="tooltip" title=""><i class="fa fa-eye"></i></a></li>
                                                 <li><a href="#" class="primary-gradient me-2" data-bs-placement="top" data-bs-toggle="tooltip" title=""><i class="fa fa-pencil"></i></a></li>
                                                 <li><a href="#" class="secondary-gradient" data-bs-placement="top" data-bs-toggle="tooltip" title="" data-bs-original-title="Quick View" aria-label="Quick View"><i class="fas fa-trash"></i></a></li>
                                             </ul>
@@ -78,7 +77,6 @@
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
 
                     </div>
                 </div>

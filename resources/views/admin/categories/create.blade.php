@@ -76,39 +76,37 @@
                                 </div>
 
                                 <div id="variations_section">
-                                    <div class="row">
+                                    
+                                    <table class="table">
+                                      <thead>
+                                        <tr>
+                                          <th scope="col">Variation name</th>
+                                          <th scope="col"><span><i class="fas fa-cogs"></i></span></th>
+                                          <th scope="col"><span><i class="fas fa-cogs"></i></span></th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
                                         @foreach($variations as $variation)
-                                            <div class="col-md-2">
-                                                <label for="{{$variation->variation_name}}">
-                                                    <input type="checkbox" value="{{$variation->id}}" name="variation_name[]" id="{{$variation->variation_name}}">
-                                                    {{$variation->variation_name}}
-                                                </label>
-                                            </div>
+                                        	<tr>
+                                        	<td>{{ $variation->variation_name }}</td>
+                                        	<td>
+                                        	<div class="custom-checkbox custom-control">
+                                                            <input type="checkbox" name="variations_id[]
+                                                            " value="{{ $variation->id }}" data-checkboxes="mygroup" class="custom-control-input" id="{{ $variation->variation_name.'forvariation' }}">
+                                                            <label for="{{ $variation->variation_name.'forvariation' }}" class="custom-control-label mt-1">Select for category variation</label>
+                                                        </div>
+                                        	</td>
+                                        	<td>
+                                        	 <div class="custom-checkbox custom-control">
+                                                            <input type="checkbox" name="pv[]" data-checkboxes="mygroup" class="custom-control-input" id="{{ $variation->variation_name.'forPricevariation' }}">
+                                                            <label for="{{ $variation->variation_name.'forPricevariation' }}" class="custom-control-label mt-1">Select for category variation</label>
+                                                        </div>
+                                        	</td>
+                                        	</tr>
                                         @endforeach
-                                    </div>
+                                       </tbody>
+                                     </table>
                                 </div>
-                                <hr>
-
-                                <div class="form-group">
-                                    <label for="pv_checkbox">
-                                        <input type="checkbox" name="pv_checkbox" id="pv_checkbox">
-                                        Add price variations</label>
-                                </div>
-
-                                <div id="pv_section">
-                                    <div class="row">
-                                        @foreach($price_variations as $pv)
-                                            <div class="col-md-2">
-                                                <label for="{{$pv->price_variation_name}}">
-                                                    <input type="checkbox" value="{{$pv->id}}" name="price_variation_name[]" id="{{$pv->price_variation_name}}">
-                                                    {{$pv->price_variation_name}}
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
-
-                                <hr>
 
                                 <div class="form-group">
                                     <label for="status">Status</label>
@@ -152,7 +150,7 @@
                 $(this).parent('div').remove();
                 x--;
             })
-        })
+        });
 
         $('#parent_category').hide();
         $('#variations_section').hide();
@@ -172,14 +170,6 @@
                 $('#variations_section').fadeIn('slow');
             } else {
                 $('#variations_section').fadeOut('slow');
-            }
-        });
-
-        $('#pv_checkbox').change(function(e){
-            if($('#pv_checkbox').prop('checked')) {
-                $('#pv_section').fadeIn('slow');
-            } else {
-                $('#pv_section').fadeOut('slow');
             }
         });
 

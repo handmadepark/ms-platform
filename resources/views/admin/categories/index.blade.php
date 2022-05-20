@@ -84,7 +84,7 @@
     <script>
         $(document).ready(function() {
             $('#categories').DataTable();
-        } );
+        });
 
         $('.form-check-input').change(function(e){
             var dataId = $(this).data('id');
@@ -113,7 +113,7 @@
                 }
             });
 
-        })
+        });
     </script>
 @endsection
 

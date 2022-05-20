@@ -36,7 +36,7 @@
                                     </tr>
                                     </thead>
                                     <tbody id="tablecontent">
-                                    @forelse($countries as $country)
+                                    @foreach($countries as $country)
                                         <tr>
                                             <td>{{$country->id}}</td>
                                             <td>{{$country->name}}</td>
@@ -64,13 +64,7 @@
 
                                             </td>
                                         </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="4">
-                                            <p class="text-danger text-center">There is no country</p>
-                                        </td>
-                                    </tr>
-                                    @endforelse
+                                    @endforeach
                                     </tbody>
                                 </table>
                             </div>
