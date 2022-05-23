@@ -1,21 +1,21 @@
-@extends('admin.layouts.master')
+@extends('admin.store_manager.layouts.master')
 @section('content')
-    <div class="main-content app-content mt-5">
+<div class="main-content app-content mt-5">
         <div class="main-container container-fluid">
             <div class="row row-sm">
                 <div class="col-xl-12">
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Countries</h4>
+                                <h4 class="card-title mg-b-0">Shipping</h4>
                                 <div class="float-end">
-                                    <a href="{{route('admin.countries.deleted')}}">
+                                    <a href="{{route('admin.stores.store_manager.shipping.deleted')}}">
                                         <button class="btn btn-sm btn-outline-warning">
                                             <span><i class="fas fa-trash"></i></span>
-                                            Deleted countries - {{$count_deleted}}
+                                            Deleted shipppings - {{$count_deleted}}
                                         </button>
                                     </a>
-                                    <a href="{{ route('admin.countries.create') }}">
+                                    <a href="{{ route('admin.stores.store_manager.shipping.create') }}">
                                         <button class="btn btn-sm btn-info">
                                             <span><i class="fas fa-plus"></i></span>
                                             New country
@@ -31,20 +31,18 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Mainland</th>
                                         <th>Status</th>
                                         <th>Operations</th>
                                     </tr>
                                     </thead>
                                     <tbody id="tablecontent">
-                                    @foreach($countries as $country)
+                                    @foreach($shippings as $shipping)
                                         <tr>
-                                            <td>{{$country->id}}</td>
-                                            <td>{{$country->name}}</td>
-                                            <td>{{ $country->getMainland['name'] }}</td>
+                                            <td>{{$shipping->id}}</td>
+                                            <td>{{$shipping->name}}</td>
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$country->id}}" id="check_status" {{ ($country->status==1) ? 'checked' : ''}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$shipping->id}}" id="check_status" {{ ($shipping->status==1) ? 'checked' : ''}}>
                                                 </div>
                                             </td>
                                             <td>
@@ -53,12 +51,12 @@
                                                         <span><i class="fas fa-eye"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.countries.edit', ['id'=>$country->id])}}">
+                                                <a href="{{route('admin.countries.edit', ['id'=>$shipping->id])}}">
                                                     <button class="btn btn-sm btn-primary">
                                                         <span><i class="fas fa-pen"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.countries.destroy', ['id'=>$country->id])}}">
+                                                <a href="{{route('admin.countries.destroy', ['id'=>$shipping->id])}}">
                                                     <button class="btn btn-sm btn-danger">
                                                         <span><i class="fas fa-trash"></i></span>
                                                     </button>
@@ -114,4 +112,3 @@
         })
     </script>
 @endsection
-

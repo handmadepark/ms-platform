@@ -7,18 +7,18 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Countries</h4>
+                                <h4 class="card-title mg-b-0">Mainlands</h4>
                                 <div class="float-end">
-                                    <a href="{{route('admin.countries.deleted')}}">
+                                    <a href="{{route('admin.mainlands.deleted')}}">
                                         <button class="btn btn-sm btn-outline-warning">
                                             <span><i class="fas fa-trash"></i></span>
-                                            Deleted countries - {{$count_deleted}}
+                                            Deleted mainlands - {{$count_deleted}}
                                         </button>
                                     </a>
-                                    <a href="{{ route('admin.countries.create') }}">
+                                    <a href="{{ route('admin.mainlands.create') }}">
                                         <button class="btn btn-sm btn-info">
                                             <span><i class="fas fa-plus"></i></span>
-                                            New country
+                                            New mainland
                                         </button>
                                     </a>
                                 </div>
@@ -26,25 +26,23 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="countries">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="mainlands">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Mainland</th>
                                         <th>Status</th>
                                         <th>Operations</th>
                                     </tr>
                                     </thead>
                                     <tbody id="tablecontent">
-                                    @foreach($countries as $country)
+                                    @foreach($mainlands as $mainland)
                                         <tr>
-                                            <td>{{$country->id}}</td>
-                                            <td>{{$country->name}}</td>
-                                            <td>{{ $country->getMainland['name'] }}</td>
+                                            <td>{{$mainland->id}}</td>
+                                            <td>{{$mainland->name}}</td>
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$country->id}}" id="check_status" {{ ($country->status==1) ? 'checked' : ''}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$mainland->id}}" id="check_status" {{ ($mainland->status==1) ? 'checked' : ''}}>
                                                 </div>
                                             </td>
                                             <td>
@@ -53,12 +51,12 @@
                                                         <span><i class="fas fa-eye"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.countries.edit', ['id'=>$country->id])}}">
+                                                <a href="{{route('admin.mainlands.edit', ['id'=>$mainland->id])}}">
                                                     <button class="btn btn-sm btn-primary">
                                                         <span><i class="fas fa-pen"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.countries.destroy', ['id'=>$country->id])}}">
+                                                <a href="{{route('admin.mainlands.destroy', ['id'=>$mainland->id])}}">
                                                     <button class="btn btn-sm btn-danger">
                                                         <span><i class="fas fa-trash"></i></span>
                                                     </button>
@@ -81,7 +79,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#countries').DataTable();
+            $('#mainlands').DataTable();
         } );
 
         $('.form-check-input').change(function(e){
@@ -96,7 +94,7 @@
             });
 
             $.ajax({
-                url: "{{ route('admin.countries.check_status') }}",
+                url: "{{ route('admin.mainlands.check_status') }}",
                 type: "POST",
                 data:{
                     "dataId":dataId,

@@ -19,24 +19,10 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{route('admin.countries.update', ['id'=>$item_selected->id])}}" method="POST">
+                            <form action="{{route('admin.mainlands.update', ['id'=>$item_selected->id])}}" method="POST">
                                 @csrf
-
                                 <div class="form-group">
-                                    <label for="name">Mainlands</label>
-                                    <select name="mainland_id" class="form-control" id="mainland_id">
-                                        <option disabled selected> Please select mainland</option>
-                                        @foreach($mainlands as $mainland)
-                                        <option value="{{ $mainland->id }}" {{ ($mainland->id == $item_selected->mainland_id) ? 'selected' : '' }}>{{ $mainland->name }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if($errors->has('name'))
-                                        <p class="text-danger">{{ $errors->first('name') }}</p>
-                                    @endif
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="name">Country name</label>
+                                    <label for="name">Mainland name</label>
                                     <input type="text" class="form-control" name="name" id="name" aria-describedby="emailHelp" value="{{$item_selected->name}}">
                                     @if($errors->has('name'))
                                         <p class="text-danger">{{ $errors->first('name') }}</p>

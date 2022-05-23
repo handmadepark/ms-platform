@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\LogController;
-use App\Models\Country;
 use App\Models\Mainlands;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
-class CountriesController extends Controller
+class MainlandController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +18,9 @@ class CountriesController extends Controller
      */
     public function index()
     {
-        $countries = Country::all();
-        $count_deleted = Country::onlyTrashed()->count();
-        return view('admin.countries.index', compact('countries', 'count_deleted'));
+        $mainlands = Mainlands::all();
+        $count_deleted = Mainlands::onlyTrashed()->count();
+        return view('admin.mainlands.index', compact('mainlands', 'count_deleted'));
     }
 
     /**
@@ -31,8 +30,7 @@ class CountriesController extends Controller
      */
     public function create()
     {
-        $mainlands = Mainlands::where('status', 1)->get();
-        return view('admin.countries.create', compact('mainlands'));
+        return view('admin.mainlands.create');
     }
 
     /**
@@ -44,9 +42,8 @@ class CountriesController extends Controller
     public function store(Request $request)
     {
             $validator = Validator::make($request->all(), [
-                'mainland_id' => 'required|integer',
-                'name'      => 'required|min:3|max:255',
-                'status'    => 'required|integer'
+                'name'          => 'required|min:3|max:255',
+                'status'        => 'required|integer'
             ]);
 
             if($validator->fails())
@@ -54,24 +51,24 @@ class CountriesController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            Country::create($request->all());
-            $content = Auth::guard('admin')->user()->name.' inserted new country - '.$request->name;
+            Mainlands::create($request->all());
+            $content = Auth::guard('admin')->user()->name.' inserted new mainland - '.$request->name;
             (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            toast('Country inserted successfully.', 'success');
-            return redirect()->route('admin.countries');
+            toast('Mainland inserted successfully.', 'success');
+            return redirect()->route('admin.mainlands');
 
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Country  $country
+     * @param  \App\Models\Mainlands  $mainland
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $item_selected = Country::find($id);
-        return view('admin.countries.show', compact('item_selected'));
+        $item_selected = Mainlands::find($id);
+        return view('admin.mainlands.show', compact('item_selected'));
     }
 
     /**
@@ -82,36 +79,34 @@ class CountriesController extends Controller
      */
     public function edit($id)
     {
-        $mainlands = Mainlands::where('status', 1)->get();
-        $item_selected = Country::find($id);
-        return view('admin.countries.edit', compact('mainlands','item_selected'));
+        $item_selected = Mainlands::find($id);
+        return view('admin.mainlands.edit', compact('item_selected'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Country  $country
+     * @param  \App\Models\Mainlands  $mainlands
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,$id)
     {
             $validator = Validator::make($request->all(), [
-                'mainland_id'   => 'required|integer',
-                'name'          => 'required|min:3|max:255',
-                'status'        => 'required|integer'
+                'name'      => 'required|min:3|max:255',
+                'status'    => 'required|integer'
             ]);
 
             if($validator->fails())
             {
                 return redirect()->back()->withErrors($validator)->withInput();
             }
-            $data = Country::find($id);
+            $data = Mainlands::find($id);
             $data->update($request->all());
-            $content = Auth::guard('admin')->user()->name.' updated country - '.$request->name;
+            $content = Auth::guard('admin')->user()->name.' updated mainland - '.$request->name;
             (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
-            toast('Country updated successfully.', 'success');
-            return redirect()->route('admin.countries');
+            toast('Mainland updated successfully.', 'success');
+            return redirect()->route('admin.mainlands');
 
     }
 
@@ -123,18 +118,18 @@ class CountriesController extends Controller
      */
     public function destroy($id)
     {
-        $item = Country::find($id);
-        $content = Auth::guard('admin')->user()->name.' deleted country - '.$item->name;
+        $item = Mainlands::find($id);
+        $content = Auth::guard('admin')->user()->name.' deleted mainland - '.$item->name;
         (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
         $item->delete();
-        toast('Country deleted successfully.', 'success');
-        return redirect()->route('admin.countries');
+        toast('Mainland deleted successfully.', 'success');
+        return redirect()->route('admin.mainlands');
 
     }
 
     public function check_status(Request $request)
     {
-        $update_status = Country::find($request->dataId);
+        $update_status = Mainlands::find($request->dataId);
         $update_status->status = $request->check;
         $update_status->save();
         if($request->check == 1)
@@ -143,29 +138,29 @@ class CountriesController extends Controller
         }else{
             $old_status = "deactive";
         }
-        $content = Auth::guard('admin')->user()->name.' updated country status to - '.$old_status;
+        $content = Auth::guard('admin')->user()->name.' updated mainland status to - '.$old_status;
         (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
         $data = [
             'icon'             => 'success',
             'status'           => 200,
-            'message'          => 'Country status successfully updated'
+            'message'          => 'Mainland status successfully updated'
         ];
         return $data;
     }
 
     public function deleted()
     {
-        $countries = Country::onlyTrashed()->get();
-        return view('admin.countries.deleted', compact('countries'));
+        $mainlands = Mainlands::onlyTrashed()->get();
+        return view('admin.mainlands.deleted', compact('mainlands'));
     }
 
     public function restore($id)
     {
-        $item = Country::onlyTrashed()->where('id', $id)->first();
-        $content = Auth::guard('admin')->user()->name.' restored deleted country - '.$item->name;
+        $item = Mainlands::onlyTrashed()->where('id', $id)->first();
+        $content = Auth::guard('admin')->user()->name.' restored deleted mainland - '.$item->name;
         (new LogController)->insert_log(Auth::guard('admin')->user()->id, $content);
         $item->restore();
-        toast('Country restored successfully.', 'success');
-        return redirect()->route('admin.countries');
+        toast('Mainland restored successfully.', 'success');
+        return redirect()->route('admin.mainlands');
     }
 }

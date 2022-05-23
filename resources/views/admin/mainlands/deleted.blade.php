@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Deleted countries</h4>
+                                <h4 class="card-title mg-b-0">Deleted mainlands</h4>
                                 <div class="float-end">
                                     <a href="{{ URL::previous() }}">
                                         <button class="btn btn-sm btn-danger">
@@ -20,31 +20,29 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="countries">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="mainlands">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
                                         <th>Name</th>
-                                        <th>Mainland</th>
                                         <th>Status</th>
                                         <th>Operations</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($countries as $country)
+                                    @foreach($mainlands as $mainland)
                                         <tr>
-                                            <td>{{$country->id}}</td>
-                                            <td>{{$country->name}}</td>
-                                            <td>{{ $country->getMainland['name'] }}</td>
+                                            <td>{{$mainland->id}}</td>
+                                            <td>{{$mainland->name}}</td>
                                             <td>
-                                                @if($country->status==1)
+                                                @if($mainland->status==1)
                                                     <button class="btn btn-sm btn-outline-success">Active</button>
                                                 @else
                                                     <button class="btn btn-sm btn-outline-warning">Inactive</button>
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.countries.restore', ['id'=>$country->id])  }}">
+                                                <a href="{{ route('admin.mainlands.restore', ['id'=>$mainland->id])  }}">
                                                     <button class="btn btn-sm btn-info">
                                                         <span><i class="fas fa-redo-alt"></i></span>
                                                     </button>
@@ -67,7 +65,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#countries').DataTable();
+            $('#mainlands').DataTable();
         } );
     </script>
 @endsection

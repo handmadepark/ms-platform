@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCountriesTable extends Migration
+class CreateShippingServicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateCountriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
+        Schema::create('shipping_services', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('mainland_id')->constrained()->ondelete('cascade')->onupdate('cascade');
-            $table->string('name');
-            $table->integer('status');
+            $table->foreignId('country_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->string('company_name');
+            $table->string('description');
+            $table->json('delivery_time');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +31,6 @@ class CreateCountriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('countries');
+        Schema::dropIfExists('shipping_services');
     }
 }

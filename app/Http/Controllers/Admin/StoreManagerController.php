@@ -503,6 +503,11 @@ class StoreManagerController extends Controller
         
     }
 
+    public function getVariationsContent()
+    {
+        return "<b>This is a variations content !</b>";
+    }
+
     public function back()
     {
         Session::forget('listing_store');

@@ -7,7 +7,9 @@ use App\Http\Controllers\Admin\
 {
     DashboardController,
     CategoriesController,
+    ShippingInformationsController,
     CountriesController,
+    MainlandController,
     StoresController,
     StoreManagerController,
     PaymentCardController,
@@ -16,6 +18,7 @@ use App\Http\Controllers\Admin\
     VariationOptionsController,
     SizeController,
     SizeOptionsController,
+    ShippingController
 };
 /*
 |--------------------------------------------------------------------------
@@ -158,6 +161,29 @@ Route::group(['prefix' => 'admin'], function ()
                 ->name('admin.countries.check_status');
         });
 
+        //mainlands
+        Route::group(['prefix' => 'mainlands'], function ()
+        {
+            Route::get('/', [MainlandController::class , 'index'])
+                ->name('admin.mainlands');
+            Route::get('/create', [MainlandController::class , 'create'])
+                ->name('admin.mainlands.create');
+            Route::post('/store', [MainlandController::class , 'store'])
+                ->name('admin.mainlands.store');
+            Route::post('/{id}/update', [MainlandController::class , 'update'])
+                ->name('admin.mainlands.update');
+            Route::any('/{id}/destroy', [MainlandController::class , 'destroy'])
+                ->name('admin.mainlands.destroy');
+            Route::get('/{id}/edit', [MainlandController::class , 'edit'])
+                ->name('admin.mainlands.edit');
+            Route::get('/{id}/restore', [MainlandController::class , 'restore'])
+                ->name('admin.mainlands.restore');
+            Route::get('/deleted', [MainlandController::class , 'deleted'])
+                ->name('admin.mainlands.deleted');
+            Route::post('/check_status', [MainlandController::class , 'check_status'])
+                ->name('admin.mainlands.check_status');
+        });
+
         //stores
         Route::group(['prefix'=>'stores'],function(){
             Route::get('/', [StoresController::class , 'index'])
@@ -210,7 +236,30 @@ Route::group(['prefix' => 'admin'], function ()
                 Route::get('/gso/{id}/{variation_id}', [StoreManagerController::class , 'gso'])->name('gso');
                 Route::get('/gsso/{size}/{id}', [StoreManagerController::class , 'gsso'])->name('gsso');
                 Route::get('/gpvodiv/{id}', [StoreManagerController::class, 'gpvodiv'])->name('gpvodiv');            
+                Route::get('/getVariationsContent', [StoreManagerController::class, 'getVariationsContent'])->name('getVariationsContent');            
             });
+
+            Route::group(['prefix'=>'shipping'],function(){
+                Route::get('/', [ShippingController::class, 'index'])->name('admin.stores.store_manager.shipping');
+                Route::get('/create', [ShippingController::class , 'create'])
+                ->name('admin.stores.store_manager.shipping.create');
+            Route::post('/store', [ShippingController::class , 'store'])
+                ->name('admin.stores.store_manager.shipping.store');
+            Route::post('/{id}/update', [ShippingController::class , 'update'])
+                ->name('admin.stores.store_manager.shipping.update');
+            Route::any('/{id}/destroy', [ShippingController::class , 'destroy'])
+                ->name('admin.stores.store_manager.shipping.destroy');
+            Route::get('/{id}/edit', [ShippingController::class , 'edit'])
+                ->name('admin.stores.store_manager.shipping.edit');
+            Route::get('/{id}/restore', [ShippingController::class , 'restore'])
+                ->name('admin.stores.store_manager.shipping.restore');
+            Route::get('/deleted', [ShippingController::class , 'deleted'])
+                ->name('admin.stores.store_manager.shipping.deleted');
+            Route::post('/check_status', [ShippingController::class , 'check_status'])
+                ->name('admin.stores.store_manager.shipping.check_status');
+            });
+
+
 
         });
 
@@ -223,6 +272,17 @@ Route::group(['prefix' => 'admin'], function ()
                 ->name('admin.settings.destroyInput');
         Route::any('{id}/destroy_scale', [SettingsController::class, 'destroy_scale'])->name('admin.settings.destroy_scale');
         
+
+        Route::group(['prefix'=>'shipping_informations'], function(){
+            Route::get('/', [ShippingInformationsController::class, 'index'])->name('admin.shipping_informations');
+            Route::post('/check_status', [ShippingInformationsController::class, 'check_status'])->name('admin.shipping_informations.check_status');
+            Route::get('/create', [ShippingInformationsController::class , 'create'])
+                ->name('admin.shipping_informations.create');
+                Route::get('/store', [ShippingInformationsController::class , 'store'])
+                ->name('admin.shipping_informations.store');
+            Route::get('/deleted', [ShippingInformationsController::class , 'deleted'])
+                ->name('admin.shipping_informations.deleted');
+        });
         
         //logout
         Route::get('/logout', [AdminController::class , 'logout'])

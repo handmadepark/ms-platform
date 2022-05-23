@@ -7,18 +7,18 @@
                     <div class="card">
                         <div class="card-header pb-0">
                             <div class="d-flex justify-content-between">
-                                <h4 class="card-title mg-b-0">Countries</h4>
+                                <h4 class="card-title mg-b-0">Shipping services</h4>
                                 <div class="float-end">
-                                    <a href="{{route('admin.countries.deleted')}}">
+                                    <a href="{{route('admin.shipping_informations.deleted')}}">
                                         <button class="btn btn-sm btn-outline-warning">
                                             <span><i class="fas fa-trash"></i></span>
-                                            Deleted countries - {{$count_deleted}}
+                                            Deleted services - {{$count_deleted}}
                                         </button>
                                     </a>
-                                    <a href="{{ route('admin.countries.create') }}">
+                                    <a href="{{ route('admin.shipping_informations.create') }}">
                                         <button class="btn btn-sm btn-info">
                                             <span><i class="fas fa-plus"></i></span>
-                                            New country
+                                            New shipping service
                                         </button>
                                     </a>
                                 </div>
@@ -26,25 +26,26 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="countries">
+                                <table class="table table-bordered table-hover mb-0 text-md-nowrap text-center" id="services">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Name</th>
-                                        <th>Mainland</th>
+                                        <th>Country</th>
+                                        <th>Service name</th>
+                                        <th>Description</th>
                                         <th>Status</th>
                                         <th>Operations</th>
                                     </tr>
                                     </thead>
                                     <tbody id="tablecontent">
-                                    @foreach($countries as $country)
+                                    @foreach($services as $service)
                                         <tr>
-                                            <td>{{$country->id}}</td>
-                                            <td>{{$country->name}}</td>
-                                            <td>{{ $country->getMainland['name'] }}</td>
+                                            <td>{{$service->id}}</td>
+                                            <td>{{$service->name}}</td>
+                                            <td>{{ $service->getMainland['name'] }}</td>
                                             <td>
                                                 <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$country->id}}" id="check_status" {{ ($country->status==1) ? 'checked' : ''}}>
+                                                    <input class="form-check-input" type="checkbox" role="switch" data-id="{{$service->id}}" id="check_status" {{ ($service->status==1) ? 'checked' : ''}}>
                                                 </div>
                                             </td>
                                             <td>
@@ -53,12 +54,12 @@
                                                         <span><i class="fas fa-eye"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.countries.edit', ['id'=>$country->id])}}">
+                                                <a href="{{route('admin.shipping_informations.edit', ['id'=>$service->id])}}">
                                                     <button class="btn btn-sm btn-primary">
                                                         <span><i class="fas fa-pen"></i></span>
                                                     </button>
                                                 </a>
-                                                <a href="{{route('admin.countries.destroy', ['id'=>$country->id])}}">
+                                                <a href="{{route('admin.shipping_informations.destroy', ['id'=>$service->id])}}">
                                                     <button class="btn btn-sm btn-danger">
                                                         <span><i class="fas fa-trash"></i></span>
                                                     </button>
@@ -81,7 +82,7 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-            $('#countries').DataTable();
+            $('#services').DataTable();
         } );
 
         $('.form-check-input').change(function(e){
@@ -96,7 +97,7 @@
             });
 
             $.ajax({
-                url: "{{ route('admin.countries.check_status') }}",
+                url: "{{ route('admin.shipping_informations.check_status') }}",
                 type: "POST",
                 data:{
                     "dataId":dataId,

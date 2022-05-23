@@ -24,6 +24,69 @@
             cursor: inherit;
             display: block;
         }
+
+        .personalization_checkox {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 18px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            }
+
+            /* Hide the browser's default checkbox */
+            .personalization_checkox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+            }
+
+            /* Create a custom checkbox */
+            .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+            }
+
+            /* When the checkbox is checked, add a blue background */
+            .personalization_checkox input:checked ~ .checkmark {
+            background-color: #2196F3;
+            }
+
+            /* Create the checkmark/indicator (hidden when not checked) */
+            .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+            }
+
+            /* Show the checkmark when checked */
+            .personalization_checkox input:checked ~ .checkmark:after {
+            display: block;
+            }
+
+            /* Style the checkmark/indicator */
+            .personalization_checkox .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
+            }
+
     </style>
 @endsection
 @section('content')
@@ -290,7 +353,7 @@
                                     <div class="col-sm-3">
                                         <label for="sku" class="col-sm-12 col-form-label"><strong>SKU</strong> <small>Optional</small></label>
                                         <p class="col-sm-12">
-                                            SKUs are for your use onlyвЂ”buyers wonвЂ™t see them.
+                                            SKUs are for your use only buyers want see them.
                                         </p>
                                     </div>
                                     <div class="col-sm-9">
@@ -309,10 +372,19 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h4>Variations</h4>
+                                    <h4>Variations
+                                        <div class="float-end" id="edit_variations_button">
+                                            <button class="btn btn-dark">
+                                                <span>
+                                                    <i class="fas fa-pencil"></i>
+                                                </span>
+                                                Edit Variations
+                                            </button>
+                                        </div>
+                                    </h4>
                                 </div>
                             </div>
-                                <div class="row mb-3">
+                                <div class="row mb-3" id="variations_content">
                                     <div class="col-sm-3">
                                         <p class="col-sm-12">Remember to factor in the costs of materials, labor, and other business expenses. If you offer free shipping, make sure to include the cost of shipping so it doesn't eat into your profits.</p>
                                     </div>
@@ -320,16 +392,62 @@
                                     <a class="btn ripple btn-info" data-bs-target="#modaldemo3" data-bs-toggle="modal" href="#">Add variations</a>
                                     </div>
                                 </div>
-								
-								<div id="modal_pv_generated_div">
-								</div>
-								
-								<div id="modal_pv_generated_div">
-								</div>
-								
-								<div id="modal_pv_generated_div">
-								</div>
 
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h4>Personalization
+                                        <div class="float-end form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="personalization-checkbox">
+                                        </div>
+                                    </h4>
+                                </div>
+                            </div>
+                                <div class="row mb-3">
+                                    <p class="col-sm-12">Collect personalized information for this listing.</p>
+                                    <div class="col-sm-12" id="personalization-content">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-header">
+                                                        Instructions for buyers
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <p>Enter the personalization instructions you want buyers to see.</p>
+                                                        <div class="mt-3">
+                                                            <textarea name="" class="form-control" id="personalization_text" cols="30" rows="5"></textarea>
+                                                        </div>
+                                                        <div class="mt-2">
+                                                        <label class="personalization_checkox">Personalization is optional
+                                                            <input type="checkbox" id="personalization_checkox">
+                                                            <span class="checkmark"></span>
+                                                        </label> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <p class="text-center">What the buyer will see</p>
+                                                        <div class="card">
+                                                            <strong>Add your personalization <small id="optional">(optional)</small></strong>
+                                                            <p id="buyers_text">See item description for details</p>
+                                                            <textarea name="" class="form-control" readonly id="" cols="30" rows="3"></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>
@@ -459,6 +577,7 @@
                                 $('#scale_size').append('<option value='+value.id+'>'+value.size_option_name+'</option>');
                             });
                             $('#scale_size').append('<option value="all">Add all option</option>');
+                            $('#scale_div').hide();
                     }
                 });
         });
@@ -553,6 +672,7 @@
         			type:"GET",
         			url:'{{url('admin/stores/listings/gpvodiv')}}'+"/"+pv_id,
         			success:function(html_response){
+                        $('#pv_options').hide();
 						$('#pv_generated_div').append(html_response);
         			}
         		})
@@ -565,12 +685,51 @@
                 $(this).parent('div').remove();
             });
             
+            $('#edit_variations_button').hide();
             $(document).on("click", "#save_changes", function(){
-                
-                $("#pv_generated_div").clone().appendTo("#modal_pv_generated_div");
-                
-                
-            	$("#modaldemo3").modal('hide');
+                $.ajax({
+        			type:"GET",
+        			url:'{{url('admin/stores/listings/getVariationsContent')}}',
+        			success:function(html_response){
+                        $('#modaldemo3').modal('hide');
+                        $('#edit_variations_button').show();
+                        $('#variations_content').empty();
+						$('#variations_content').append(html_response);
+        			}
+        		})
+            });
+
+            $(document).on("click", "#edit_variations_button", function(e){
+                $("#modaldemo3").modal('show');
+            });
+
+            $('#personalization-content').hide();
+            $(document).on("change", "#personalization-checkbox", function(e){
+                if($('#personalization-checkbox').prop('checked'))
+                {
+                    $('#personalization-content').fadeIn('slow');
+                }
+                else
+                {
+                    $('#personalization-content').fadeOut('slow');
+                }
+            });
+
+            $(document).on("keyup", "#personalization_text", function(){
+               var text = $(this).val();
+               $('#buyers_text').text(text);
+            })
+
+            $('#optional').hide();
+            $(document).on("change", "#personalization_checkox", function(e){
+                if($('#personalization_checkox').prop('checked'))
+                {
+                    $('#optional').show();
+                }
+                else
+                {
+                    $('#optional').hide();
+                }
             });
             
             

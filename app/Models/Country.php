@@ -11,10 +11,20 @@ class Country extends Model
     use HasFactory, SoftDeletes;
 
     protected $table = 'countries';
-    protected $fillable = ['name', 'status'];
+    protected $fillable = ['mainland_id', 'name', 'status'];
 
     public function getStores()
     {
         return $this->hasMany(Stores::class, 'country_id', 'id');
+    }
+
+    public function getMainland()
+    {
+        return $this->belongsTo(Mainlands::class, 'mainland_id', 'id');
+    }
+
+    public function getShippingServices()
+    {
+        return $this->hasMany(ShippingServices::class, 'country_id', 'id');
     }
 }
